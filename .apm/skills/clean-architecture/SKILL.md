@@ -1,6 +1,6 @@
 ---
 name: clean-architecture
-description: Rules for layered system architecture, dependency direction, and boundary enforcement. Derived from Robert C. Martin's Clean Architecture.
+description: Use when writing, modifying, designing, refactoring, or reviewing code that crosses layers or boundaries to enforce dependency direction and clean architecture rules. Derived from Robert C. Martin's Clean Architecture.
 ---
 
 # SKILL: Clean Architecture

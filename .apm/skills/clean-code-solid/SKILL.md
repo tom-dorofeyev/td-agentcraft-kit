@@ -1,6 +1,6 @@
 ---
 name: clean-code-solid
-description: The five SOLID principles applied to all code — functions, classes, modules, and systems. SOLID is not class-level design only; it governs every unit of code at every scale.
+description: Use when writing, modifying, refactoring, designing, or reviewing code and architecture to apply the five SOLID principles across functions, classes, modules, and systems at every scale.
 ---
 
 # SKILL: SOLID Principles

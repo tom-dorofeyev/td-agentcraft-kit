@@ -1,6 +1,6 @@
 ---
 name: clean-code-security
-description: Systematic security review checklist based on OWASP Top 10. Used by the Code Reviewer to evaluate implementation artifacts for common vulnerability classes. Findings are always BLOCKING.
+description: Use when reviewing or implementing code that could affect security boundaries to apply an OWASP Top 10 checklist to implementation artifacts and flag any vulnerability as BLOCKING.
 ---
 
 # SKILL: Security (OWASP Top 10)

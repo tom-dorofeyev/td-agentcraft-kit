@@ -1,6 +1,6 @@
 ---
 name: semantic-duplication
-description: Detect semantic duplication that clone tools miss. Search for existing implementations, reuse them, and converge on the right abstraction.
+description: Use when writing, modifying, refactoring, or reviewing code to detect semantic duplication that clone tools miss, reuse existing implementations, and converge on the right abstraction.
 ---
 
 # SKILL: Semantic Duplication

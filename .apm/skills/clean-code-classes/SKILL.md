@@ -1,6 +1,6 @@
 ---
 name: clean-code-classes
-description: Rules for class design, cohesion, size, and organisation. SOLID principles are covered separately in clean-code-solid. Derived from Clean Code Chapter 10.
+description: Use when writing, modifying, refactoring, or reviewing classes, interfaces, and modules to enforce cohesion, size, and organisation. SOLID principles are covered separately in clean-code-solid. Derived from Clean Code Chapter 10.
 ---
 
 # SKILL: Clean Code — Classes

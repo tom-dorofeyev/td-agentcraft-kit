@@ -1,6 +1,6 @@
 ---
 name: clean-code-tests
-description: Rules for writing clean, reliable, single-behaviour tests following F.I.R.S.T. and TDD discipline. Derived from Clean Code Chapter 9.
+description: Use when writing, modifying, refactoring, or reviewing tests to enforce clean, reliable, single-behaviour test code following F.I.R.S.T. and TDD discipline. Derived from Clean Code Chapter 9.
 ---
 
 # SKILL: Clean Code — Tests

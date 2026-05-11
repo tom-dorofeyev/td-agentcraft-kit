@@ -1,6 +1,6 @@
 ---
 name: clean-code-comments
-description: Rules for when and when not to write comments. A comment is a failure to express intent in code. Derived from Clean Code Chapter 4.
+description: Use when writing, modifying, refactoring, or reviewing code comments to decide when a comment is justified and when naming or structure should replace it. Derived from Clean Code Chapter 4.
 ---
 
 # SKILL: Clean Code — Comments

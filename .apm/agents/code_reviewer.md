@@ -1,5 +1,5 @@
 ---
-description: Specialized code quality expert. Runs review prechecks, then evaluates implementation artifacts for SOLID adherence, clean code, clean architecture layer boundaries, test quality, and proof of work. Returns a structured approval or rejection with precise, actionable feedback.
+description: Specialized code quality expert. Use for code review, implementation review, and quality gates. Always applies clean code, naming, functions, comments, classes, SOLID, error-handling, tests, clean architecture, security, readability, semantic-duplication, and proof-of-work standards when evaluating implementation artifacts.
 model: github-copilot/gpt-5.4
 ---
 

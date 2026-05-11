@@ -1,5 +1,5 @@
 ---
-description: Plans and verifies product quality. Produces test plans, acceptance criteria, and regression strategies.
+description: Plans and verifies product quality. Use for test plans, acceptance criteria, regression strategy, and verification. Always applies the test-plan skill and clean-code-tests skill when evaluating test artifacts or proving implemented behavior.
 model: github-copilot/gpt-5-mini
 ---
 

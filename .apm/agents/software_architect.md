@@ -1,5 +1,5 @@
 ---
-description: Designs robust, maintainable system architectures. Produces design docs, interface contracts, and conformance reviews.
+description: Designs robust, maintainable system architectures. Use for architecture decisions, technical design, interface contracts, and conformance reviews. Always applies clean architecture, SOLID, class design, code-smell, and design-decision skills when designing or reviewing system structure.
 model: github-copilot/gpt-5.4
 reasoningEffort: high
 ---

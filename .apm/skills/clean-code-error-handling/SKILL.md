@@ -1,6 +1,6 @@
 ---
 name: clean-code-error-handling
-description: Rules for robust, readable error handling using exceptions instead of error codes or nulls. Derived from Clean Code Chapter 7.
+description: Use when writing, modifying, refactoring, or reviewing error paths, exceptions, null handling, and failure boundaries to keep error handling robust and readable. Derived from Clean Code Chapter 7.
 ---
 
 # SKILL: Clean Code — Error Handling
