@@ -1,0 +1,87 @@
+lockfile_version: '1'
+generated_at: '2026-05-11T16:17:32.157930+00:00'
+dependencies: []
+local_deployed_files:
+- .agents/skills/clean-architecture
+- .agents/skills/clean-code-classes
+- .agents/skills/clean-code-comments
+- .agents/skills/clean-code-error-handling
+- .agents/skills/clean-code-functions
+- .agents/skills/clean-code-naming
+- .agents/skills/clean-code-security
+- .agents/skills/clean-code-solid
+- .agents/skills/clean-code-tests
+- .agents/skills/code-smells
+- .agents/skills/design-decision
+- .agents/skills/escalation
+- .agents/skills/fast-path
+- .agents/skills/full-workflow
+- .agents/skills/investigation
+- .agents/skills/notify
+- .agents/skills/product-spec
+- .agents/skills/readability-cognitive-load
+- .agents/skills/semantic-duplication
+- .agents/skills/specification-question
+- .agents/skills/state-management-logging
+- .agents/skills/static-code-analysis
+- .agents/skills/test-plan
+- .claude/agents/code_reviewer.md
+- .claude/agents/product_specialist.md
+- .claude/agents/qa_engineer.md
+- .claude/agents/software_architect.md
+- .claude/agents/software_engineer.md
+- .claude/agents/team_leader.md
+- .claude/skills/clean-architecture
+- .claude/skills/clean-code-classes
+- .claude/skills/clean-code-comments
+- .claude/skills/clean-code-error-handling
+- .claude/skills/clean-code-functions
+- .claude/skills/clean-code-naming
+- .claude/skills/clean-code-security
+- .claude/skills/clean-code-solid
+- .claude/skills/clean-code-tests
+- .claude/skills/code-smells
+- .claude/skills/design-decision
+- .claude/skills/escalation
+- .claude/skills/fast-path
+- .claude/skills/full-workflow
+- .claude/skills/investigation
+- .claude/skills/notify
+- .claude/skills/product-spec
+- .claude/skills/readability-cognitive-load
+- .claude/skills/semantic-duplication
+- .claude/skills/specification-question
+- .claude/skills/state-management-logging
+- .claude/skills/static-code-analysis
+- .claude/skills/test-plan
+- .github/agents/code_reviewer.agent.md
+- .github/agents/product_specialist.agent.md
+- .github/agents/qa_engineer.agent.md
+- .github/agents/software_architect.agent.md
+- .github/agents/software_engineer.agent.md
+- .github/agents/team_leader.agent.md
+- .opencode/agents/code_reviewer.md
+- .opencode/agents/product_specialist.md
+- .opencode/agents/qa_engineer.md
+- .opencode/agents/software_architect.md
+- .opencode/agents/software_engineer.md
+- .opencode/agents/team_leader.md
+local_deployed_file_hashes:
+  .claude/agents/code_reviewer.md: sha256:b4c2786a04fb51a31b17202ea436442aeb79c123166c260bd95d126e36e26943
+  .claude/agents/product_specialist.md: sha256:b6ba303ea2f4d416c0dde8a8fe66523d26534fa50a0cd336d1fe599c6b8d8734
+  .claude/agents/qa_engineer.md: sha256:d1183c3564ade01dfb1f0d75994a45b79fe78ef12a578f3e020a23ad8be2cb98
+  .claude/agents/software_architect.md: sha256:4cb5a744b410a9b7b1ab3f9516de5ee2ab771f1c82725dfcbd833104f2d99efb
+  .claude/agents/software_engineer.md: sha256:5d41d02116bf7f4edf19e8eb1f01a218da5d597fe33f5e202c4b4f0d7e0d512a
+  .claude/agents/team_leader.md: sha256:803e38e3aa7ed5190754eefff4c4ddee0df7ec312fed9dcd706430062cb2f411
+  .github/agents/code_reviewer.agent.md: sha256:b4c2786a04fb51a31b17202ea436442aeb79c123166c260bd95d126e36e26943
+  .github/agents/product_specialist.agent.md: sha256:b6ba303ea2f4d416c0dde8a8fe66523d26534fa50a0cd336d1fe599c6b8d8734
+  .github/agents/qa_engineer.agent.md: sha256:d1183c3564ade01dfb1f0d75994a45b79fe78ef12a578f3e020a23ad8be2cb98
+  .github/agents/software_architect.agent.md: sha256:4cb5a744b410a9b7b1ab3f9516de5ee2ab771f1c82725dfcbd833104f2d99efb
+  .github/agents/software_engineer.agent.md: sha256:5d41d02116bf7f4edf19e8eb1f01a218da5d597fe33f5e202c4b4f0d7e0d512a
+  .github/agents/team_leader.agent.md: sha256:803e38e3aa7ed5190754eefff4c4ddee0df7ec312fed9dcd706430062cb2f411
+  .opencode/agents/code_reviewer.md: sha256:b4c2786a04fb51a31b17202ea436442aeb79c123166c260bd95d126e36e26943
+  .opencode/agents/product_specialist.md: sha256:b6ba303ea2f4d416c0dde8a8fe66523d26534fa50a0cd336d1fe599c6b8d8734
+  .opencode/agents/qa_engineer.md: sha256:d1183c3564ade01dfb1f0d75994a45b79fe78ef12a578f3e020a23ad8be2cb98
+  .opencode/agents/software_architect.md: sha256:4cb5a744b410a9b7b1ab3f9516de5ee2ab771f1c82725dfcbd833104f2d99efb
+  .opencode/agents/software_engineer.md: sha256:5d41d02116bf7f4edf19e8eb1f01a218da5d597fe33f5e202c4b4f0d7e0d512a
+  .opencode/agents/team_leader.md: sha256:803e38e3aa7ed5190754eefff4c4ddee0df7ec312fed9dcd706430062cb2f411
