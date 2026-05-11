@@ -29,7 +29,7 @@ Instead, install it as an APM package from your target project:
 ```sh
 cd your-project
 apm init
-apm install <owner>/td-agentcraft-kit#main
+apm install tom-dorofeyev/td-agentcraft-kit#main
 ```
 
 That adds this kit to your `apm.yml`, resolves it into `apm_modules/`, and deploys its agents, skills, and instructions into the directories your AI tools read.
