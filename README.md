@@ -31,6 +31,21 @@ apm install https://github.com/tom-dorofeyev/td-agentcraft-kit#main
 ## Install Globally
 
 Use this when you want the kit available in your user config.
+Either by directly accessing github:
+
+macOS / Linux:
+
+```
+apm install --global https://github.com/tom-dorofeyev/td-agentcraft-kit#main --target opencode,claude,copilot
+```
+
+Windows PowerShell:
+
+```
+apm install --global https://github.com/tom-dorofeyev/td-agentcraft-kit#main --target opencode,claude,copilot
+```
+
+Or clone locally and install after adding some custom changes:
 
 ```sh
 git clone https://github.com/tom-dorofeyev/td-agentcraft-kit td-agentcraft-kit
