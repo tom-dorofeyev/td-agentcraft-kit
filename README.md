@@ -1,27 +1,41 @@
 # td-agentcraft-kit
 
-Ready-made APM kit for Copilot, Claude, and OpenCode.
+Run the same APM workflow across Copilot, Claude, and OpenCode with one install.
 
-This repo helps you get the kit running with the least amount of setup friction.
+Best if you want a fast, reusable setup without rebuilding the same agent structure in each tool.
 
-## Start Here
+## Why Use It
 
-1. Install APM: [APM Quickstart](https://microsoft.github.io/apm/quickstart/)
-2. Pick one install path below
-3. Optional: add Telegram alerts in [docs/telegram-notifications.md](docs/telegram-notifications.md)
-
-You only need one install option.
+- One kit for Copilot, Claude, and OpenCode
+- Safer project-level install by default
+- Optional global install and Telegram notifications
 
 ## Recommended For Most People
 
-Use [docs/install-in-a-project.md](docs/install-in-a-project.md) if you want this kit in a single repository.
+Install APM once: [APM Quickstart](https://microsoft.github.io/apm/quickstart/)
 
-This is the safer default because the setup stays local to the project and is easier to change later.
+Then install this kit in the repository you are working on:
 
-## Use Global Install If You Want It Everywhere
+```sh
+cd your-project
+apm init --target opencode,claude,copilot
+apm install https://github.com/tom-dorofeyev/td-agentcraft-kit#main
+```
 
-Use [docs/install-globally.md](docs/install-globally.md) if you want the same kit available across all projects on your machine.
+This is the default recommendation because it stays local to one repo and is easier to change later.
 
-## Need More Detail?
+## Want It Available Everywhere Instead?
 
-All setup docs live in the [docs](docs) folder.
+Use the global install only if you want the same kit across all projects on your machine:
+
+```sh
+apm install --global https://github.com/tom-dorofeyev/td-agentcraft-kit#main --target opencode,claude,copilot
+```
+
+Full global setup details: [docs/install-globally.md](docs/install-globally.md)
+
+## Optional
+
+- Telegram notifications: [docs/telegram-notifications.md](docs/telegram-notifications.md)
+- Project install details: [docs/install-in-a-project.md](docs/install-in-a-project.md)
+- All docs: [docs](docs)
