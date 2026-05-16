@@ -1,6 +1,6 @@
-name: dream-team-kit
+name: td-agentcraft-kit
 version: 1.0.0
-description: APM project for dream-team-kit
+description: APM project for td-agentcraft-kit
 author: Tom Dorofeyev
 license: MIT
 # Which agent platforms to deploy to.
