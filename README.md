@@ -6,7 +6,7 @@ This repo helps you get the kit running with the least amount of setup friction.
 
 ## Start Here
 
-1. Install APM: [docs/install-apm.md](docs/install-apm.md)
+1. Install APM: [APM Quickstart](https://microsoft.github.io/apm/quickstart/)
 2. Pick one install path below
 3. Optional: add Telegram alerts in [docs/telegram-notifications.md](docs/telegram-notifications.md)
 
