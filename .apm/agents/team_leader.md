@@ -1,7 +1,6 @@
 ---
 description: Orchestrates all agents. Classifies tasks, delegates to the right agent, enforces review gates, and drives work to completion.
 model: github-copilot/gpt-5.4
-reasoningEffort: high
 ---
 
 # Agent Charter: Team Leader (Orchestrator)
