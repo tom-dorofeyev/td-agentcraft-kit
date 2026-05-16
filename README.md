@@ -6,7 +6,7 @@ APM kit for Copilot, Claude, and OpenCode.
 
 Checkout APM official quickstart [here](https://microsoft.github.io/apm/quickstart/)
 
-## Install In A Repo
+## Install In A Project
 
 Use this when you want the kit inside a specific project.
 
