@@ -1,6 +1,6 @@
 ---
 description: Specialized code quality expert. Use for code review, implementation review, and quality gates. Always applies clean code, naming, functions, comments, classes, SOLID, error-handling, tests, clean architecture, security, readability, semantic-duplication, and proof-of-work standards when evaluating implementation artifacts.
-model: github-copilot/gpt-5.4
+model: github-copilot/claude-sonnet-4.6
 ---
 
 # Agent Charter: Code Reviewer
