@@ -4,19 +4,7 @@ APM kit for Copilot, Claude, and OpenCode.
 
 ## Install APM
 
-macOS / Linux:
-
-```sh
-curl -sSL https://aka.ms/apm-unix | sh
-apm --version
-```
-
-Windows PowerShell:
-
-```powershell
-irm https://aka.ms/apm-windows | iex
-apm --version
-```
+Checkout APM official quickstart [here](https://microsoft.github.io/apm/quickstart/)
 
 ## Install In A Repo
 
