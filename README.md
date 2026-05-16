@@ -1,75 +1,112 @@
-# dream-team-kit
+# td-agentcraft-kit
 
-An APM-based agent kit for multi-agent workflows across Copilot, Claude, and OpenCode.
+APM kit for Copilot, Claude, and OpenCode.
 
-This repository packages a shared set of agents, skills, and instructions so the same working model can be deployed to multiple agent platforms from one source of truth.
+## Install APM
 
-## Install
-
-### 1. Install APM
-
-On macOS or Linux:
+macOS / Linux:
 
 ```sh
 curl -sSL https://aka.ms/apm-unix | sh
-```
-
-Verify the CLI is available:
-
-```sh
 apm --version
 ```
 
-### 2. Use this kit in another APM project
+Windows PowerShell:
 
-If you want to use this kit in your own repo, you normally do not clone this repository.
+```powershell
+irm https://aka.ms/apm-windows | iex
+apm --version
+```
 
-Instead, install it as an APM package from your target project:
+## Install In A Repo
+
+Use this when you want the kit inside a specific project.
 
 ```sh
 cd your-project
-apm init
-apm install tom-dorofeyev/td-agentcraft-kit#main
+apm init --target opencode,claude,copilot
+apm install https://github.com/tom-dorofeyev/td-agentcraft-kit#main
 ```
 
-That adds this kit to your `apm.yml`, resolves it into `apm_modules/`, and deploys its agents, skills, and instructions into the directories your AI tools read.
+## Install Globally
 
-If the GitHub repository is private, authenticate first with `gh auth login`.
+Use this when you want the kit available in your user config.
 
-## Project Purpose
+```sh
+git clone https://github.com/tom-dorofeyev/td-agentcraft-kit td-agentcraft-kit
+cd td-agentcraft-kit
+```
 
-The kit is structured around role-based agents such as:
+Then run one of these:
 
-- team leader
-- software engineer
-- software architect
-- qa engineer
-- code reviewer
-- product specialist
+macOS / Linux:
 
-It also includes workflow skills for architecture, code review, testing, escalation, investigation, and notifications.
+```sh
+apm install --global "$PWD" --target opencode,claude,copilot
+```
+
+Windows PowerShell:
+
+```powershell
+apm install --global $PWD.Path --target opencode,claude,copilot
+```
+
+Global files are deployed to:
+
+macOS / Linux:
+
+- OpenCode: `~/.config/opencode/`
+- Claude Code: `~/.claude/`
+- GitHub Copilot: `~/.copilot/`
+
+Windows PowerShell:
+
+- OpenCode: `~\.config\opencode\`
+- Claude Code: `~\.claude\`
+- GitHub Copilot: `~\.copilot\`
 
 ## Telegram Notifications
 
-This repo includes a notifier at `.apm/skills/notify/notify.mjs` that can send Telegram messages.
-
-To enable it, set these environment variables at the system level:
+Set these environment variables if you want Telegram notifications:
 
 - `TELEGRAM_TOKEN`
 - `TELEGRAM_CHAT_ID`
 
-Example for a shell-based setup:
+Current shell session:
+
+macOS / Linux:
 
 ```sh
 export TELEGRAM_TOKEN="your-telegram-bot-token"
 export TELEGRAM_CHAT_ID="your-chat-id"
 ```
 
-For persistent local setup on macOS, add those exports to your shell profile such as `~/.zshrc` or `~/.zprofile`. If your editor or agent runner is launched outside the shell session, make sure those variables are available to the process at the OS level as well.
+Windows PowerShell:
 
-## Notes
+```powershell
+$env:TELEGRAM_TOKEN="your-telegram-bot-token"
+$env:TELEGRAM_CHAT_ID="your-chat-id"
+```
 
-- `apm_modules/` is ignored by git and should remain generated/local state.
-- The repo currently keeps operational configuration in source and expects secrets to come from the environment.
-- If you add more notification providers later, follow the same pattern: read credentials from environment variables, not from committed files.
-- When `apm.yml` changes, run `apm install` again so deployed agent files stay in sync with the manifest and lockfile.
+Persist for future sessions:
+
+macOS / Linux:
+
+```sh
+printf '\nexport TELEGRAM_TOKEN="your-telegram-bot-token"\nexport TELEGRAM_CHAT_ID="your-chat-id"\n' >> ~/.zshrc
+source ~/.zshrc
+```
+
+Windows PowerShell:
+
+```powershell
+[Environment]::SetEnvironmentVariable("TELEGRAM_TOKEN", "your-telegram-bot-token", "User")
+[Environment]::SetEnvironmentVariable("TELEGRAM_CHAT_ID", "your-chat-id", "User")
+```
+
+macOS GUI apps started outside the shell may also need these in the current login session:
+
+```sh
+launchctl setenv TELEGRAM_TOKEN "your-telegram-bot-token"
+launchctl setenv TELEGRAM_CHAT_ID "your-chat-id"
+```
