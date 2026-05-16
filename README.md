@@ -1,73 +1,27 @@
 # td-agentcraft-kit
 
-APM kit for Copilot, Claude, and OpenCode.
+Ready-made APM kit for Copilot, Claude, and OpenCode.
 
-## Install APM
+This repo helps you get the kit running with the least amount of setup friction.
 
-Checkout APM official quickstart [here](https://microsoft.github.io/apm/quickstart/)
+## Start Here
 
-## Install In A Project
+1. Install APM: [docs/install-apm.md](docs/install-apm.md)
+2. Pick one install path below
+3. Optional: add Telegram alerts in [docs/telegram-notifications.md](docs/telegram-notifications.md)
 
-Use this when you want the kit inside a specific project.
+You only need one install option.
 
-```sh
-cd your-project
-apm init --target opencode,claude,copilot
-apm install https://github.com/tom-dorofeyev/td-agentcraft-kit#main
-```
+## Recommended For Most People
 
-## Install Globally
+Use [docs/install-in-a-project.md](docs/install-in-a-project.md) if you want this kit in a single repository.
 
-Use this when you want the kit available in your user config.
-Either by directly accessing github:
+This is the safer default because the setup stays local to the project and is easier to change later.
 
-macOS / Linux:
+## Use Global Install If You Want It Everywhere
 
-```
-apm install --global https://github.com/tom-dorofeyev/td-agentcraft-kit#main --target opencode,claude,copilot
-```
+Use [docs/install-globally.md](docs/install-globally.md) if you want the same kit available across all projects on your machine.
 
-Windows PowerShell:
+## Need More Detail?
 
-```
-apm install --global https://github.com/tom-dorofeyev/td-agentcraft-kit#main --target opencode,claude,copilot
-```
-
-Or clone locally and install after adding some custom changes:
-
-```sh
-git clone https://github.com/tom-dorofeyev/td-agentcraft-kit td-agentcraft-kit
-cd td-agentcraft-kit
-```
-
-Then run one of these:
-
-macOS / Linux:
-
-```sh
-apm install --global "$PWD" --target opencode,claude,copilot
-```
-
-Windows PowerShell:
-
-```powershell
-apm install --global $PWD.Path --target opencode,claude,copilot
-```
-
-Global files are deployed to:
-
-macOS / Linux:
-
-- OpenCode: `~/.config/opencode/`
-- Claude Code: `~/.claude/`
-- GitHub Copilot: `~/.copilot/`
-
-Windows PowerShell:
-
-- OpenCode: `~\.config\opencode\`
-- Claude Code: `~\.claude\`
-- GitHub Copilot: `~\.copilot\`
-
-## Telegram Notifications
-
-Telegram setup instructions live in [docs/telegram-notifications.md](docs/telegram-notifications.md).
+All setup docs live in the [docs](docs) folder.
