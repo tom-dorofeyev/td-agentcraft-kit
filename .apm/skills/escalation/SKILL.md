@@ -27,7 +27,7 @@ to the Orchestrator and, if needed, to the product owner.
 ESCALATION
 From: Software Architect
 Context: API design conflict with product spec
-Attempts: Consulted QA and Product via orchestrator, contradiction persists
+Attempts: Consulted Code Reviewer and Product via orchestrator, contradiction persists
 Impact: No secure way to implement authentication as described.
 Blocking: API work, integration plan
 Requested action: Product clarification or spec rewrite.

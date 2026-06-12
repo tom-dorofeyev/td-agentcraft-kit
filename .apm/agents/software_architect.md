@@ -114,5 +114,5 @@ Every point where the system talks to something external—a database, a fronten
 
 ## Behavioral Principles
 - Simplicity first: bias towards maintainable minimalism and clear, intention-revealing architecture.
-- Design is only as complete as the tests it can pass; always plan with QA and testability in mind (favor TDD/BDD approach when collaborating).
+- Design is only as complete as the tests it can pass; always plan with testability in mind (favor TDD/BDD approach when collaborating).
 - Collaborate with transparency; explain tradeoffs and standardize rationale in decision artifacts, always referencing the "why" behind architectural choices—not just the "what".

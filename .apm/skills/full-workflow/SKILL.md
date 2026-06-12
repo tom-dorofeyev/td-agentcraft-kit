@@ -1,6 +1,6 @@
 ---
 name: full-workflow
-description: Full multi-gate engineering workflow for features, non-trivial changes, and anything introducing new abstractions — requires QA test plan, orchestrator verification, peer code review, architecture review, and a runtime quality gate before QA verification.
+description: Full multi-gate engineering workflow for features, non-trivial changes, and anything introducing new abstractions — requires a pre-implementation verification plan, orchestrator verification, peer code review, architecture review, and a final runtime quality gate.
 ---
 
 # Full Workflow
@@ -15,22 +15,22 @@ The goal is **continuous forward progress**, not stopping after each slice. Micr
 - Keep the slice scoped to the current task. Do not pull unrelated files, unrelated refactors, or opportunistic cleanups into the slice. If unrelated changes are discovered, leave them out of the slice and continue with only task-relevant work.
 - Plan work in **micro-slices**: the smallest independently shippable unit that produces a verifiable behavior change. If a slice takes more than one Engineering agent call to implement, it is too large — split it.
 - **Keep working**: after one slice reaches `done`, re-assess the remaining plan, then immediately start the next slice. Never wait for user input between slices unless re-assessment produces a plan change that requires a Product Specialist consult.
-- A slice must reach `done` before work on the next slice begins — never work on two slices in parallel, and never start a new slice while the current one is still in review or QA.
+- A slice must reach `done` before work on the next slice begins — never work on two slices in parallel, and never start a new slice while the current one is still in review or verification.
 - Never batch many unfinished changes waiting for one large final review; this is explicitly disallowed.
-- Every handoff must identify slice id/status: `pending`, `in-review`, `qa-verifying`, or `done`.
-- Each completed slice must be captured in its own git commit on the task branch after it passes all gates and QA verification. Do not leave a `done` slice uncommitted, and do not bundle multiple slices into one commit.
+- Every handoff must identify slice id/status: `pending`, `in-review`, `verifying`, or `done`.
+- Each completed slice must be captured in its own git commit on the task branch after it passes all gates and final verification. Do not leave a `done` slice uncommitted, and do not bundle multiple slices into one commit.
 - Before each slice commit, verify that the committed diff contains only task-relevant changes. Exclude unrelated files and unrelated edits even if they are present in the branch or working tree.
 - **If interrupted at any point**, the last `done` slice represents the safe, working state of the codebase. Incomplete slices in progress are discarded or rolled back — only completed slices count.
 
 ## Mandatory Review Gates (in order)
 
-Implementation must pass **all five** gates before reaching QA.
+Implementation must pass **all five** gates before a slice can be marked done.
 
-### Gate 1 — QA Test Plan Approved (QA Engineer, before implementation begins)
+### Gate 1 — Verification Plan On File (Software Engineer, before implementation begins)
 
-- Before any implementation starts, route the spec + architecture design to the **QA Engineer** to produce a test plan and acceptance criteria.
-- The test plan must cover: happy paths, edge cases, negative paths, and regression scope.
-- Implementation does not begin until the test plan is approved by the Orchestrator.
+- Before any implementation starts, route the spec + architecture design to the **Software Engineer** to produce a concise verification plan and proof-of-work outline.
+- The verification plan must cover: happy paths, edge cases, negative paths, and regression scope.
+- Implementation does not begin until the verification plan is approved by the Orchestrator.
 - Purpose: the engineer must know *what proof of work is required* before writing a single line of code. Without this, "proof of work" is undefined and peer review becomes subjective.
 
 ### Gate 2 — Orchestrator Verification (Team Leader)
@@ -55,7 +55,7 @@ Implementation must pass **all five** gates before reaching QA.
 
 ### Gate 5 — Runtime Quality Gate (Orchestrator, mandatory before cycle close)
 
-This gate is executed by the orchestrator — not delegated to any agent — immediately after Gate 4 is approved and before the slice is handed to QA. Its purpose is to independently verify that the codebase is still in a working state, using hard evidence from real commands. Agent claims of "it works", "tests pass", or "build succeeded" are **not accepted as evidence** — the orchestrator must run the commands itself and observe the output.
+This gate is executed by the orchestrator — not delegated to any agent — immediately after Gate 4 is approved and before the slice is marked done. Its purpose is to independently verify that the codebase is still in a working state, using hard evidence from real commands. Agent claims of "it works", "tests pass", or "build succeeded" are **not accepted as evidence** — the orchestrator must run the commands itself and observe the output.
 
 Verification steps (run in order, stop and reject on first failure):
 
@@ -71,7 +71,7 @@ On failure:
 
 On success:
 - Attach the command output as proof to the slice record.
-- Hand off to QA verification with only a concise verification summary; keep the raw logs in the slice record unless QA explicitly needs a failure trace.
+- Mark the slice ready to close with a concise verification summary; keep the raw logs in the slice record.
 
 > **Trust policy**: agents are expected to be honest, but mistakes happen. Gate 4 exists precisely because an agent may genuinely believe it succeeded yet the code is still broken. The orchestrator does not assume bad faith — but it also does not assume correctness. Real command output is the only acceptable proof.
 
@@ -104,12 +104,11 @@ A slice is only marked done when **all** of the following are true:
 
 - Behavior for that slice is implemented and demonstrable.
 - **Proof of work exists and is verified by the Team Leader**: automated tests (unit, integration, or e2e) are written, executed, and pass — covering happy path, edge cases, and negative paths. This is the default expectation. When automated tests are genuinely impractical, an explicit documented alternative must be provided and verified. A slice with no verification evidence on record is not done, regardless of any other approval.
-- Gate 1 approved (QA test plan on file before implementation began).
+- Gate 1 approved (verification plan on file before implementation began).
 - Gate 2 approved.
 - Gate 3 approved.
 - Gate 4 approved.
 - Gate 5 passed (build succeeds and the full test suite passes — with raw command output attached as proof).
-- QA verification passed for that slice.
 - A dedicated commit for that slice exists on the task branch so the workflow can safely revert to the last known-good slice boundary if later work goes wrong.
 
 > **Proof-of-Work Policy**: Code that arrives at any review gate with no Team Leader verification summary is rejected immediately and routed back to the engineer. Automated tests are the strong default — any exception must be explicitly justified and documented, not silently omitted.

@@ -9,7 +9,7 @@ description: Defines a structured process for creating thorough, traceable test 
 Aims to systematize the creation of robust, detailed, and clear test plans for every meaningful artifact. Guarantees that every requirement, design, or implementation can be objectively and reliably validated.
 
 ## Application
-- QA starts a test plan before code/implementation for each new spec/design/feature.
+- The Team Leader or implementing engineer starts a test plan before code/implementation for each new spec/design/feature.
 - Test artifacts follow a structured format: what is tested, methodology, expected outcome, edge/negative cases.
 - Test owners and approval history are tracked.
 
@@ -20,7 +20,7 @@ Aims to systematize the creation of robust, detailed, and clear test plans for e
 
 ## Robustness Protocols
 - Updates to test plans require versioning/history.
-- Every deployed feature requires QA sign-off linked to test plan.
+- Every deployed feature requires Team Leader sign-off linked to the recorded verification plan.
 
 ## Example Test Plan Structure
 ```

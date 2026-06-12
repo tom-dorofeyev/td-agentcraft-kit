@@ -24,9 +24,9 @@ Gives all agents a standard way to raise, document, and track clarifying questio
 ## Example Question Format
 ```
 QUESTION #17
-From: QA Engineer
+From: Team Leader
 Context: New onboarding flow - missing error handling requirement
 Detail: Should a user be redirected or shown an error page if email verification fails?
 Blocking: Test plan for onboarding
-Required for: QA acceptance criteria.
+Required for: acceptance criteria and verification plan.
 ```

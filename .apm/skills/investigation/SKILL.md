@@ -37,7 +37,7 @@ Choose the narrowest capable delegate first:
 | Question Type | Delegate To | Expected Output |
 |---|---|---|
 | Existing code behavior, architecture, dependency flow, integration points, root-cause hypothesis | **Software Architect** | Explanation with file references, constraints, and recommended interpretation |
-| Test coverage, acceptance scope, regression risk, reproducibility, verification gaps | **QA Engineer** | Coverage/risk assessment with referenced tests or missing cases |
+| Test coverage, acceptance scope, regression risk, reproducibility, verification gaps | **Code Reviewer** | Coverage/risk assessment with referenced tests or missing cases |
 | Code quality risk, review of a suspicious implementation, likely bug patterns, non-obvious correctness concerns | **Code Reviewer** | Findings-first review with severity and file references |
 | Business intent or expected user-facing behavior when the request is fundamentally product-facing rather than technical | **Product Specialist** | Clarified product explanation grounded in user outcomes |
 

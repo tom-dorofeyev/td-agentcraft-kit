@@ -29,7 +29,7 @@ The layout is split into three parts:
 
 ## What Ships In This Kit
 
-The agent layer includes dedicated roles for product, engineering, deterministic review, judgment-based review, architecture, QA, and orchestration.
+The agent layer includes dedicated roles for product, engineering, deterministic review, judgment-based review, architecture, and orchestration.
 
 The skills layer includes reusable modules for areas such as:
 

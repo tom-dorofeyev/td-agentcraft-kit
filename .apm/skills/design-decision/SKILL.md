@@ -6,7 +6,7 @@ description: Ensures technical decisions include explicit rationale, trade-offs,
 # SKILL: Design Decision
 
 ## Purpose & Scope
-Forces every technical or design artifact to be accompanied by clear, deliberate rationale and explicit trade-off commentary. Rationale should reference Clean Code, SOLID, YAGNI, and team standards wherever possible. Ensures downstream agents (QA, Product) can understand, evaluate, and question every major decision, always including both "what" and "why."
+Forces every technical or design artifact to be accompanied by clear, deliberate rationale and explicit trade-off commentary. Rationale should reference Clean Code, SOLID, YAGNI, and team standards wherever possible. Ensures downstream agents and stakeholders can understand, evaluate, and question every major decision, always including both "what" and "why."
 
 ## Application
 - Attach a "Decision Record" section to every relevant architectural doc, interface, or design proposal.

@@ -1,6 +1,6 @@
 ---
 name: fast-path
-description: Lightweight workflow for low-risk, isolated changes (≤ 3 files, no new abstractions): engineer implements, the Team Leader verifies measurable checks first, reviewer evaluates judgment-based concerns, QA spot-checks.
+description: Lightweight workflow for low-risk, isolated changes (≤ 3 files, no new abstractions): engineer implements, the Team Leader verifies measurable checks first, reviewer evaluates judgment-based concerns, and the Team Leader closes the slice.
 ---
 
 # Fast Path Workflow
@@ -23,7 +23,7 @@ If any item is false, this workflow does not apply. Return to the team leader to
 | 1 | Software Engineer | Implement the change + self-review checklist with concise verification notes |
 | 2 | Team Leader | Run measurable checks first and fail fast on build, test, static-analysis, or coverage issues |
 | 3 | Code Reviewer | Review the implementation artifact and return an approval or rejection |
-| 4 | QA Engineer | Spot-check against stated intent and existing acceptance criteria |
+| 4 | Team Leader | Confirm the change satisfies stated intent and close the slice |
 
 ## Self-Review Checklist (Software Engineer)
 
@@ -39,12 +39,12 @@ The engineer must complete all of the following before submitting:
 
 A fast-path slice with no Team Leader-verifiable proof on record is **not done** and is rejected immediately.
 
-## QA Spot-Check (QA Engineer)
+## Final Intent Check (Team Leader)
 
-The QA Engineer verifies:
+The Team Leader verifies:
 
 - The change satisfies its stated intent.
 - No obvious regressions in adjacent behavior.
 - The Team Leader verification summary shows zero failures for the required measurable checks.
 
-QA does not re-run a full test plan — this is a targeted spot-check only.
+This is a targeted close-out check only; it does not introduce a separate downstream agent or full test-plan pass.
