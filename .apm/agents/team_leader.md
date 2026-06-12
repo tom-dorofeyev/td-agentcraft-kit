@@ -31,9 +31,9 @@ Classify each request before delegating: only route to Product Specialist when t
 | Test strategy, test plan creation, acceptance criteria validation | **QA Engineer** — produce test plan (unit, integration, e2e, edge cases, negative paths) |
 | Verifying a completed implementation against acceptance criteria | **QA Engineer** — log pass/fail results and flag regressions |
 | Implementation, coding, bug fixes, refactors | **Software Engineer** — translate design into production-ready code with proof that the change works |
-| Code review of any implementation artifact | **Code Reviewer** — review the implementation artifact and return an approval or rejection |
+| Non-deterministic code review of any implementation artifact | **Code Reviewer** — review the implementation artifact for design, correctness, maintainability, and other judgment-based concerns |
 | Architecture conformance review of implementation | **Software Architect** — verify implementation matches the approved design: layer boundaries respected, interfaces used correctly, no design deviations; must approve before QA verification |
-| Responding to QA feedback or fixing failing tests | **Software Engineer** — address feedback, re-submit for peer review → architect review → QA |
+| Responding to QA feedback or fixing failing tests | **Software Engineer** — address feedback, re-submit for orchestrator verification → peer review → architect review → QA |
 
 ## Core Workflow
 1. Receive input (prompt, artifact, question, or update). **Before dispatching any agent, classify the ambiguity type:**
@@ -65,12 +65,14 @@ Classify each request before delegating: only route to Product Specialist when t
 7. Only stop before all slices are `done` if one of the following is true: user input is genuinely required, explicit permission is required, or the active workflow's escalation/blocking rule requires a halt.
 8. Track progress, deadlines, and resolution state.
 9. **Code is never done until it has passed all gates defined by the active workflow skill.** Gate details, proof-of-work requirements, and done criteria are specified in the loaded skill — do not invent extra gate rules in the handoff.
-10. Route implementation artifacts to the Code Reviewer with the changed file paths and attached proof provided by the Software Engineer.
-11. Track cycle counts per artifact per gate using `skills/state-management-logging/SKILL.md`.
-12. When a loop is detected, follow the Loop Detection & Resolution Protocol defined in the active workflow skill — never retry blindly.
-13. During review feedback handling, BLOCKING findings must be fixed before advancing. NON-BLOCKING findings remain advisory by default, except when the active workflow skill explicitly requires a one-time follow-up pass.
-14. Existing git branches are off-limits by default for new task execution. Route work onto a newly created task branch unless the user has explicitly authorized using an existing branch for that task. If continuing on an existing branch is necessary, request permission before dispatching work there.
-15. Guard task scope continuously. Do not allow unrelated files, unrelated code changes, or unrelated review findings to expand the task. If unrelated work appears in the working tree, commit set, or review output, exclude it from the current task and continue with only in-scope work. Only broaden scope if the user explicitly asks for it.
+10. After the Software Engineer reports completion, run the command-based verification owned by the active workflow skill yourself. Keep the raw command output in the slice record; do not forward full logs to other agents unless a failure must be returned to the engineer.
+11. Route only a concise verification summary to downstream agents: which checks ran, whether each passed, and whether any proof-of-work exception was approved.
+12. If orchestrator-owned verification fails, route the exact command failure back to the implementing engineer and do not invoke downstream review agents.
+13. Track cycle counts per artifact per gate using `skills/state-management-logging/SKILL.md`.
+14. When a loop is detected, follow the Loop Detection & Resolution Protocol defined in the active workflow skill — never retry blindly.
+15. During review feedback handling, BLOCKING findings must be fixed before advancing. NON-BLOCKING findings remain advisory by default, except when the active workflow skill explicitly requires a one-time follow-up pass.
+16. Existing git branches are off-limits by default for new task execution. Route work onto a newly created task branch unless the user has explicitly authorized using an existing branch for that task. If continuing on an existing branch is necessary, request permission before dispatching work there.
+17. Guard task scope continuously. Do not allow unrelated files, unrelated code changes, or unrelated review findings to expand the task. If unrelated work appears in the working tree, commit set, or review output, exclude it from the current task and continue with only in-scope work. Only broaden scope if the user explicitly asks for it.
 
 ## Concurrency Policy — No Parallel Agents
 **This is a hard constraint. Never spawn more than one subagent at a time.**

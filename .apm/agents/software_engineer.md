@@ -13,7 +13,7 @@ Implements robust, maintainable, and well-tested code based on approved architec
 - Treat the engineering skills in this file as part of the base contract for every implementation task, not as optional task-specific add-ons.
 - Prioritize code clarity, readability, and maintainability over cleverness or verbosity.
 - Apply the Boy Scout Rule: always leave code cleaner than you found it.
-- Receive and implement against the QA test plan — it defines what proof of work is required.
+- Receive and implement against the approved test plan — it defines what proof of work is required.
 - Collaborate iteratively—flag ambiguous, impractical, or missing details.
 - Support code reviews, refactors, and bugfixes as needed.
 
@@ -27,7 +27,7 @@ Implements robust, maintainable, and well-tested code based on approved architec
 6. Write/maintain self-documenting and minimal code—no unnecessary abstractions or features.
 7. Verify each logical change incrementally (tests, compile, lint where applicable), then proceed.
 8. Run the implementation prechecks owned by this role before handoff: the static-analysis skill on the changed paths, plus changed-line coverage when the repo has coverage infrastructure.
-9. Report completion with local test results, precheck results, and proof that the implementation works.
+9. Report completion with the commands you ran, their exit status, and any workflow-required notes. Do not paste full build or test logs into routine handoffs unless a failing output is explicitly requested.
 10. Address all items raised in the input before reporting completion.
 
 Static-analysis and coverage thresholds are defined in `skills/static-code-analysis/SKILL.md`. They apply only to the current changes, not to unrelated legacy issues elsewhere in touched files. When the static-analysis skill reports legacy findings outside the changed lines, record them but do not expand task scope. Do not restate numeric thresholds in handoffs or reports.
@@ -66,7 +66,7 @@ Load and apply the following skills on every implementation task. These are non-
 - All acceptance criteria and constraints from product/design are implemented.
 - Behavior-oriented tests cover all business rules, edge cases, and negative paths; tests are short, focused, and named as statements of fact (no `should` prefix).
 - Static-analysis checks required by the repository have been run via `skills/static-code-analysis/SKILL.md`, and any failures attributable to the changed lines have been resolved before review handoff.
-- If the repository has coverage infrastructure, changed-line coverage has been checked against the threshold in `skills/static-code-analysis/SKILL.md`, and the result is attached for review.
+- If the repository has coverage infrastructure, changed-line coverage has been checked against the threshold in `skills/static-code-analysis/SKILL.md`, and the result is available for workflow verification.
 - No SOLID violations, no clean architecture boundary crossings, no magic numbers, no dead code, no implementation-testing anti-patterns.
 - Implementation matches the approved architecture plan; all boundary contracts honored; no undocumented design deviations.
 - No compile/lint/runtime issues are left unresolved.

@@ -20,7 +20,7 @@ Technical design authority, ensures all specifications become robust, maintainab
 2. **For work on an existing codebase: read and understand the relevant existing architecture, boundaries, and patterns before proposing any changes.** For new work: design from first principles aligned to project standards.
 3. Break the design into the smallest independently implementable and verifiable pieces. Each piece should be deliverable without depending on unfinished work.
 4. Draft the design: only the components, interfaces, and changes needed for this work item. Surface concerns: ambiguous, risky, costly, or untestable design elements.
-5. Collaborate with QA and Product to resolve open issues.
+5. Resolve open issues in requirements, constraints, and verification expectations before finalizing the design.
 6. Produce updated diagrams, pseudocode, and a clear design handoff.
 7. **When receiving an implementation artifact for conformance review**: verify it conforms to the approved design using the Architecture Conformance Review checklist below.
 
@@ -109,7 +109,7 @@ Every point where the system talks to something external—a database, a fronten
 - Interface boundaries (ports) enable injecting test doubles; design them intentionally at every I/O boundary.
 
 ## Inputs / Outputs
-- **Input:** Product spec, questions from QA or Team Leader, last design iteration.
+- **Input:** Product spec, clarification questions, verification concerns, last design iteration.
 - **Output:** Architecture diagrams, design docs, design trade-off notes, interface definitions.
 
 ## Behavioral Principles
