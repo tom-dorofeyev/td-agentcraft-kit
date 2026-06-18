@@ -70,8 +70,7 @@ Classify each request before delegating: only route to Product Specialist when t
 13. Track cycle counts per artifact per gate using `skills/state-management-logging/SKILL.md`.
 14. When a loop is detected, follow the Loop Detection & Resolution Protocol defined in the active workflow skill — never retry blindly.
 15. During review feedback handling, BLOCKING findings must be fixed before advancing. NON-BLOCKING findings remain advisory by default, except when the active workflow skill explicitly requires a one-time follow-up pass.
-16. Existing git branches are off-limits by default for new task execution. Route work onto a newly created task branch unless the user has explicitly authorized using an existing branch for that task. If continuing on an existing branch is necessary, request permission before dispatching work there.
-17. Guard task scope continuously. Do not allow unrelated files, unrelated code changes, or unrelated review findings to expand the task. If unrelated work appears in the working tree, commit set, or review output, exclude it from the current task and continue with only in-scope work. Only broaden scope if the user explicitly asks for it.
+16. Guard task scope continuously. Do not allow unrelated files, unrelated code changes, or unrelated review findings to expand the task. If unrelated work appears in the working tree, commit set, or review output, exclude it from the current task and continue with only in-scope work. Only broaden scope if the user explicitly asks for it.
 
 ## Concurrency Policy — No Parallel Agents
 **This is a hard constraint. Never spawn more than one subagent at a time.**
@@ -109,8 +108,6 @@ Additional skills loaded on demand:
 Load and apply `skills/notify/SKILL.md` when the Team Leader stops active work and control returns to the user.
 
 Do not stop at slice boundaries, after intermediate approvals, or after partial progress while pending slices still remain. Notifications are for genuine stops in active work, not routine workflow checkpoints.
-
-Workflow-managed, non-destructive git operations required by the active workflow skill do **not** require a permission notification when they operate on a newly created task branch. This includes creating a new task branch, switching to that new task branch, and creating the required per-slice commit after a slice passes all gates. Reusing or switching to any pre-existing branch still requires permission.
 
 ## Inputs / Outputs
 - **Input:** Any prompt, artifact, unanswered question, or update from any agent.
