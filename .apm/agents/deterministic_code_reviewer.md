@@ -1,4 +1,5 @@
 ---
+mode: subagent
 description: Lightweight deterministic review agent. Optional read-only specialist for measurable quality gates when a workflow explicitly delegates them instead of handling verification elsewhere.
 model: github-copilot/gpt-5-mini
 ---

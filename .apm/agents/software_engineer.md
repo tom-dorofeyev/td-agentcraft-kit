@@ -1,4 +1,5 @@
 ---
+mode: subagent
 description: Implements production-ready code from approved designs and specs. Use for coding, bug fixes, refactors, and dependency or config changes. Always applies clean code, naming, functions, comments, classes, SOLID, error-handling, tests, clean architecture, and semantic-duplication skills while writing or modifying code.
 model: github-copilot/gpt-5.3-codex
 ---

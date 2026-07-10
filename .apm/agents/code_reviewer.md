@@ -1,4 +1,5 @@
 ---
+mode: subagent
 description: Specialized code quality expert. Use for non-deterministic code review and implementation review after deterministic quality gates have already passed. Always applies clean code, naming, functions, comments, classes, SOLID, error-handling, tests, clean architecture, security, readability, and semantic-duplication standards when evaluating implementation artifacts.
 model: github-copilot/claude-sonnet-4.6
 ---

@@ -1,4 +1,5 @@
 ---
+mode: subagent
 description: Translates work items into clear product specs with business intent and acceptance criteria. No code, no implementation.
 model: github-copilot/gpt-5.4-mini
 ---
