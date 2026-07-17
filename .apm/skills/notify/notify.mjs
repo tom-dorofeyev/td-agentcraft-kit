@@ -1,3 +1,5 @@
+import { execSync } from "node:child_process";
+
 const [, , ...args] = process.argv;
 const message = args.join(" ");
 
@@ -9,11 +11,55 @@ if (!message) {
 await notify(message);
 
 async function notify(text) {
-  const providers = [sendTelegramMessage];
+  const providers = [sendOsNotification, sendTelegramMessage];
 
   for (const send of providers) {
-    const sent = await send(text);
-    if (sent) return;
+    await send(text);
+  }
+}
+
+function sendOsNotification(text) {
+  if (process.platform === "darwin") {
+    return sendMacNotification(text);
+  }
+  if (process.platform === "win32") {
+    return sendWindowsNotification(text);
+  }
+  return false;
+}
+
+function sendMacNotification(text) {
+  const escaped = text.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+  try {
+    execSync(`osascript -e 'display notification "${escaped}" with title "td-agentcraft-kit" sound name "default"'`, {
+      stdio: "ignore",
+    });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function sendWindowsNotification(text) {
+  const escaped = text.replace(/'/g, "''");
+  const psCommand = `
+    [Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime] | Out-Null;
+    $template = [Windows.UI.Notifications.ToastNotificationManager]::GetTemplateContent([Windows.UI.Notifications.ToastTemplateType]::ToastText01);
+    $template.GetElementsByTagName('text')[0].AppendChild($template.CreateTextNode('${escaped}')) | Out-Null;
+    $audio = $template.CreateElement('audio');
+    $audio.SetAttribute('src', 'ms-winsoundevent:Notification.Default');
+    $template.DocumentElement.AppendChild($audio) | Out-Null;
+    $toast = [Windows.UI.Notifications.ToastNotification]::new($template);
+    [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier('td-agentcraft-kit').Show($toast);
+  `.replace(/\n\s*/g, " ").trim();
+  try {
+    execSync(`powershell -Command "${psCommand.replace(/"/g, '\\"')}"`, {
+      stdio: "ignore",
+      timeout: 5000,
+    });
+    return true;
+  } catch {
+    return false;
   }
 }
 
