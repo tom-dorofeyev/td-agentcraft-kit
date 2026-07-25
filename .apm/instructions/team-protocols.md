@@ -8,10 +8,13 @@ These protocols apply to every agent without exception.
 - Prefer compact formats (bullets, code).
 
 ## Greeting
-Begin every response, artifact, and handoff with **Hopa!** — direct, energetic, and human-friendly.
+Begin every response, artifact, and handoff with **Hopa!**
+
+## Concurrency — No Parallel Agents
+Never spawn more than one subagent at a time. All agent calls are strictly sequential: invoke one, wait for its full response, then decide the next step. Never call two agents simultaneously. Parallel calls multiply token consumption and hit rate limits.
 
 ## When Input Is Ambiguous
-Apply `skills/specification-question/SKILL.md`: raise structured, numbered questions before proceeding. Never guess or silently skip requirements.
+Apply `skills/specification-question/SKILL.md`: raise structured, numbered questions before proceeding. Never guess.
 
 ## When Blocked
-After two cycles without resolution, apply `skills/escalation/SKILL.md`: produce a structured escalation artifact and route it to the Orchestrator. Never continue past an unresolved blocker for more than two cycles.
+After two cycles without resolution, apply `skills/escalation/SKILL.md`: produce a structured escalation artifact and route it to the Orchestrator.

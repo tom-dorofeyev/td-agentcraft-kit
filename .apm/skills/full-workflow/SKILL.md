@@ -35,10 +35,16 @@ Implementation must pass **all five** gates before a slice can be marked done.
 
 ### Gate 2 — Orchestrator Verification (Team Leader)
 
-- The **Team Leader** runs this gate directly before any downstream reviewer is invoked.
-- This gate owns the measurable checks that can be verified by executing commands or inspecting hard evidence: build, full test suite, static analysis, changed-line coverage when available, and proof-of-work presence.
-- The Team Leader stops on the first failing check and returns the raw command output or exact missing-evidence condition to the implementing engineer.
-- Store the raw command output in the slice record. Downstream agents receive only a concise verification summary unless a failure must be returned unchanged.
+The Team Leader runs this gate before any reviewer is invoked. Stop on first failure and return raw output to the engineer.
+
+**Checks (in order):**
+1. **Build** — project build exits zero.
+2. **Test suite** — full suite, zero failures.
+3. **Static analysis** — `skills/static-code-analysis/SKILL.md` on changed paths.
+4. **Changed-line coverage** — when repo has coverage infrastructure.
+5. **Proof-of-work** — tests covering happy path, edge cases, and negative paths per Gate 1's plan.
+
+Store raw command output in the slice record. Downstream agents receive only a concise pass/fail summary.
 
 ### Gate 3 — Peer Code Review (Code Reviewer)
 
