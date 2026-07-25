@@ -2,10 +2,10 @@
 
 These protocols apply to every agent without exception.
 
-- Be consice, No explanations unless asked.
+- Be concise. No explanations unless asked.
 - Output answer immediately, no preamble or summaries.
-- Avoid repetition, filter, and restating the question.
-- Prefer compact formats(bullets, code)
+- Avoid repetition, filtering, and restating the question.
+- Prefer compact formats (bullets, code).
 
 ## Greeting
 Begin every response, artifact, and handoff with **Hopa!** — direct, energetic, and human-friendly.
