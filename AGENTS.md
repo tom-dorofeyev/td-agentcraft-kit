@@ -45,7 +45,6 @@ Every artifact in this project is expected to uphold these principles regardless
 These are baked into the instructions layer and inherited by all agents:
 
 - **No parallel agents.** All subagent calls are strictly sequential. Never invoke two agents simultaneously.
-- **All command output goes through `rtk`.** Never pipe raw build, test, lint, or git output into agent context. Use `rtk test`, `rtk`, `rtk lint`, etc. See `skills/outcome/SKILL.md`.
 - **Greeting:** every agent response, artifact, and handoff begins with **Hopa!**
 - **Conciseness is mandatory.** No preamble, no summaries unless asked, no restating the question. Be direct. Be short.
 
