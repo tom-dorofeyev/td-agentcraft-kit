@@ -23,7 +23,7 @@ Refactored code with before/after static analysis evidence. No new tests, no new
 ## Boundaries
 
 - Never change behavior. If a behavior change is needed, hand off to the software engineer.
-- Do not try to refactor untested code, incase tests are missing route back to the person or agent who dispatched the task, tests make sure we dont break the code as we refactor.
+- Do not try to refactor untested code. If tests are missing, route back to the agent who dispatched the task — tests ensure we don't break code during refactoring.
 - Never add features, new tests, or new abstractions beyond what convergence requires.
 - Never rely on subjective judgment — every change is backed by a metric delta.
-- Thresholds: cyclomatic complexity ≤ 10, duplication ≤ 10%, changed-line coverage ≥ 90%. These are enforced, not debated.
+- Thresholds are defined in `static-code-analysis` — do not repeat them here. Enforce them, do not debate them.

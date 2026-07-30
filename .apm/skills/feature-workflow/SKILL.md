@@ -54,7 +54,7 @@ Steps 1–2 run once and produce a locked spec + design. Step 3 loops until the 
 
 1. **Software Engineer** — implement or fix based on reviewer findings from the previous cycle. On cycle 1, implement from scratch per the design.
 2. **Code Reviewer** — review against the spec, design, and quality standards. Output findings categorized as **blocking**, **high**, **medium**, **low**.
-3. **Refactorer** — run static analysis. Enforce complexity ≤ 10, duplication ≤ 10%, coverage ≥ 90%. Produce before/after metric evidence.
+3. **Refactorer** — run static analysis per `static-code-analysis`. Enforce all thresholds. Produce before/after metric evidence.
 
 **Loop rules:**
 
@@ -67,9 +67,7 @@ Steps 1–2 run once and produce a locked spec + design. Step 3 loops until the 
 
 **Exit conditions (all must be true):**
 - No blocking review findings remaining.
-- Cyclomatic complexity ≤ 10 on changed lines.
-- Duplication ≤ 10% on changed lines.
-- Changed-line coverage ≥ 90%.
+- All metric thresholds pass per `static-code-analysis` (complexity, duplication, coverage).
 
 **Loop cap:** Maximum 5 cycles. If blocking issues or metric violations remain after cycle 5, escalate — do not loop further.
 

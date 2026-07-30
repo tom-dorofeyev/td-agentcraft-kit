@@ -75,6 +75,6 @@ An investigation is complete when all of the following are true:
 
 ## Escalation
 
-If the investigation cannot proceed because the question is fundamentally ambiguous, use `skills/specification-question/SKILL.md` to ask one structured clarification batch.
+If the investigation cannot proceed because the question is fundamentally ambiguous, ask the user one structured batch of clarifying questions. Never guess.
 
-If two investigation handoffs still do not resolve the answer, use `skills/escalation/SKILL.md` and return a blocked investigation summary to the orchestrator.
+If two investigation handoffs still do not resolve the answer, produce a blocked investigation summary and route it to the orchestrator.

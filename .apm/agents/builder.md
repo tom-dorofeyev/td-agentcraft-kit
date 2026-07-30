@@ -29,4 +29,3 @@ Working, tested, production-grade code. No narrative.
 - Names: intention-revealing, unambiguous, pronounceable.
 - Error handling: robust, never swallow exceptions, no null returns.
 - Classes: high cohesion, single responsibility, small interfaces.
-- Detect and eliminate semantic duplication, not just copy-paste.
