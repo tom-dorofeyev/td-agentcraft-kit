@@ -35,9 +35,9 @@ The user interacts directly with 3 exposed agents:
 
 | Agent | Role |
 |---|---|
-| **Agent** | Small, low-context tasks — ≤3 files, no abstractions, quick fixes, read-only questions |
-| **Planner** | Planning phase — generates approved PRD (Epics, User Stories, Gherkin tests) and Architecture doc (HLD + LLD) |
-| **Implementer** | Execution phase — AFK code-review-refactor loop until all acceptance tests pass |
+| **Agent** | Default assistant — a helpful, precise, efficient AI coding assistant for everyday work |
+| **Planner** | Planning phase — produces approved docs scaled to scope: lightweight spec, full PRD + Architecture, or phased MVP rollout |
+| **Implementer** | Execution phase — AFK implementation loop adapted to plan depth, until all acceptance criteria pass |
 
 ### Subagents (internal, `mode: subagent`)
 
@@ -46,17 +46,17 @@ Exposed agents delegate specialist work to 6 subagents:
 | Subagent | Called By | Purpose |
 |---|---|---|
 | product-specialist | Planner | Product specs with Gherkin acceptance criteria |
-| architect | Planner | HLD + LLD architectural design |
+| architect | Planner | HLD + LLD architectural design (conceptual, no code) |
 | builder | Implementer | Production code implementation |
 | code-reviewer | Implementer | Quality, correctness, and security review |
 | refactorer | Implementer | Complexity/duplication reduction, metric enforcement |
-| investigator | Any | Read-only codebase investigation |
+| investigator | Planner, Implementer | Read-only codebase investigation |
 
 ## Workflow
 
-1. **Small tasks** → Agent handles directly.
-2. **Features / non-trivial changes** → Planner produces approved PRD + Architecture docs, then Implementer runs the AFK loop.
-3. **Investigation** → Investigator subagent answers read-only questions.
+1. **Everyday tasks** → Agent (default assistant).
+2. **Anything needing planning** → Planner produces approved docs (depth scales with scope), then Implementer runs the AFK loop.
+3. **Massive scope** → Planner scopes to MVP phases. Implementer runs per phase. Planner loops back for next phase.
 
 ## What Ships In This Kit
 

@@ -33,9 +33,9 @@ Agents and skills use YAML frontmatter for metadata. Exposed agents have no `mod
 
 | Agent | Role | When to Use |
 |---|---|---|
-| **Agent** | Small, low-context tasks | ≤3 files, no new abstractions, low-risk changes, read-only questions |
-| **Planner** | Requirements + architecture planning | New features, non-trivial changes, anything needing user-approved planning docs |
-| **Implementer** | AFK implementation loop | Executing approved plans — code-review-refactor until acceptance tests pass |
+| **Agent** | Default assistant | Everyday coding tasks, questions, simple changes — the one-liner passthrough |
+| **Planner** | Scope-scaled planning | Any task needing planning: lightweight spec for small changes, full PRD + Architecture for features, phased MVP for platforms |
+| **Implementer** | AFK implementation loop | Executing approved plans — adapts to plan depth, runs until acceptance criteria pass |
 
 ## Subagents
 
@@ -72,11 +72,13 @@ These are baked into the instructions layer and inherited by all agents:
 
 ## Workflow Overview
 
-The kit supports three execution paths:
+The kit supports three execution paths based on scope. The Planner handles all scopes — plan depth scales, not whether to plan.
 
-- **Agent (Fast Path)** — ≤3 files, no new abstractions, low-risk changes. Direct implementation, no planning overhead.
-- **Planner → Implementer (Full Workflow)** — Features, architectural changes, multi-file refactors. Planner produces approved PRD + Architecture documents, then Implementer runs the AFK code-review-refactor loop until all Gherkin acceptance tests pass.
-- **Investigation** — Read-only question answering via the investigator subagent. No code changes.
+| Scope | Signal | Path |
+|---|---|---|
+| **Small** | A change bigger than a one-liner but not a full feature | **Planner → Implementer** — lightweight spec, then direct implementation + review |
+| **Medium** | New feature, cross-cutting change, new abstraction | **Planner → Implementer** — full PRD + Architecture, then AFK loop until Gherkin tests pass |
+| **Large** | Entire application, "create an X" | **Planner → Implementer → Planner → ...** — MVP scoped into phases, each phase through the full workflow, loop back for next phase |
 
 Gate enforcement is strict. A task is not "done" until every applicable gate has passed and the evidence has been recorded. Build must succeed. Full test suite must pass. No exceptions.
 
