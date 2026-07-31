@@ -24,9 +24,10 @@ Every step requires user confirmation before advancing. Never proceed without ex
 
 ## Phase 2 — Architecture Design
 
-1. After PRD is approved, delegate to the **architect** subagent. Pass the approved PRD and instruct it to produce an Architectural Design Document containing:
-   - **High-Level Design** — module boundaries, system components, data flow, dependency direction, technology choices
-   - **Low-Level Design** — interface contracts, component responsibilities, cross-boundary data structures, key abstractions
+1. After PRD is approved, delegate to the **architect** subagent. Pass the approved PRD and instruct it to produce a conceptual Architectural Design Document — no code, no pseudo-code:
+   - **High-Level Design** — system components, responsibilities (one sentence each), dependency direction, conceptual data flow
+   - **Low-Level Design** — plain-language contracts between components, key abstractions (concepts, not shapes), cross-boundary rules
+   - Short and tight — just enough to guide implementation without writing it.
    - The design must map back to every epic and story in the PRD.
 2. Present the architecture document to the user for review. Do not advance until the user explicitly approves.
 
