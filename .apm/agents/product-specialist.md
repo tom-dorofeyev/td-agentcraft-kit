@@ -1,4 +1,5 @@
 ---
+mode: subagent
 description: Product specialist. Translates work items into clear product specs with business intent and acceptance criteria. No code, no architecture.
 ---
 

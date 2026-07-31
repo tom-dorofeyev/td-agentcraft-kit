@@ -10,7 +10,8 @@ A reusable APM kit that ships a multi-agent engineering workflow system to Copil
 
 ### The Mental Model
 
-- **Agents** → classes (role-specific contracts with defined inputs/outputs)
+- **Exposed Agents** → classes (role-specific contracts with defined inputs/outputs, user-facing)
+- **Subagents** → private methods (specialist capabilities called by exposed agents, marked `mode: subagent`)
 - **Skills** → methods (reusable capabilities loaded on demand)
 - **Instructions** → base class (shared rules inherited by all agents)
 
@@ -20,13 +21,34 @@ This analogy drives every design decision. Duplication across agents is treated 
 
 ```text
 .apm/
-  agents/        # Agent charters — one file per role
+  agents/        # Agent charters — 3 exposed (Agent, Planner, Implementer) + 6 subagents
   instructions/  # Shared rules inherited by every agent
   skills/        # Reusable workflows, quality gates, engineering standards
 docs/            # User-facing documentation (install guides, system overview)
 ```
 
-Agents and skills use YAML frontmatter for metadata. The `apm.yml` manifest declares targets, version, and dependencies.
+Agents and skills use YAML frontmatter for metadata. Exposed agents have no `mode` field. Subagents have `mode: subagent`. The `apm.yml` manifest declares targets, version, and dependencies.
+
+## Exposed Agents
+
+| Agent | Role | When to Use |
+|---|---|---|
+| **Agent** | Small, low-context tasks | ≤3 files, no new abstractions, low-risk changes, read-only questions |
+| **Planner** | Requirements + architecture planning | New features, non-trivial changes, anything needing user-approved planning docs |
+| **Implementer** | AFK implementation loop | Executing approved plans — code-review-refactor until acceptance tests pass |
+
+## Subagents
+
+These are internal specialist agents called by exposed agents. Each is marked `mode: subagent` in its YAML frontmatter:
+
+| Subagent | Called By | Purpose |
+|---|---|---|
+| product-specialist | Planner | Generates PRD with Epics, User Stories, Gherkin acceptance tests |
+| architect | Planner | Generates HLD + LLD architectural design |
+| builder | Implementer | Writes production code from approved designs |
+| code-reviewer | Implementer | Reviews implementation for correctness, quality, security |
+| refactorer | Implementer | Reduces cognitive load and duplication, enforces metric thresholds |
+| investigator | Agent, Planner, Implementer | Read-only codebase investigation |
 
 ## Universal Design Principles
 
@@ -50,20 +72,20 @@ These are baked into the instructions layer and inherited by all agents:
 
 ## Workflow Overview
 
-The kit supports three execution paths, chosen by the orchestrator per task:
+The kit supports three execution paths:
 
-- **Fast Path** — ≤ 3 files, no new abstractions, low-risk changes. Lightweight review gates.
-- **Full Workflow** — features, architectural changes, multi-file refactors. Full gate sequence: verification plan → orchestrator verification → peer review → architecture conformance review → runtime quality gate.
-- **Investigation** — read-only question answering. No code changes.
+- **Agent (Fast Path)** — ≤3 files, no new abstractions, low-risk changes. Direct implementation, no planning overhead.
+- **Planner → Implementer (Full Workflow)** — Features, architectural changes, multi-file refactors. Planner produces approved PRD + Architecture documents, then Implementer runs the AFK code-review-refactor loop until all Gherkin acceptance tests pass.
+- **Investigation** — Read-only question answering via the investigator subagent. No code changes.
 
-Gate enforcement is strict. A slice is not "done" until every applicable gate has passed and the evidence has been recorded. Build must succeed. Full test suite must pass. No exceptions.
+Gate enforcement is strict. A task is not "done" until every applicable gate has passed and the evidence has been recorded. Build must succeed. Full test suite must pass. No exceptions.
 
 ## Writing for This Kit
 
 When contributing agent charters, skills, or instructions:
 
 1. **Respect the analogy.** If a skill defines a method, it should be independently loadable and reusable. If an agent defines a class contract, its responsibilities should be single and clear.
-2. **Follow the existing formats.** Agents use a charter structure (Role, Mission, Core Workflow, Skills table, Input/Output, Behavioral Principles). Skills use frontmatter + body with a single, focused purpose.
+2. **Follow the existing formats.** Agents use YAML frontmatter with `description` and optional `mode: subagent`. Skills use frontmatter + body with a single, focused purpose.
 3. **Never duplicate.** If behavior is shared by multiple agents, it belongs in `instructions/` or a skill. If a skill overlaps semantically with another, converge them.
 4. **Apply the Rule of Three.** Do not extract a skill on the first or second occurrence of a pattern. Wait for the third.
 5. **Treat markdown as code.** Naming, structure, cohesion, and coupling apply to these files exactly as they would to source code.

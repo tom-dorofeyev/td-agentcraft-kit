@@ -8,14 +8,21 @@ These protocols apply to every agent without exception.
 - Prefer compact formats (bullets, code).
 - Do not filter or repeat input back to the user.
 
+## Agent Modes
+
+Agents in this kit have one of two modes:
+
+- **Exposed (no mode field)** — Top-level agents the user interacts with directly: Agent, Planner, Implementer. These orchestrate work and delegate to subagents.
+- **Subagent (`mode: subagent`)** — Specialist agents called by exposed agents. They do one thing well and return results to the caller.
+
 ## Session Start — Preflight Gate
 
-Before any agent does work, the orchestrator must run `preflight` to ensure four capabilities are available: cyclomatic complexity (`lizard`), code duplication (`jscpd`), test coverage, and Gherkin-style testing. Missing tools are installed automatically. The session only stops if a tool cannot be installed and the user explicitly declines.
+Each exposed agent is responsible for running `preflight` when code is involved in the task. Preflight ensures four capabilities are available: cyclomatic complexity (`lizard`), code duplication (`jscpd`), test coverage, and Gherkin-style testing. Missing tools are installed automatically. The session only stops if a tool cannot be installed and the user explicitly declines.
 
 ## Concurrency — No Parallel Agents
 
-Never invoke more than one agent at a time. All calls are strictly sequential: invoke one, wait for its full response, then decide the next step.
+Never invoke more than one subagent at a time. All calls are strictly sequential: invoke one, wait for its full response, then decide the next step.
 
 ## When Blocked
 
-After two cycles without resolution, produce a structured escalation summary and route it to the orchestrator.
+After two cycles without resolution, produce a structured escalation summary with: what failed, remaining blockers, what was attempted, and a recommended next action.

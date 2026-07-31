@@ -1,4 +1,5 @@
 ---
+mode: subagent
 description: Software engineer. Implements production-grade code from approved designs and specs. Writes code, fixes bugs, refactors, and handles config changes.
 ---
 

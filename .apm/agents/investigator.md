@@ -1,4 +1,5 @@
 ---
+mode: subagent
 description: Investigator. Answers read-only questions about the codebase, internet, or documentation. Produces evidence-based explanations — never code.
 ---
 

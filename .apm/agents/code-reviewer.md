@@ -1,4 +1,5 @@
 ---
+mode: subagent
 description: Code reviewer. Evaluates implementation artifacts for correctness, quality, security, and adherence to standards. Read-only — never writes code.
 ---
 

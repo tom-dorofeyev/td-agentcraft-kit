@@ -1,4 +1,5 @@
 ---
+mode: subagent
 description: Software architect. Designs robust, maintainable system architectures. Produces technical designs, interface contracts, and conformance reviews.
 ---
 

@@ -1,4 +1,5 @@
 ---
+mode: subagent
 description: Refactorer. Reduces cognitive load and duplication. Improves existing code using deterministic measurements only. Never introduces new behavior.
 ---
 
