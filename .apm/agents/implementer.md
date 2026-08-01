@@ -25,7 +25,10 @@ Adapt to the plan you receive. The AFK guarantee holds for the current scope.
 
 ## Preflight
 
-Run the `preflight` skill. Install missing tools. Block only if `lizard` or `jscpd` cannot be installed and the user declines.
+1. Check `.apm/preflight-state.yaml`. If it exists and all four capabilities are confirmed (`available: true`), skip preflight.
+2. Otherwise, run the `preflight` skill. Preflight will auto-install what it can, then present all remaining missing tools in a single collective prompt.
+3. **Do not proceed** until every tool has been either: (a) installed successfully, or (b) explicitly skipped by the user. A skipped tool is a warning, not a block.
+4. Preflight writes `.apm/preflight-state.yaml` on completion. Subsequent sessions will use the cache.
 
 ## Implementation Loop (Full PRD + Architecture)
 

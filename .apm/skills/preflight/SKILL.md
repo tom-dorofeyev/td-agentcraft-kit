@@ -1,131 +1,121 @@
 ---
 name: preflight
-description: Validates that all required quality measurement tools are available. Installs missing tools globally. Never touches project files unless user approves.
+description: Validates that all required quality measurement tools are available. Installs missing tools globally. Caches confirmed tool state so subsequent runs skip checks.
 ---
 
 # Preflight Check
 
-Run at the start of every session before any agent does work. Bias for action: install globally, keep git clean, never block over a tool if there's a fallback.
+Bias for action: install globally, keep git clean. Once tools are confirmed, state is cached and subsequent runs are instant.
 
 ## Golden Rule
 
-Tools must work. Git must stay clean. Project-level changes are opt-in only.
+- Install globally or user-local (`pip install --user`, `npm install -g`). Never touch project files.
+- If a tool needs project-level config (JaCoCo in pom.xml, etc.), ask. If declined, use global fallback.
+- Tool artifacts (reports, coverage data) → always add to `.gitignore` without asking.
 
-- **Install tools globally or user-local** (`pip install --user`, `npm install -g`). These never touch the project repo.
-- **If a tool absolutely needs project-level config** (JaCoCo in `pom.xml`, `nyc` in `package.json`, etc.), tell the user what would change and ask. If they decline (team decision, big company), use the global fallback instead.
-- **Tool artifacts** (reports, coverage data, temp files) → always add to `.gitignore` without asking.
+## Step 0 — Cache Check
 
-## Gitignore — Always Auto-Applied
+```bash
+cat .apm/preflight-state.yaml 2>/dev/null || echo "missing"
+```
 
-Never ask. These are build artifacts, not code:
+- **All tools `available: true`** → skip all checks, report "All 4 capabilities confirmed (cached)", exit.
+- **Some tools missing/declined** → re-check only those.
+- **File missing** → full run.
+- **Force re-check** if user requests or `last_check` > 30 days.
+
+## Gitignore — Auto-Applied
 
 | Tool | Patterns |
 |---|---|
-| `nyc` | `.nyc_output/`, `coverage/` |
-| `c8` | `coverage/` |
+| `nyc` / `c8` | `.nyc_output/`, `coverage/` |
 | `pytest-cov` / `coverage` | `.coverage`, `htmlcov/`, `coverage.xml` |
 | JaCoCo (Maven) | `target/site/jacoco/`, `target/jacoco.exec` |
 | JaCoCo (Gradle) | `build/reports/jacoco/`, `build/jacoco/` |
 | `jscpd` | `.jscpd-report/`, `.jscpd-report.json` |
-| `lizard` | (no artifacts) |
 
 ## Step 1 — Complexity & Duplication
 
-Install globally. Never touches project files.
-
 ```bash
 lizard --version 2>/dev/null || pip install --user lizard
-```
-
-```bash
 jscpd --version 2>/dev/null || npm install -g jscpd
 ```
 
-**Fallback for jscpd if global install fails or user declines:** `npx jscpd` — runs without installing globally.
+Fallback for jscpd: `npx jscpd`. If both fail → record as missing for collective prompt.
 
-If both global and fallback fail → tell the user and ask. Only block if they say no.
+## Step 2 — Coverage
 
-## Step 2 — Detect Language & Coverage Tool
-
-| Signal | Language | Coverage tool | Global/preferred install |
+| Signal | Language | Tool | Install |
 |---|---|---|---|
-| `package.json` | JS/TS | `nyc`, `c8`, `vitest`, or `jest` | `npm install -g nyc` or use `npx` |
-| `pyproject.toml`, `setup.py`, `requirements*.txt` | Python | `pytest-cov` | `pip install --user pytest-cov coverage` |
-| `go.mod` | Go | built-in | `go test -cover` (no install needed) |
-| `pom.xml` | Java (Maven) | JaCoCo | Needs plugin in `pom.xml` — ask before editing |
-| `build.gradle` / `build.gradle.kts` | Java (Gradle) | JaCoCo | Needs plugin in `build.gradle` — ask before editing |
-| None detected | Unknown | Ask the user | — |
+| `package.json` | JS/TS | nyc, c8, vitest, jest | `npm install -g nyc` or `npx` |
+| `pyproject.toml`, `setup.py`, `requirements*.txt` | Python | pytest-cov | `pip install --user pytest-cov coverage` |
+| `go.mod` | Go | built-in | `go test -cover` (no install) |
+| `pom.xml` | Java (Maven) | JaCoCo | Ask before editing pom.xml |
+| `build.gradle(.kts)` | Java (Gradle) | JaCoCo | Ask before editing build.gradle |
+| None detected | Unknown | — | Ask the user |
 
-### Project-level changes (only if user approves)
-
-Only JaCoCo for Java requires project config. Before touching `pom.xml` or `build.gradle`:
-
-> "JaCoCo needs a plugin entry in pom.xml/build.gradle. This won't change any code — it enables coverage measurement. Add it? If not, coverage gates will run on whatever the project already has."
-
-If user says no → pass with warning. Coverage gates will still check whatever coverage setup already exists.
-
-### Verify it works
-
+Verify:
 ```bash
-# JS/TS — prefer npx (no install), fall back to global
+# JS/TS
 npx nyc --version 2>/dev/null || nyc --version 2>/dev/null || echo "missing"
-
 # Python
 python -c "import coverage" 2>/dev/null || pip install --user coverage
-
-# Go (built-in)
+# Go
 go version 2>/dev/null && go test -cover ./... 2>&1 | head -1
-
-# Java (Maven) — only if user approved plugin
-mvn jacoco:help 2>/dev/null || echo "JaCoCo plugin not in pom.xml (user declined)"
-
-# Java (Gradle) — only if user approved plugin
-gradle tasks --all 2>/dev/null | grep -q jacoco || echo "JaCoCo plugin not in build.gradle (user declined)"
+# Java — only if user approved plugin
+mvn jacoco:help 2>/dev/null || echo "JaCoCo not configured (user declined)"
 ```
 
-## Step 3 — Gherkin-Style Testing
-
-Check for `.feature` files:
+## Step 3 — Gherkin
 
 ```bash
 find . -name "*.feature" -not -path "*/node_modules/*" -not -path "*/.git/*" 2>/dev/null | head -5
 ```
 
-| Signal | Runner | Install (prefer global) |
+| Signal | Runner | Install |
 |---|---|---|
-| `.feature` files in JS/TS project | `cucumber-js` | `npm install -g @cucumber/cucumber` or `npx cucumber-js` |
-| `features/` or `.feature` in Python | `behave` | `pip install --user behave` |
-| `.feature` in Java (Maven) | cucumber-jvm | Needs maven dependency — ask before editing `pom.xml` |
-| `.feature` in Java (Gradle) | cucumber-jvm | Needs gradle dependency — ask before editing `build.gradle` |
-| No `.feature` files, no source files | — | Pass with reminder. New project. |
-| No `.feature` files, existing source files | — | Pass with note: no BDD runner configured. |
+| `.feature` + JS/TS | cucumber-js | `npm install -g @cucumber/cucumber` or `npx` |
+| `.feature` + Python | behave | `pip install --user behave` |
+| `.feature` + Java | cucumber-jvm | Ask before editing pom.xml/build.gradle |
+| No `.feature` files | — | Not needed |
 
-If a Gherkin runner is missing and the project has `.feature` files: install globally if possible. If it requires project config, ask. If user says no → pass with warning.
+## Step 4 — Collective Prompt
 
-## Step 4 — Report
+After Steps 1-3, present all tools that could not be auto-installed in a single prompt:
 
 ```
-Preflight — td-agentcraft-kit
-==============================
-✓ Cyclomatic complexity (lizard)
-✓ Code duplication (jscpd)
-✓ Test coverage (nyc via npx)
-✓ Gherkin-style testing (behave)
-✓ .gitignore updated (3 patterns added)
-
-All capabilities present. Proceeding.
+Preflight — tools needed: jscpd, pytest-cov, cucumber-jvm
+[y] install now  [s] skip (gate will warn)  [a] abort
 ```
 
-```
-Preflight — td-agentcraft-kit
-==============================
-✓ Cyclomatic complexity (lizard)
-✓ Code duplication (jscpd)
-✓ Test coverage (JaCoCo — plugin in pom.xml, user approved)
-✗ Gherkin-style testing (cucumber-jvm declined by user)
-✓ .gitignore updated (2 patterns added)
+Never auto-skip. Every gap must be explicitly acknowledged. `s` → record as `declined` and continue with warning. `a` → stop.
 
-Proceeding with logged gap. Gherkin gates will be skipped.
+## Step 5 — Cache
+
+Write `.apm/preflight-state.yaml`:
+
+```yaml
+last_check: "<ISO-8601>"
+project_language: "<js|python|go|java|unknown>"
+tools:
+  lizard:    { available: true,  install_method: "pip install --user lizard" }
+  jscpd:     { available: true,  install_method: "npm install -g jscpd" }
+  coverage:  { available: true,  tool: "nyc", install_method: "npx nyc" }
+  gherkin:   { available: false, reason: "no .feature files" }
+gitignore_updated: true
+warnings: []
 ```
 
-**Block only if:** `lizard` or `jscpd` cannot be installed at all (no global, no npx, and user says no). Everything else passes with a warning.
+Add `.apm/preflight-state.yaml` to `.gitignore`.
+
+## Step 6 — Report
+
+```
+Preflight — <project>
+=====================
+✓ lizard  ✓ jscpd  ✓ coverage (nyc)  ✓ gherkin (behave)
+✓ .gitignore updated  ✓ State cached
+All capabilities present.
+```
+
+If gaps: show `✗` with reason, note which gates are skipped. Block only on `a` (abort).
