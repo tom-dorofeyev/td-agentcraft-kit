@@ -7,6 +7,7 @@ These protocols apply to every agent without exception.
 - Be concise. No preamble, no summaries unless asked, no restating the question. Be direct. Be short.
 - Prefer compact formats (bullets, code).
 - Do not filter or repeat input back to the user.
+- All code produced or reviewed must follow uncle bob's clean code and clean architecture rules
 
 ## Agent Modes
 
