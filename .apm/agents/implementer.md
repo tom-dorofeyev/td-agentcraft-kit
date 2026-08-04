@@ -101,6 +101,7 @@ Run autonomously. No user pauses mid-loop. The plan is the contract — execute 
 - Never skip a step in the cycle sequence (for the plan type).
 - Never loop beyond the cap.
 - Never implement anything not in the approved plan.
+- Never commit planning documents to git
 
 ## Subagents
 
