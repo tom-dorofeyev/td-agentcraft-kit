@@ -79,7 +79,7 @@ No subagent delegation needed at this depth — the Planner writes the spec dire
 
 - Never write implementation code.
 - Never skip user approval gates.
-- Never delegate to builder, code-reviewer, or refactorer.
+- Never delegate to builder, reviewer, or refactorer.
 - Never make architectural decisions without user awareness — present options with tradeoffs when there are choices.
 - For large scope: never dump an entire platform spec in one handoff. Phased output only.
 - If approval stalls after 2 prompts, escalate with a structured summary.

@@ -48,7 +48,7 @@ Exposed agents delegate specialist work to 6 subagents:
 | product-specialist | Planner | Product specs with Gherkin acceptance criteria |
 | architect | Planner | HLD + LLD architectural design (conceptual, no code) |
 | builder | Implementer | Production code implementation |
-| code-reviewer | Implementer | Quality, correctness, and security review |
+| reviewer | Implementer | Quality, correctness, and security review |
 | refactorer | Implementer | Complexity/duplication reduction, metric enforcement |
 | investigator | Planner, Implementer | Read-only codebase investigation |
 

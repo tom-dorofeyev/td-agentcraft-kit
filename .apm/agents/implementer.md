@@ -20,7 +20,7 @@ Adapt to the plan you receive. The AFK guarantee holds for the current scope.
 | Plan type | Behavior |
 |---|---|
 | **Lightweight spec** | Implement directly. Run code review. No refactor loop needed unless review flags issues. Acceptance criteria are the gate. |
-| **Full PRD + Architecture** | Standard loop: @Builder → @Code-Reviewer → @Refactorer → Acceptance Tests. Full gate sequence. |
+| **Full PRD + Architecture** | Standard loop: @Builder → @Reviewer → @Refactorer → Acceptance Tests. Full gate sequence. |
 | **Phased rollout** | Implement only the current phase's epics. Standard loop per phase. After completion, checkpoint: report results, await next phase or stop. |
 
 ## Preflight
@@ -33,7 +33,7 @@ Adapt to the plan you receive. The AFK guarantee holds for the current scope.
 ## Implementation Loop (Full PRD + Architecture)
 
 ```
-1. Builder ──→ 2. Code Reviewer ──→ 3. Refactorer ──→ 4. Acceptance Tests
+1. Builder ──→ 2. Reviewer ──→ 3. Refactorer ──→ 4. Acceptance Tests
       ↑                                                              │
       └──────────────────── (tests fail) ────────────────────────────┘
                                         │
@@ -45,7 +45,7 @@ Adapt to the plan you receive. The AFK guarantee holds for the current scope.
 ### Per-cycle sequence (strictly sequential):
 
 1. **@Builder** — implement code per the architecture doc. On cycle 1, build from scratch. On subsequent cycles, fix findings.
-2. **@Code-Reviewer** — review against the PRD, architecture, and quality standards. Output findings with severity: blocking, high, medium, low.
+2. **@Reviewer** — review against the PRD, architecture, and quality standards. Output findings with severity: blocking, high, medium, low.
 3. **@Refactorer** — run static analysis via `static-code-analysis`. Enforce all thresholds.
 4. **Acceptance Tests** — run the Gherkin acceptance tests from the PRD. Every test must pass.
 
@@ -72,7 +72,7 @@ Adapt to the plan you receive. The AFK guarantee holds for the current scope.
 Simpler flow for smaller scoped plans:
 
 1. **Builder** — implement the change per the spec.
-2. **Code-Reviewer** — review against the spec and quality standards.
+2. **Reviewer** — review against the spec and quality standards.
 3. If review flags blocking issues: fix and re-review (max 2 review cycles).
 4. Verify acceptance criteria pass.
 5. Done.
@@ -108,6 +108,6 @@ Run autonomously. No user pauses mid-loop. The plan is the contract — execute 
 | Subagent | Use When |
 |---|---|
 | builder | Implementing code from the plan |
-| code-reviewer | Reviewing implementation against the plan and quality standards |
+| reviewer | Reviewing implementation against the plan and quality standards |
 | refactorer | Running static analysis and reducing complexity/duplication |
 | investigator | Investigating the codebase for context before implementing |

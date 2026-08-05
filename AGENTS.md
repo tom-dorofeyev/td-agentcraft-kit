@@ -46,7 +46,7 @@ These are internal specialist agents called by exposed agents. Each is marked `m
 | product-specialist | Planner | Generates PRD with Epics, User Stories, Gherkin acceptance tests |
 | architect | Planner | Generates HLD + LLD architectural design |
 | builder | Implementer | Writes production code from approved designs |
-| code-reviewer | Implementer | Reviews implementation for correctness, quality, security |
+| reviewer | Implementer | Reviews implementation for correctness, quality, security |
 | refactorer | Implementer | Reduces cognitive load and duplication, enforces metric thresholds |
 | investigator | Agent, Planner, Implementer | Read-only codebase investigation |
 

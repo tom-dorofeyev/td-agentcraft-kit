@@ -26,7 +26,7 @@ The Planner scales output to the task. No routing — every request gets a plan,
 | Scope | Planner Output | Implementer Path |
 |---|---|---|
 | **Small** | Lightweight spec: what to build, key decisions, acceptance criteria | Direct implementation + review. Refactor only if flagged. |
-| **Medium** | Full PRD (Epics, Stories, Gherkin) + Architecture (HLD + LLD) | Full AFK loop: Builder → Code Reviewer → Refactorer → Acceptance Tests |
+| **Medium** | Full PRD (Epics, Stories, Gherkin) + Architecture (HLD + LLD) | Full AFK loop: Builder → Reviewer → Refactorer → Acceptance Tests |
 | **Large** | MVP scoping: full PRD + Architecture for MVP epics, sketches for future phases. Folder per epic. | Per-phase AFK loop. Checkpoint after each phase. Planner loops back for next phase. |
 
 ## Agent Sequence
@@ -74,7 +74,7 @@ The Implementer adapts to the plan it receives. No user interruptions mid-loop.
 ### Full Loop (Medium/Large scope)
 
 ```
-Builder ──→ Code Reviewer ──→ Refactorer ──→ Acceptance Tests
+Builder ──→ Reviewer ──→ Refactorer ──→ Acceptance Tests
     ↑                                                    │
     └──────────────── (tests fail) ─────────────────────┘
                                 │
@@ -86,7 +86,7 @@ Builder ──→ Code Reviewer ──→ Refactorer ──→ Acceptance Tests
 **Per-cycle sequence (strictly sequential):**
 
 1. **Builder** — implement code per the architecture doc.
-2. **Code Reviewer** — review against PRD, architecture, quality standards. Severity: blocking, high, medium, low.
+2. **Reviewer** — review against PRD, architecture, quality standards. Severity: blocking, high, medium, low.
 3. **Refactorer** — run `static-code-analysis`. Enforce all thresholds.
 4. **Acceptance Tests** — run Gherkin tests. Every test must pass.
 
@@ -111,7 +111,7 @@ Builder ──→ Code Reviewer ──→ Refactorer ──→ Acceptance Tests
 ### Lightweight Path (Small scope)
 
 1. **Builder** — implement per the spec.
-2. **Code Reviewer** — review against spec and quality standards.
+2. **Reviewer** — review against spec and quality standards.
 3. Fix blocking issues, re-review (max 2 cycles).
 4. Verify acceptance criteria.
 5. Refactor only if reviewer flags complexity/duplication.

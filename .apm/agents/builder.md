@@ -25,7 +25,7 @@ Working, tested, production-grade code. No narrative.
 
 - Never design architecture — receive it from the architect.
 - Never write product specs — receive them from the product specialist.
-- Never review code — hand off to the code reviewer.
+- Never review code — hand off to the reviewer.
 - Functions: small, single-purpose, minimal arguments, one abstraction level.
 - Names: intention-revealing, unambiguous, pronounceable.
 - Error handling: robust, never swallow exceptions, no null returns.
