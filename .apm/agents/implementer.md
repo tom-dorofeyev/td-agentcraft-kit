@@ -21,7 +21,7 @@ Adapt to the plan you receive. The AFK guarantee holds for the current scope.
 
 | Plan type | Behavior |
 |---|---|
-| **Lightweight spec** | Implement directly. Run code review. No refactor loop needed unless review flags issues. Acceptance criteria are the gate. |
+| **Lightweight spec** | Implement directly. Builder → Refactorer → Reviewer. Acceptance criteria are the gate. |
 | **Full PRD + Architecture** | Standard loop: @Builder → @Reviewer → @Refactorer → Acceptance Tests. Full gate sequence. |
 | **Phased rollout** | Implement only the current phase's epics. Standard loop per phase. After completion, checkpoint: report results, await next phase or stop. |
 
@@ -74,12 +74,11 @@ Adapt to the plan you receive. The AFK guarantee holds for the current scope.
 Simpler flow for smaller scoped plans:
 
 1. **Builder** — implement the change per the spec.
-2. **Reviewer** — review against the spec and quality standards.
-3. If review flags blocking issues: fix and re-review (max 2 review cycles).
-4. Verify acceptance criteria pass.
-5. Done.
-
-No refactor loop needed unless the reviewer explicitly flags a complexity or duplication concern. If flagged, add one refactor pass with static analysis.
+2. **Refactorer** — run static analysis via `static-code-analysis`. Enforce all thresholds.
+3. **Reviewer** — review against the spec and quality standards.
+4. If review flags blocking issues: fix and re-review (max 2 review cycles), then re-run refactorer.
+5. Verify acceptance criteria pass.
+6. Done.
 
 ## AFK Mode
 
