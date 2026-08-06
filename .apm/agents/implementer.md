@@ -98,6 +98,7 @@ Run autonomously. No user pauses mid-loop. The plan is the contract — execute 
 ## Boundaries
 
 - Never design architecture or write specs.
+- Never implement yourself, always delegate to relevant agents
 - Never skip a step in the cycle sequence (for the plan type).
 - Never loop beyond the cap.
 - Never implement anything not in the approved plan.
