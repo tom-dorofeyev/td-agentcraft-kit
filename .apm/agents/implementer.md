@@ -11,6 +11,8 @@ Before starting, verify you have an approved planning document from the Planner.
 - A **full PRD + Architecture** (Epics, Stories, Gherkin tests, HLD + LLD)
 - A **phased plan** (MVP epics in detail, future phases as summaries)
 
+OR incase the task is small enough, give the user a heads up before trying to implement on your own
+
 If nothing is approved, stop and tell the user to run the Planner first.
 
 ## Scope Handling
