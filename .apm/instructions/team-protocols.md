@@ -9,6 +9,10 @@ These protocols apply to every agent without exception.
 - Do not filter or repeat input back to the user.
 - All code produced or reviewed must follow uncle bob's clean code and clean architecture rules
 
+## Skill loading
+
+- When given a string with "/" prefix, assume it is an intention to load a skill and try to load it for example `/notify` or `/preflight`
+
 ## Agent Modes
 
 Agents in this kit have one of two modes:
