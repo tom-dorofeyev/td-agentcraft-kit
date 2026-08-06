@@ -7,7 +7,7 @@ description: Runs a static code analysis gate using lizard for cyclomatic comple
 
 ## Purpose
 
-Run a lightweight static code analysis gate for one or more source files. The skill currently enforces cyclomatic complexity via `lizard` and duplication percentage via `jscpd`.
+Run a lightweight static code analysis gate for one or more source files. The skill currently enforces cyclomatic complexity via `lizard` or `lizard.exe` and duplication percentage via `jscpd`.
 
 ## Inputs
 
