@@ -25,7 +25,20 @@ function sendOsNotification(text) {
   if (process.platform === "win32") {
     return sendWindowsNotification(text);
   }
+  if (isWsl()) {
+    return sendWslNotification(text);
+  }
   return false;
+}
+
+function isWsl() {
+  if (process.platform !== "linux") return false;
+  try {
+    execSync("test -f /proc/sys/fs/binfmt_misc/WSLInterop", { stdio: "ignore" });
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 function sendMacNotification(text) {
@@ -40,9 +53,9 @@ function sendMacNotification(text) {
   }
 }
 
-function sendWindowsNotification(text) {
+function buildWindowsToastCommand(text) {
   const escaped = text.replace(/'/g, "''");
-  const psCommand = `
+  return `
     [Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime] | Out-Null;
     $template = [Windows.UI.Notifications.ToastNotificationManager]::GetTemplateContent([Windows.UI.Notifications.ToastTemplateType]::ToastText01);
     $template.GetElementsByTagName('text')[0].AppendChild($template.CreateTextNode('${escaped}')) | Out-Null;
@@ -52,8 +65,25 @@ function sendWindowsNotification(text) {
     $toast = [Windows.UI.Notifications.ToastNotification]::new($template);
     [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier('td-agentcraft-kit').Show($toast);
   `.replace(/\n\s*/g, " ").trim();
+}
+
+function sendWindowsNotification(text) {
+  const psCommand = buildWindowsToastCommand(text);
   try {
     execSync(`powershell -Command "${psCommand.replace(/"/g, '\\"')}"`, {
+      stdio: "ignore",
+      timeout: 5000,
+    });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function sendWslNotification(text) {
+  const psCommand = buildWindowsToastCommand(text);
+  try {
+    execSync(`powershell.exe -Command "${psCommand.replace(/"/g, '\\"')}"`, {
       stdio: "ignore",
       timeout: 5000,
     });
