@@ -1,140 +1,106 @@
 ---
 name: feature-workflow
-description: End-to-end workflow for any task needing planning. Planner produces approved docs (depth scales with scope), then Implementer runs the AFK loop until acceptance criteria pass.
+description: Plan approved working slices, then run the AFK loop per slice until criteria pass.
 ---
 
 # Feature Workflow
 
-Use this workflow for any task that needs planning — from a small spec to a full platform.
+Use for work beyond a one-liner: plan with user, then deliver working, reviewed, clean, tested slices.
 
-## Purpose
+## Scope
 
-Take a user request from vague intent to a working, reviewed, measurably clean, and acceptance-tested implementation. Two phases: planning (with user), then AFK implementation. Plan depth scales with scope.
-
-## Entry Criteria
-
-Use this workflow when:
-
-- The task needs planning — more than a one-liner fix, but could be small.
-- New abstractions, modules, or cross-cutting changes are involved.
-- The user wants a planning step before code.
-
-## Plan Depth
-
-The Planner scales output to the task. No routing — every request gets a plan, just at different depth.
-
-| Scope | Planner Output | Implementer Path |
+| Scope | Planner output | Implementer path |
 |---|---|---|
-| **Small** | Lightweight spec: what to build, key decisions, acceptance criteria | Direct implementation + review. Refactor only if flagged. |
-| **Medium** | Full PRD (Epics, Stories, Gherkin) + Architecture (HLD + LLD) | Full AFK loop: Builder → Reviewer → Refactorer → Acceptance Tests |
-| **Large** | MVP scoping: full PRD + Architecture for MVP epics, sketches for future phases. Folder per epic. | Per-phase AFK loop. Checkpoint after each phase. Planner loops back for next phase. |
+| **Small** | Lightweight spec + criteria | One working slice; direct loop/review. |
+| **Medium** | PRD or technical spec + HLD/LLD | Ordered slices; full AFK loop per slice. |
+| **Large** | Phased MVP spec + architecture | Current-phase slices; checkpoint per phase. |
 
-## Agent Sequence
+## Flow
 
-```
-1. Planner ──→ 2. Implementer
-     │               │
-     ▼               ▼
-Plan (any depth)   AFK Loop (adapted to plan depth)
-(user approved)    (until acceptance criteria pass)
-```
+`Planner → Approved docs + slices → Implementer → AFK loop per slice`
 
-## Phase 1 — Planner: Document Generation
+## Planner
 
-The Planner produces approved planning artifacts scaled to the task.
+### Small
 
-### Small Scope
+Lightweight spec:
+- Build.
+- Decisions/constraints.
+- Criteria.
+- Single working, committable slice unless unsafe.
 
-Planner writes a lightweight spec directly (no subagents):
-- What to build
-- Key design decisions or constraints
-- Acceptance criteria (bullets or Gherkin — keep it tight)
+### Medium
 
-### Medium Scope
+- **product-specialist** → PRD: epics, stories, Gherkin.
+- **architect** → conceptual HLD/LLD: components, dependencies, contracts, abstractions.
+- **Planner** → ordered slices: approved scope/criteria, dependencies, working outcome, proof. Epics may contain many slices.
 
-Planner delegates to subagents:
-- **product-specialist** → PRD with Epics, User Stories, Gherkin acceptance tests
-- **architect** → Conceptual architecture doc (HLD + LLD). No code, no pseudo-code: system components, dependency direction, plain-language contracts, key abstractions.
+### Large
 
-### Large Scope
+- **product-specialist** → phased PRD: MVP detailed, future summaries.
+- **architect** → phased architecture: MVP detailed, future light.
+- **Planner** → ordered current-phase slices; each working and committable.
+- Output: folder/epic. MVP slices ready; future refined later.
 
-Planner pushes for MVP:
-- **product-specialist** → Phased PRD: MVP epics in full detail, future phases as summaries
-- **architect** → Phased architecture: full system design, annotated per phase. Full detail for MVP components.
-- Output: folder per epic. MVP epics ready for implementation. Future phases will be fleshed out in later planning cycles.
+### Gate
 
-### Phase 1 Gate
+User approves artifacts and slices. Hand off to Implementer.
 
-Planning artifacts approved by the user. Hand off to Implementer.
+## Implementer
 
-## Phase 2 — Implementer: AFK Loop
+Divide approved scope into small, working, committable slices. No pauses mid-loop or between slices. Each maps to approved criteria, works end-to-end where applicable, and passes its loop before next. Never batch all plan work.
 
-The Implementer adapts to the plan it receives. No user interruptions mid-loop.
+### Full Loop
 
-### Full Loop (Medium/Large scope)
+`Builder → Plan Review → Quality/Architecture Review → Refactorer → Acceptance Tests`
 
-```
-Builder ──→ Reviewer ──→ Refactorer ──→ Acceptance Tests
-    ↑                                                    │
-    └──────────────── (tests fail) ─────────────────────┘
-                                │
-                          all tests pass
-                                │
-                             DONE ✓
-```
+Run per slice. Failed gate returns to Builder for same slice; later slices wait.
 
-**Per-cycle sequence (strictly sequential):**
+1. **Builder** — implement per architecture.
+2. **Reviewer: Plan Review** — slice scope, criteria, required behavior/tests; severity: blocking, high, medium, low.
+3. **Reviewer: Quality/Architecture Review** — clean code, security, tests, architecture; severity: blocking, high, medium, low.
+4. **Refactorer** — `static-code-analysis`; enforce thresholds.
+5. **Acceptance Tests** — slice Gherkin, then full suite. All pass.
 
-1. **Builder** — implement code per the architecture doc.
-2. **Reviewer** — review against PRD, architecture, quality standards. Severity: blocking, high, medium, low.
-3. **Refactorer** — run `static-code-analysis`. Enforce all thresholds.
-4. **Acceptance Tests** — run Gherkin tests. Every test must pass.
-
-### Cycle Rules
-
-| Cycle | Fix scope |
+| Cycle | Fix |
 |---|---|
-| 1 | All findings + all metric violations |
-| 2 | All findings + all metric violations |
-| 3 | Blocking + High + all metric violations |
-| 4 | Blocking only + all metric violations |
-| 5 | Blocking only + all metric violations |
+| 1–2 | All findings + metrics |
+| 3 | Blocking, high + metrics |
+| 4–5 | Blocking + metrics |
 
-### Exit Conditions
+### Slice Gate
 
-- All acceptance criteria pass.
-- No blocking review findings.
-- All metric thresholds pass per `static-code-analysis`.
+- Slice criteria and metrics pass; no blocking findings.
+- Build and full suite pass.
+- Slice works independently and is committable.
 
-**Loop cap: 5 cycles.**
+**Cap: 5 cycles/slice.**
 
-### Lightweight Path (Small scope)
+### Lightweight Loop
 
-1. **Builder** — implement per the spec.
-2. **Reviewer** — review against spec and quality standards.
-3. Fix blocking issues, re-review (max 2 cycles).
-4. Verify acceptance criteria.
-5. Refactor only if reviewer flags complexity/duplication.
+1. Builder.
+2. Reviewer: Plan Review.
+3. Reviewer: Quality/Architecture Review.
+4. Fix blocking issues; re-review, max 2 cycles.
+5. Verify criteria, build, full suite.
+6. Refactor if complexity/duplication flagged.
 
-## Planner Responsibilities
+## Responsibilities
 
-- Receive the user request.
-- Load `grill-me` if requirements are vague.
-- Determine plan depth collaboratively with the user.
-- Produce approved planning artifacts.
-- For large scope: scope to MVP. Sketch future phases. Only hand off the current phase.
+### Planner
 
-## Implementer Responsibilities
+- Gather requirements; load `grill-me` if vague.
+- Set plan depth with user.
+- Produce approved artifacts and ordered slices; never monolithic handoff.
+- Large: MVP first; hand off current phase only.
 
-- Run `preflight` before starting.
-- Adapt implementation path to plan depth.
-- Execute autonomously (AFK) for the current scope.
-- Track cycle count. Enforce caps.
-- Notify user via `notify` skill on completion.
-- For phased rollout: checkpoint after each phase.
+### Implementer
+
+- Run `preflight`.
+- Execute current scope, slice by slice.
+- Track caps; notify via `notify`.
+- Phase completion: checkpoint.
 
 ## Escalation
 
-Produce a structured escalation with: what failed, remaining blockers/metric violations/test failures, what was attempted, recommended next action.
-
-Route back to Planner if plan needs revision. Otherwise escalate to user.
+Report failure, blockers/metrics/tests, attempts, next action. Return to Planner if plan needs revision; else user.
