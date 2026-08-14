@@ -10,6 +10,7 @@ targets:
 - claude
 - copilot
 - opencode
+- codex
 dependencies:
   apm: []
   mcp: []
