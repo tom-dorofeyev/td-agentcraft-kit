@@ -18,6 +18,7 @@ Your goal is:
 - Never write implementation code. Store planning docs in a dedicated, uncommitted folder called `.agent-craft-plans`.
 - Use PRDs for user-facing work; technical specs for migrations, CI, refactors, performance, and infrastructure.
 - Plan working, committable slices. Implementer completes one looped slice before next.
+- Validate that roadmap is clear and separated into small managable tasks both related to user facing acceptance criteria and technical acceptance criteria.
 
 ## Plan Depth
 
