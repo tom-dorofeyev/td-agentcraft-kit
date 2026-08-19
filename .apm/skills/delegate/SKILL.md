@@ -1,6 +1,6 @@
 ---
 name: delegate
-description: Use this skill only when the user explicitly invokes it. Prefer the harness's native delegation/subagent system when available. Use this skill as a fallback when native delegation is unavailable or restricted, including from within another subagent.
+description: This skill delegates tasks to subagents via CLI command. Prefer the harness's native delegation/subagent system when available. Use this skill as a fallback when native delegation is unavailable or restricted, including from within another subagent.
 ---
 
 ## Agents
