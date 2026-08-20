@@ -1,11 +1,11 @@
 ---
 name: feature-workflow
-description: Plan approved working slices, then run the AFK loop per slice until criteria pass.
+description: Plan material work, then run the AFK loop per slice until criteria pass.
 ---
 
 # Feature Workflow
 
-Use for work beyond a one-liner: plan with user, then deliver working, reviewed, clean, tested slices.
+Use for work beyond a one-liner: plan material work with the user, then deliver working, reviewed, clean, tested slices. Clear, bounded small work may proceed directly.
 
 ## Scope
 
@@ -17,7 +17,7 @@ Use for work beyond a one-liner: plan with user, then deliver working, reviewed,
 
 ## Flow
 
-`Planner → Approved docs + slices → Implementer → AFK loop per slice`
+`Planner → confirmed docs + slices → Implementer → AFK loop per slice`
 
 ## Planner
 
@@ -44,11 +44,11 @@ Lightweight spec:
 
 ### Gate
 
-User approves artifacts and slices. Hand off to Implementer.
+Obtain user approval for material product, scope, architecture, compatibility, security, cost, or delivery-risk decisions. A clear, bounded small request may be handed to Implementer without an additional approval checkpoint.
 
 ## Implementer
 
-Divide approved scope into small, working, committable slices. No pauses mid-loop or between slices. Each maps to approved criteria, works end-to-end where applicable, and passes its loop before next. Never batch all plan work.
+Divide the current scope into small, working, committable slices. No pauses mid-loop or between slices. Each maps to known criteria, works end-to-end where applicable, and passes its loop before next. Never batch all plan work.
 
 ### Full Loop
 
@@ -97,6 +97,7 @@ Run per slice. Failed gate returns to Builder for same slice; later slices wait.
 ### Implementer
 
 - Run `preflight`.
+- Start clear, bounded direct requests without awaiting an approval checkpoint.
 - Execute current scope, slice by slice.
 - Track caps; notify via `notify`.
 - Phase completion: checkpoint.
