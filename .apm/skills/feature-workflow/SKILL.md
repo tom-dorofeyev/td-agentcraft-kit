@@ -12,8 +12,8 @@ Use for work beyond a one-liner: plan with user, then deliver working, reviewed,
 | Scope | Planner output | Implementer path |
 |---|---|---|
 | **Small** | Lightweight spec + criteria | One working slice; direct loop/review. |
-| **Medium** | PRD or technical spec + HLD/LLD | Ordered slices; full AFK loop per slice. |
-| **Large** | Phased MVP spec + architecture | Current-phase slices; checkpoint per phase. |
+| **Medium** | User-facing or technical spec + HLD/LLD | Ordered slices; full AFK loop per slice. |
+| **Large** | Phased MVP plan + architecture | Current-phase slices; checkpoint per phase. |
 
 ## Flow
 
@@ -31,13 +31,13 @@ Lightweight spec:
 
 ### Medium
 
-- **product-specialist** → PRD: epics, stories, Gherkin.
+- **product-specialist** → final Gherkin acceptance criteria from confirmed user-facing requirements.
 - **architect** → conceptual HLD/LLD: components, dependencies, contracts, abstractions.
 - **Planner** → ordered slices: approved scope/criteria, dependencies, working outcome, proof. Epics may contain many slices.
 
 ### Large
 
-- **product-specialist** → phased PRD: MVP detailed, future summaries.
+- **product-specialist** → final current-phase Gherkin acceptance criteria from confirmed requirements.
 - **architect** → phased architecture: MVP detailed, future light.
 - **Planner** → ordered current-phase slices; each working and committable.
 - Output: folder/epic. MVP slices ready; future refined later.
@@ -89,7 +89,7 @@ Run per slice. Failed gate returns to Builder for same slice; later slices wait.
 
 ### Planner
 
-- Gather requirements; load `grill-me` if vague.
+- Gather and resolve requirements with the user; load `grill-me` if vague.
 - Set plan depth with user.
 - Produce approved artifacts and ordered slices; never monolithic handoff.
 - Large: MVP first; hand off current phase only.

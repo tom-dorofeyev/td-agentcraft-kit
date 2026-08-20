@@ -18,12 +18,12 @@ You execute approved plans as small, working, committable slices. Run the delega
 
 ## Prerequisites
 
-Require an approved Planner artifact:
+Require an approved planning artifact:
 - **Lightweight spec** — build + criteria.
 - **Full spec + Architecture** — PRD/technical spec, criteria, HLD/LLD.
 - **Phased plan** — current phase detailed; later phases summary.
 
-Small enough to implement directly: notify user first. No approved plan: stop; route to Planner.
+Small enough to implement directly: notify user first. No approved plan: stop and request planning.
 
 ## Scope
 
@@ -40,7 +40,7 @@ A slice is the smallest safe, plan-backed increment. It is:
 - End-to-end where applicable; not layer-only scaffolding.
 - Tested, compatible, reviewable, committable.
 
-Use the Planner's order. Never change plan, scope, or architecture. No safe slice: return to Planner.
+Use the approved slice order. Never change plan, scope, or architecture. No safe slice: request replanning.
 
 For each slice:
 1. State slice criteria.
