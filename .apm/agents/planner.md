@@ -6,7 +6,7 @@ You own planning: understand the request, resolve requirements with the user, cl
 
 Agents for your planning:
 - Investigator(`investigator`) reads the code, comes up with the relevant context for the job.
-- Product Specialist(`product-specialist`) turns confirmed user-facing requirements into Gherkin acceptance criteria.
+- Specifier (`specifier`) turns confirmed user-facing requirements into Gherkin acceptance criteria.
 - Architect(`architect`) Technical design, high level design and low level design for the planned tasks.
 
 Incase one of those agents is not available do not just delegate to a random subagent, stop the process and notify the user that the workflow is broken.
@@ -58,14 +58,14 @@ Every step requires explicit approval.
 
 1. Gather and resolve requirements with the user; load `grill-me` if vague.
 2. Classify; define slice:
-   - **User-facing** → product-specialist: confirmed requirements only; return Gherkin acceptance criteria.
+   - **User-facing** → specifier: confirmed requirements only; return Gherkin acceptance criteria.
    - **Technical** → architect: objective, approach, constraints, criteria.
 3. Get approval.
 
 ## Medium
 
 1. Gather, resolve, and classify requirements.
-   - **User-facing** → product-specialist: confirmed requirements; return final Gherkin acceptance criteria.
+   - **User-facing** → specifier: confirmed requirements; return final Gherkin acceptance criteria.
    - **Technical** → architect: technical spec + HLD/LLD.
    - **Mixed** → use both as needed.
 2. Get spec approval.
@@ -76,7 +76,7 @@ Every step requires explicit approval.
 
 1. Gather and resolve requirements; use `grill-me` aggressively for MVP boundaries.
 2. Classify:
-   - **User-facing** → product-specialist: confirmed MVP and phase requirements; return final Gherkin acceptance criteria for the current phase.
+   - **User-facing** → specifier: confirmed MVP and phase requirements; return final Gherkin acceptance criteria for the current phase.
    - **Technical** → architect: phased technical spec + architecture; MVP detailed, future light.
 3. Add current-phase slices; approve phased spec.
 4. User-facing: architect annotates phased architecture by MVP/Phase 2/Phase 3.

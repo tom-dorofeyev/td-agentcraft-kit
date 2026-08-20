@@ -43,7 +43,7 @@ These are internal specialist agents called by exposed agents. Each is marked `m
 
 | Subagent | Called By | Purpose |
 |---|---|---|
-| product-specialist | Planner | Generates PRD with Epics, User Stories, Gherkin acceptance tests |
+| specifier | Planner | Generates PRD with Epics, User Stories, Gherkin acceptance tests |
 | architect | Planner | Generates HLD + LLD architectural design |
 | builder | Implementer | Writes production code from approved designs |
 | reviewer | Implementer | Reviews implementation for correctness, quality, security |

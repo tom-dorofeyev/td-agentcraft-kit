@@ -31,13 +31,13 @@ Lightweight spec:
 
 ### Medium
 
-- **product-specialist** → final Gherkin acceptance criteria from confirmed user-facing requirements.
+- **specifier** → final Gherkin acceptance criteria from confirmed user-facing requirements.
 - **architect** → conceptual HLD/LLD: components, dependencies, contracts, abstractions.
 - **Planner** → ordered slices: approved scope/criteria, dependencies, working outcome, proof. Epics may contain many slices.
 
 ### Large
 
-- **product-specialist** → final current-phase Gherkin acceptance criteria from confirmed requirements.
+- **specifier** → final current-phase Gherkin acceptance criteria from confirmed requirements.
 - **architect** → phased architecture: MVP detailed, future light.
 - **Planner** → ordered current-phase slices; each working and committable.
 - Output: folder/epic. MVP slices ready; future refined later.
