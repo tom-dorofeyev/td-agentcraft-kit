@@ -21,7 +21,7 @@ This analogy drives every design decision. Duplication across agents is treated 
 
 ```text
 .apm/
-  agents/        # Agent charters — 3 exposed (Agent, Planner, Implementer) + 6 subagents
+  agents/        # Agent charters — 3 exposed (Agent, Planner, Implementer) + 7 subagents
   instructions/  # Shared rules inherited by every agent
   skills/        # Reusable workflows, quality gates, engineering standards
 docs/            # User-facing documentation (install guides, system overview)
@@ -48,6 +48,7 @@ These are internal specialist agents called by exposed agents. Each is marked `m
 | builder | Implementer | Writes production code from approved designs |
 | reviewer | Implementer | Reviews implementation for correctness, quality, security |
 | refactorer | Implementer | Reduces cognitive load and duplication, enforces metric thresholds |
+| hardener | Implementer | Strengthens tests through mutation testing |
 | investigator | Agent, Planner, Implementer | Read-only codebase investigation |
 
 ## Universal Design Principles

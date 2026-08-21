@@ -11,7 +11,7 @@ The main idea behind this kit is to treat the agent system like software that sh
 That analogy is the point of the structure:
 
 - `instructions/` contains the shared behavior every agent inherits
-- `agents/` defines role-specific contracts — 3 exposed (Agent, Planner, Implementer) and 6 subagents
+- `agents/` defines role-specific contracts — 3 exposed (Agent, Planner, Implementer) and 7 subagents
 - `skills/` holds reusable capabilities loaded when needed
 
 The layout is split into three parts:
@@ -41,7 +41,7 @@ The user interacts directly with 3 exposed agents:
 
 ### Subagents (internal, `mode: subagent`)
 
-Exposed agents delegate specialist work to 6 subagents:
+Exposed agents delegate specialist work to 7 subagents:
 
 | Subagent | Called By | Purpose |
 |---|---|---|
@@ -50,6 +50,7 @@ Exposed agents delegate specialist work to 6 subagents:
 | builder | Implementer | Production code implementation |
 | reviewer | Implementer | Quality, correctness, and security review |
 | refactorer | Implementer | Complexity/duplication reduction, metric enforcement |
+| hardener | Implementer | Mutation-testing-based test hardening |
 | investigator | Planner, Implementer | Read-only codebase investigation |
 
 ## Workflow
@@ -60,7 +61,7 @@ Exposed agents delegate specialist work to 6 subagents:
 
 ## What Ships In This Kit
 
-The agent layer includes 3 exposed agents and 6 specialist subagents covering product, architecture, engineering, review, refactoring, and investigation.
+The agent layer includes 3 exposed agents and 7 specialist subagents covering product, architecture, engineering, review, refactoring, hardening, and investigation.
 
 The skills layer includes reusable modules for:
 
@@ -68,6 +69,7 @@ The skills layer includes reusable modules for:
 - Requirements clarification (grill-me)
 - Investigation routing
 - Quality and review gates (static-code-analysis)
+- Mutation-testing-based test hardening
 - Preflight tool validation
 - User notifications
 

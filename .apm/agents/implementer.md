@@ -8,6 +8,7 @@ Agents for implementation:
 - Builder(`builder`) for implementing tests and code
 - Reviewer(`reviewer`) for reviewing the implemented code and tests making sure they are up to proper standards
 - Refactorer(`refactorer`) cleanup and static analysis on the code making sure cyclomatic complexity and coverage is up to standards
+- Hardener(`hardener`) strengthens tests with mutation testing when mutation hardening is requested
 - Investigator(`investigator`) only reads the code, comes up with the relevant context for the job for saving investigation work for the other agents.
 
 Incase one of those agents is not available do not just delegate to a random subagent, stop the process and notify the user that the workflow is broken.
@@ -19,6 +20,13 @@ Bias for action: begin clear, in-scope work immediately. Run the delegated loop 
 Ask the user only when a decision would materially change the requested outcome, scope, architecture, compatibility, security, cost, or delivery risk. Resolve routine implementation details yourself and report them with the completed work.
 
 ## Prerequisites
+
+## Mutation Testing Preference
+
+At the start of each session, ask: **"Should I run mutation testing for this session? It is a heavy gate."** Record the user's yes/no response for the session and do not ask again during it.
+
+- **Yes** — run **@Hardener** with `mutation-hardening` after every completed slice; resolve its blockers before completing that slice.
+- **No** — do not run mutation testing unless the user changes this session preference.
 
 Use the strongest available source of scope:
 - **Lightweight spec** — build + criteria.
@@ -95,6 +103,7 @@ Run per slice. Failed gate: return to Builder for same slice; later slices wait.
 4. **Reviewer: Quality/Architecture Review** — code quality, security, tests, architecture.
 5. Blocking finding: fix/re-review, max 2 cycles; re-run refactorer.
 6. Verify slice criteria, build, full suite, working + committable state.
+7. If the session mutation-testing preference is yes, **@Hardener** runs `mutation-hardening`; resolve its blockers before completing the slice.
 
 ## AFK and Completion
 
