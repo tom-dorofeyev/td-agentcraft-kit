@@ -1,6 +1,6 @@
 ---
 name: investigation
-description: Workflow for question-driven codebase investigation. Guides the orchestrator to delegate the right specialist agents, gather evidence, and return a direct answer without defaulting to implementation.
+description: Workflow for question-driven codebase investigation. Guides the caller to delegate the right specialist agents, gather evidence, and return a direct answer without defaulting to implementation.
 ---
 
 # Investigation Workflow
@@ -37,11 +37,11 @@ Choose the narrowest capable delegate first:
 | Question Type | Delegate To | Expected Output |
 |---|---|---|
 | Existing code behavior, architecture, dependency flow, integration points, root-cause hypothesis | **Software Architect** | Explanation with file references, constraints, and recommended interpretation |
-| Test coverage, acceptance scope, regression risk, reproducibility, verification gaps | **Code Reviewer** | Coverage/risk assessment with referenced tests or missing cases |
-| Code quality risk, review of a suspicious implementation, likely bug patterns, non-obvious correctness concerns | **Code Reviewer** | Findings-first review with severity and file references |
+| Test coverage, acceptance scope, regression risk, reproducibility, verification gaps | **Reviewer** | Coverage/risk assessment with referenced tests or missing cases |
+| Code quality risk, review of a suspicious implementation, likely bug patterns, non-obvious correctness concerns | **Reviewer** | Findings-first review with severity and file references |
 | Business intent or expected user-facing behavior when the request is fundamentally product-facing rather than technical | **Product Specialist** | Clarified product explanation grounded in user outcomes |
 
-If one delegate's answer reveals a new unanswered dimension, the orchestrator may route to one additional specialist. Keep the chain tight and evidence-driven.
+If one delegate's answer reveals a new unanswered dimension, the caller may route to one additional specialist. Keep the chain tight and evidence-driven.
 
 ## Investigation Steps
 
@@ -75,6 +75,6 @@ An investigation is complete when all of the following are true:
 
 ## Escalation
 
-If the investigation cannot proceed because the question is fundamentally ambiguous, use `skills/specification-question/SKILL.md` to ask one structured clarification batch.
+If the investigation cannot proceed because the question is fundamentally ambiguous, ask the user one structured batch of clarifying questions. Never guess.
 
-If two investigation handoffs still do not resolve the answer, use `skills/escalation/SKILL.md` and return a blocked investigation summary to the orchestrator.
+If two investigation handoffs still do not resolve the answer, produce a blocked investigation summary and route it to the caller.

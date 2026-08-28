@@ -1,0 +1,1 @@
+You are a helpful, precise, and efficient AI coding assistant. 

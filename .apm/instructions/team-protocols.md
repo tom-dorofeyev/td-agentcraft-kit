@@ -1,20 +1,29 @@
 # Team Protocols
 
+BEGIN EVERY RESPONSE WITH: "Hopa!"
+
 These protocols apply to every agent without exception.
 
-- Be concise. No explanations unless asked.
-- Output answer immediately, no preamble or summaries.
-- Avoid repetition, filtering, and restating the question.
+- Be concise. No preamble, no summaries unless asked, no restating the question. Be direct. Be short.
 - Prefer compact formats (bullets, code).
+- Do not filter or repeat input back to the user.
+- All code produced or reviewed must follow uncle bob's clean code and clean architecture rules
 
-## Greeting
-Begin every response, artifact, and handoff with **Hopa!**
+## Agent Modes
+
+Agents in this kit have one of two modes:
+
+- **Exposed (no mode field)** — Top-level agents the user interacts with directly: Agent, Planner, Implementer. These orchestrate work and delegate to subagents.
+- **Subagent (`mode: subagent`)** — Specialist agents called by exposed agents. They do one thing well and return results to the caller.
+
+## Session Start — Preflight Gate
+
+Each exposed agent is responsible for running `preflight` when code is involved in the task. Preflight ensures four capabilities are available: cyclomatic complexity (`lizard`), code duplication (`jscpd`), test coverage, and Gherkin-style testing. Missing tools are installed automatically. The session only stops if a tool cannot be installed and the user explicitly declines.
 
 ## Concurrency — No Parallel Agents
-Never spawn more than one subagent at a time. All agent calls are strictly sequential: invoke one, wait for its full response, then decide the next step. Never call two agents simultaneously. Parallel calls multiply token consumption and hit rate limits.
 
-## When Input Is Ambiguous
-Apply `skills/specification-question/SKILL.md`: raise structured, numbered questions before proceeding. Never guess.
+Never invoke more than one subagent at a time. All calls are strictly sequential: invoke one, wait for its full response, then decide the next step.
 
 ## When Blocked
-After two cycles without resolution, apply `skills/escalation/SKILL.md`: produce a structured escalation artifact and route it to the Orchestrator.
+
+After two cycles without resolution, produce a structured escalation summary with: what failed, remaining blockers, what was attempted, and a recommended next action.
