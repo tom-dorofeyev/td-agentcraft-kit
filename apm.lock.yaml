@@ -1,0 +1,38 @@
+lockfile_version: '1'
+generated_at: '2026-05-11T16:17:32.157930+00:00'
+dependencies: []
+local_deployed_files:
+- .agents/skills/clean-architecture
+- .agents/skills/clean-code-classes
+- .agents/skills/clean-code-comments
+- .agents/skills/clean-code-error-handling
+- .agents/skills/clean-code-functions
+- .agents/skills/clean-code-naming
+- .agents/skills/clean-code-security
+- .agents/skills/clean-code-solid
+- .agents/skills/clean-code-tests
+- .agents/skills/code-smells
+- .agents/skills/design-decision
+- .agents/skills/escalation
+- .agents/skills/fast-path
+- .agents/skills/full-workflow
+- .agents/skills/investigation
+- .agents/skills/notify
+- .agents/skills/product-spec
+- .agents/skills/readability-cognitive-load
+- .agents/skills/semantic-duplication
+- .agents/skills/specification-question
+- .agents/skills/state-management-logging
+- .agents/skills/static-code-analysis
+- .agents/skills/test-plan
+- .opencode/agents/code_reviewer.md
+- .opencode/agents/product_specialist.md
+- .opencode/agents/software_architect.md
+- .opencode/agents/software_engineer.md
+- .opencode/agents/team_leader.md
+local_deployed_file_hashes:
+  .opencode/agents/code_reviewer.md: sha256:647470ebadaa5d27c828b87ba13e1ae202cfce3c8caff77de9f760d5da6fb48d
+  .opencode/agents/product_specialist.md: sha256:b6ba303ea2f4d416c0dde8a8fe66523d26534fa50a0cd336d1fe599c6b8d8734
+  .opencode/agents/software_architect.md: sha256:0c1af3fdfb855c8060ba86cd26a284579ee885e98e4838879c127a84bd83df84
+  .opencode/agents/software_engineer.md: sha256:65cc5a6b6315ac03d97241f849368ecb9f7dfd71512429cd248cd3b25ee78abe
+  .opencode/agents/team_leader.md: sha256:803e38e3aa7ed5190754eefff4c4ddee0df7ec312fed9dcd706430062cb2f411
