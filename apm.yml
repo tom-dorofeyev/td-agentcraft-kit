@@ -7,10 +7,7 @@ license: MIT
 # Resolution order: --target flag > this field > auto-detect from filesystem.
 # Accepted values: copilot, claude, cursor, opencode, codex, gemini, windsurf, all
 targets:
-- claude
-- copilot
 - opencode
-- codex
 dependencies:
   apm: []
   mcp: []
