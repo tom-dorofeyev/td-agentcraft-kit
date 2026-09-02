@@ -18,7 +18,7 @@ Agents in this kit have one of two modes:
 
 ## Session Start — Preflight Gate
 
-Each exposed agent is responsible for running `preflight` when code is involved in the task. Preflight ensures four capabilities are available: cyclomatic complexity (`lizard`), code duplication (`jscpd`), test coverage, and Gherkin-style testing. Missing tools are installed automatically. The session only stops if a tool cannot be installed and the user explicitly declines.
+Each exposed agent is responsible for running `preflight` when code is involved in the task. Preflight ensures four capabilities are available: cyclomatic complexity (`lizard`), code duplication (`jscpd`), and test coverage. Missing tools are installed automatically. The session only stops if a tool cannot be installed and the user explicitly declines.
 
 ## Concurrency — No Parallel Agents
 
