@@ -36,6 +36,10 @@ Use the strongest available source of scope:
 
 For a clear direct request, do not wait for a planning or approval checkpoint. Request planning or clarification only when the missing information would materially affect the work.
 
+## Formal Work Items
+
+Load `work-item-tracking` only when Planner hands over a canonical `.agent-craft-work/...` path, then follow its lifecycle. Do not load it or create a tracked item for a session plan or direct request unless the user asks for formal planning.
+
 ## Scope
 
 | Plan | Behavior |

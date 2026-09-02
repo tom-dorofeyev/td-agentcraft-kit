@@ -27,6 +27,26 @@ The layout is split into three parts:
 - `instructions/` holds shared rules that apply across the whole team
 - `skills/` contains reusable workflows, quality gates, and engineering standards
 
+## Planning Outputs
+
+Planning has two modes:
+
+- **Session plan** — the plan stays in the conversation; it creates no files.
+- **Formal work item** — a durable plan with acceptance criteria, ordered slices, and a Planner → Implementer handoff.
+
+A formal item is stored outside the kit's tracked files:
+
+```text
+.agent-craft-work/
+  task/
+    2026-09-02--rename-account/
+      todo/
+      in-progress/
+      done/
+```
+
+The item type follows work scope: small work is a `task`, medium work a `user-story`, and a large work item's current phase an `epic`. Planner loads `work-item-tracking` after approving a formal plan, then hands the canonical path to Implementer. Implementer loads the same skill for the lifecycle: `todo → in-progress → done`. Review, refactoring, acceptance tests, and retries remain within `in-progress`. The skill is never loaded for a session plan.
+
 ## Agent Architecture
 
 ### Exposed Agents (user-facing)
@@ -56,7 +76,7 @@ Exposed agents delegate specialist work to 7 subagents:
 ## Workflow
 
 1. **Everyday tasks** → Agent (default assistant).
-2. **Anything needing planning** → Planner produces approved docs (depth scales with scope), then Implementer runs the AFK loop.
+2. **Anything needing planning** → Planner either plans in-session or creates a formal work item, then Implementer runs the AFK loop.
 3. **Massive scope** → Planner scopes to MVP phases. Implementer runs per phase. Planner loops back for next phase.
 
 ## What Ships In This Kit
@@ -66,6 +86,7 @@ The agent layer includes 3 exposed agents and 7 specialist subagents covering pr
 The skills layer includes reusable modules for:
 
 - Feature workflow orchestration (Planner → Implementer)
+- Formal work-item lifecycle tracking (work-item-tracking)
 - Requirements clarification (grill-me)
 - Investigation routing
 - Quality and review gates (static-code-analysis)
