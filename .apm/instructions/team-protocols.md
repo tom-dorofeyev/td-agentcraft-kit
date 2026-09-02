@@ -21,7 +21,3 @@ Each exposed agent is responsible for running `preflight` when code is involved 
 ## Concurrency — No Parallel Agents
 
 Never invoke more than one subagent at a time. All calls are strictly sequential: invoke one, wait for its full response, then decide the next step.
-
-## When Blocked
-
-After two cycles without resolution, produce a structured escalation summary with: what failed, remaining blockers, what was attempted, and a recommended next action.
