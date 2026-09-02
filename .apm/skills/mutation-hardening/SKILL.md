@@ -3,7 +3,7 @@ name: mutation-hardening
 description: Runs mutation testing to harden Java, TypeScript/JavaScript, and Go tests. Use when asked to kill mutants, measure mutation score, or strengthen tests with mutation testing.
 ---
 
-# Hopa! Mutation Hardening
+# Mutation Hardening
 
 ## Purpose
 

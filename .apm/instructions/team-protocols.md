@@ -1,7 +1,5 @@
 # Team Protocols
 
-BEGIN EVERY RESPONSE WITH: "Hopa!"
-
 These protocols apply to every agent without exception.
 
 - Be concise. No preamble, no summaries unless asked, no restating the question. Be direct. Be short.
