@@ -66,20 +66,7 @@ go version 2>/dev/null && go test -cover ./... 2>&1 | head -1
 mvn jacoco:help 2>/dev/null || echo "JaCoCo not configured (user declined)"
 ```
 
-## Step 3 — Gherkin
-
-```bash
-find . -name "*.feature" -not -path "*/node_modules/*" -not -path "*/.git/*" 2>/dev/null | head -5
-```
-
-| Signal | Runner | Install |
-|---|---|---|
-| `.feature` + JS/TS | cucumber-js | `npm install -g @cucumber/cucumber` or `npx` |
-| `.feature` + Python | behave | `pip install --user behave` |
-| `.feature` + Java | cucumber-jvm | Ask before editing pom.xml/build.gradle |
-| No `.feature` files | — | Not needed |
-
-## Step 4 — Collective Prompt
+## Step 3 — Collective Prompt
 
 After Steps 1-3, present all tools that could not be auto-installed in a single prompt:
 
@@ -90,7 +77,7 @@ Preflight — tools needed: jscpd, pytest-cov, cucumber-jvm
 
 Never auto-skip. Every gap must be explicitly acknowledged. `s` → record as `declined` and continue with warning. `a` → stop.
 
-## Step 5 — Cache
+## Step 4 — Cache
 
 Write `.apm/preflight-state.yaml`:
 
@@ -101,7 +88,6 @@ tools:
   lizard:    { available: true,  install_method: "pip install --user lizard" }
   jscpd:     { available: true,  install_method: "npm install -g jscpd" }
   coverage:  { available: true,  tool: "nyc", install_method: "npx nyc" }
-  gherkin:   { available: false, reason: "no .feature files" }
 gitignore_updated: true
 warnings: []
 ```
@@ -113,7 +99,7 @@ Add `.apm/preflight-state.yaml` to `.gitignore`.
 ```
 Preflight — <project>
 =====================
-✓ lizard  ✓ jscpd  ✓ coverage (nyc)  ✓ gherkin (behave)
+✓ lizard  ✓ jscpd  ✓ coverage (nyc)
 ✓ .gitignore updated  ✓ State cached
 All capabilities present.
 ```
