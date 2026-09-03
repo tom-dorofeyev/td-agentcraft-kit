@@ -1,9 +1,4 @@
----
-name: domain-driven-design
-description: Use when designing, reviewing, or refactoring module boundaries, domain models, and cross-context interactions to enforce DDD strategic and tactical patterns. Derived from Eric Evans' Domain-Driven Design.
----
-
-# SKILL: Domain-Driven Design
+# Domain-Driven Design
 
 ## Strategic Design
 

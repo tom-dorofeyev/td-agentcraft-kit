@@ -1,9 +1,4 @@
----
-name: clean-code-naming
-description: Use when writing, modifying, refactoring, or reviewing code to enforce intention-revealing, unambiguous names for variables, functions, classes, interfaces, tests, and files. Derived from Clean Code Chapter 2.
----
-
-# SKILL: Clean Code — Naming
+# Clean Code — Naming
 
 ## Rules
 

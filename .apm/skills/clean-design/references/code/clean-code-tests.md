@@ -1,9 +1,4 @@
----
-name: clean-code-tests
-description: Use when writing, modifying, refactoring, or reviewing tests to enforce clean, reliable, single-behaviour test code following F.I.R.S.T. and TDD discipline. Derived from Clean Code Chapter 9.
----
-
-# SKILL: Clean Code — Tests
+# Clean Code — Tests
 
 ## Rules
 
@@ -35,6 +30,7 @@ Before committing any test:
 3. Is the test touching real network, filesystem, clock, or random values? Replace with test doubles.
 4. Would a semantically equivalent refactor of the production code break this test? If yes, it is testing implementation — rewrite.
 5. Does the arrange block exceed 5–8 lines? Extract a factory or fixture.
+6. Does one production code change break several test? This should point out the test is probably not written well
 
 ## When Reviewing
 

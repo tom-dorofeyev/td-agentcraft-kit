@@ -1,9 +1,4 @@
----
-name: code-smells
-description: A catalogue of code smells and heuristics for recognising poor design. Primarily used during code review. Derived from Clean Code Chapter 17.
----
-
-# SKILL: Code Smells & Heuristics
+# Code Smells & Heuristics
 
 ## Purpose
 This skill is a diagnostic lens — a catalogue of recognisable patterns that signal design problems. It does not define rules for writing, but gives reviewers and refactoring-minded engineers a vocabulary for identifying *what is wrong* and *why*.

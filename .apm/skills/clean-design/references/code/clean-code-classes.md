@@ -1,11 +1,6 @@
----
-name: clean-code-classes
-description: Use when writing, modifying, refactoring, or reviewing classes, interfaces, and modules to enforce cohesion, size, and organisation. SOLID principles are covered separately in clean-code-solid. Derived from Clean Code Chapter 10.
----
+# Clean Code — Classes
 
-# SKILL: Clean Code — Classes
-
-> SOLID principles (SRP, OCP, LSP, ISP, DIP) are defined and applied via `skills/clean-code-solid/SKILL.md`. This skill focuses on class-level design: size, cohesion, and organisation.
+> SOLID principles (SRP, OCP, LSP, ISP, DIP) are defined and applied via [SOLID](../design/clean-code-solid.md). This reference focuses on class-level design: size, cohesion, and organisation.
 
 ## Rules
 

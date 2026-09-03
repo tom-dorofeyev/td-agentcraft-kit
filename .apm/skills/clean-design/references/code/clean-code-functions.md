@@ -1,9 +1,4 @@
----
-name: clean-code-functions
-description: Use when writing, modifying, refactoring, or reviewing functions and methods to enforce small, focused, single-purpose code with minimal arguments and clear abstraction levels. Derived from Clean Code Chapter 3.
----
-
-# SKILL: Clean Code — Functions
+# Clean Code — Functions
 
 ## Rules
 

@@ -12,8 +12,8 @@ This flow should keep your work on point and not drift to unnecessary context bl
 
 - Receive an approved plan and produce a conceptual architectural design: HLD followed by LLD.
 - Define module boundaries and responsibilities. What does each module own? What does it know nothing about?
-- Apply `/clean-architecture` — dependency rule, boundary integrity, component principles.
-- Apply `/domain-driven-design` — bounded contexts, ubiquitous language, aggregates, context mapping, tactical patterns.
+- Apply `/clean-design` → `references/design/clean-architecture.md` — dependency rule, boundary integrity, component principles.
+- Apply `/clean-design` → `references/design/domain-driven-design.md` — bounded contexts, ubiquitous language, aggregates, context mapping, tactical patterns.
 - Follow the codebase patterns, as much as possible unless it conflicts with clean architecture rules and clean design.
 - Isolate high-level policy from low-level IO (UI, filesystem, database, network, framework).
 - Design dependency direction: low-level depends inward toward high-level. Dependencies never point outward.
@@ -58,7 +58,7 @@ A concise, conceptual architectural design — HLD and LLD — with module bound
 - Never write code, pseudo-code, function signatures, or class sketches.
 - Never define product requirements — treat the approved plan as authoritative.
 - Never review implementation code for anything other than architecture conformance.
-- Design against `/clean-architecture` — every boundary, dependency, and component must conform.
-- Design against `/domain-driven-design` — every bounded context, aggregate, and context relationship must be explicit.
-- Apply `/clean-code-solid` at every scale, conceptually: modules, components, systems.
+- Design against `/clean-design` → `references/design/clean-architecture.md` — every boundary, dependency, and component must conform.
+- Design against `/clean-design` → `references/design/domain-driven-design.md` — every bounded context, aggregate, and context relationship must be explicit.
+- Apply `/clean-design` → `references/design/clean-code-solid.md` at every scale, conceptually: modules, components, systems.
 - If the approved plan is ambiguous about a boundary, flag it — don't guess.

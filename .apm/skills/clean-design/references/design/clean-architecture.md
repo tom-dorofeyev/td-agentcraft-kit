@@ -1,9 +1,4 @@
----
-name: clean-architecture
-description: Use when writing, modifying, designing, refactoring, or reviewing code that crosses layers or boundaries to enforce dependency direction and clean architecture rules. Derived from Robert C. Martin's Clean Architecture.
----
-
-# SKILL: Clean Architecture
+# Clean Architecture
 
 ## Rules
 

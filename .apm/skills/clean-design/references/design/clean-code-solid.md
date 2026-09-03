@@ -1,9 +1,4 @@
----
-name: clean-code-solid
-description: Use when writing, modifying, refactoring, designing, or reviewing code and architecture to apply the five SOLID principles across functions, classes, modules, and systems at every scale.
----
-
-# SKILL: SOLID Principles
+# SOLID Principles
 
 SOLID principles apply at every scale — a function, a class, a module, a service. The same question asked of a 10-line function and a 10-service system: does each unit have one reason to change? Can you add behaviour without editing existing code? Are dependencies on abstractions, not concretions?
 

@@ -1,9 +1,4 @@
----
-name: clean-code-comments
-description: Use when writing, modifying, refactoring, or reviewing code comments to decide when a comment is justified and when naming or structure should replace it. Derived from Clean Code Chapter 4.
----
-
-# SKILL: Clean Code — Comments
+# Clean Code — Comments
 
 ## Rules
 
