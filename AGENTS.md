@@ -2,7 +2,7 @@
 
 ## What This Project Is
 
-A reusable APM kit that ships a multi-agent engineering workflow system to Copilot, Claude, and OpenCode. It is distributed via `apm install` and designed for a single-install, cross-tool experience.
+A reusable APM kit that ships a multi-agent engineering workflow system to Copilot and OpenCode. It is distributed via `apm install` and designed for a single-install, cross-tool experience.
 
 ## Core Philosophy
 

@@ -5,9 +5,10 @@ author: Tom Dorofeyev
 license: MIT
 # Which agent platforms to deploy to.
 # Resolution order: --target flag > this field > auto-detect from filesystem.
-# Accepted values: copilot, claude, cursor, opencode, codex, gemini, windsurf, all
+# Supported targets: copilot, opencode
 targets:
 - opencode
+- copilot
 dependencies:
   apm: []
   mcp: []

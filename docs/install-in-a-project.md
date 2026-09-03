@@ -4,7 +4,7 @@ Use this when you want the kit inside a specific repository.
 
 ```sh
 cd your-project
-apm init --target opencode,claude,copilot
+apm init --target opencode,copilot
 apm install https://github.com/tom-dorofeyev/td-agentcraft-kit#main
 ```
 

@@ -104,4 +104,4 @@ This separation keeps the system easier to evolve:
 - Subagents are clearly distinguished from exposed agents via `mode: subagent`
 - The Planner ↔ Implementer split creates a clean handoff between planning and execution
 
-That makes the kit easier to maintain and easier to adapt across Copilot, Claude, and OpenCode.
+That makes the kit easier to maintain and easier to adapt across Copilot and OpenCode.

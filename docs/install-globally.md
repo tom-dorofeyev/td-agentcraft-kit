@@ -7,13 +7,13 @@ Use this when you want the kit available in your user config for all projects.
 macOS / Linux:
 
 ```sh
-apm install --global https://github.com/tom-dorofeyev/td-agentcraft-kit#main --target opencode,claude,copilot
+apm install --global https://github.com/tom-dorofeyev/td-agentcraft-kit#main --target opencode,copilot
 ```
 
 Windows PowerShell:
 
 ```powershell
-apm install --global https://github.com/tom-dorofeyev/td-agentcraft-kit#main --target opencode,claude,copilot
+apm install --global https://github.com/tom-dorofeyev/td-agentcraft-kit#main --target opencode,copilot
 ```
 
 ## Install From A Local Clone
@@ -30,13 +30,13 @@ Then run one of these:
 macOS / Linux:
 
 ```sh
-apm install --global "$PWD" --target opencode,claude,copilot
+apm install --global "$PWD" --target opencode,copilot
 ```
 
 Windows PowerShell:
 
 ```powershell
-apm install --global $PWD.Path --target opencode,claude,copilot
+apm install --global $PWD.Path --target opencode,copilot
 ```
 
 ## Deployment Paths
@@ -46,13 +46,11 @@ Global files are deployed to:
 macOS / Linux:
 
 - OpenCode: `~/.config/opencode/`
-- Claude Code: `~/.claude/`
 - GitHub Copilot: `~/.copilot/`
 
 Windows PowerShell:
 
 - OpenCode: `~\.config\opencode\`
-- Claude Code: `~\.claude\`
 - GitHub Copilot: `~\.copilot\`
 
 If you also want Telegram notifications, see [telegram-notifications.md](telegram-notifications.md).
