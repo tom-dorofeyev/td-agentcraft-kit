@@ -10,9 +10,10 @@ A reusable APM kit that ships a multi-agent engineering workflow system to Copil
 
 ### The Mental Model
 
-- **Exposed Agents** → classes (role-specific contracts with defined inputs/outputs, user-facing)
-- **Subagents** → private methods (specialist capabilities called by exposed agents, marked `mode: subagent`)
-- **Skills** → methods (reusable capabilities loaded on demand)
+- **Agent** → default user-facing entry point
+- **Orchestration skills** → Planner and Implementer workflows
+- **Workflow roles** → portable leaf-role contracts loaded by `specialized-agent`
+- **Skills** → reusable capabilities loaded on demand
 - **Instructions** → base class (shared rules inherited by all agents)
 
 This analogy drives every design decision. Duplication across agents is treated as a DRY violation. Shared behavior is extracted into instructions or skills, not copy-pasted. Every file has one reason to change.
@@ -21,35 +22,27 @@ This analogy drives every design decision. Duplication across agents is treated 
 
 ```text
 .apm/
-  agents/        # Agent charters — 3 exposed (Agent, Planner, Implementer) + 7 subagents
+  agents/        # Default Agent entry point
   instructions/  # Shared rules inherited by every agent
   skills/        # Reusable workflows, quality gates, engineering standards
 docs/            # User-facing documentation (install guides, system overview)
 ```
 
-Agents and skills use YAML frontmatter for metadata. Exposed agents have no `mode` field. Subagents have `mode: subagent`. The `apm.yml` manifest declares targets, version, and dependencies.
+The default Agent and each skill use YAML frontmatter for metadata. Workflow role contracts are plain Markdown references in `specialized-agent`. The `apm.yml` manifest declares targets, version, and dependencies.
 
-## Exposed Agents
+## Workflow Roles
 
-| Agent | Role | When to Use |
+`planner` and `implementer` orchestrate their workflows. `specialized-agent` loads these portable leaf contracts and uses native delegation for one bounded, sequential task; `delegate` is its fallback:
+
+| Role | Purpose |
 |---|---|---|
-| **Agent** | Default assistant | Everyday coding tasks, questions, simple changes — the one-liner passthrough |
-| **Planner** | Scope-scaled planning | Any task needing planning: lightweight spec for small changes, full PRD + Architecture for features, phased MVP for platforms |
-| **Implementer** | AFK implementation loop | Executing approved plans — adapts to plan depth, runs until acceptance criteria pass |
-
-## Subagents
-
-These are internal specialist agents called by exposed agents. Each is marked `mode: subagent` in its YAML frontmatter:
-
-| Subagent | Called By | Purpose |
-|---|---|---|
-| specifier | Planner | Generates PRD with Epics, User Stories, Gherkin acceptance tests |
-| architect | Planner | Generates HLD + LLD architectural design |
-| builder | Implementer | Writes production code from approved designs |
-| reviewer | Implementer | Reviews implementation for correctness, quality, security |
-| refactorer | Implementer | Reduces cognitive load and duplication, enforces metric thresholds |
-| hardener | Implementer | Strengthens tests through mutation testing |
-| investigator | Agent, Planner, Implementer | Read-only codebase investigation |
+| Specifier | Gherkin acceptance criteria |
+| Architect | HLD + LLD architectural design |
+| Builder | Production implementation |
+| Reviewer | Correctness, quality, and security review |
+| Refactorer | Measured complexity and duplication reduction |
+| Hardener | Mutation-test hardening |
+| Investigator | Read-only codebase investigation |
 
 ## Universal Design Principles
 
@@ -67,7 +60,7 @@ Every artifact in this project is expected to uphold these principles regardless
 
 These are baked into the instructions layer and inherited by all agents:
 
-- **No parallel agents.** All subagent calls are strictly sequential. Never invoke two agents simultaneously.
+- **No parallel roles.** All delegated role calls are strictly sequential. Never invoke two roles simultaneously.
 - **Conciseness is mandatory.** No preamble, no summaries unless asked, no restating the question. Be direct. Be short.
 
 ## Workflow Overview
@@ -76,19 +69,19 @@ The kit supports three execution paths based on scope. The Planner handles all s
 
 | Scope | Signal | Path |
 |---|---|---|
-| **Small** | A change bigger than a one-liner but not a full feature | **Planner → Implementer** — lightweight spec, then direct implementation + review |
-| **Medium** | New feature, cross-cutting change, new abstraction | **Planner → Implementer** — full PRD + Architecture, then AFK loop until Gherkin tests pass |
-| **Large** | Entire application, "create an X" | **Planner → Implementer → Planner → ...** — MVP scoped into phases, each phase through the full workflow, loop back for next phase |
+| **Small** | A change bigger than a one-liner but not a full feature | **`/planner` → `/implementer`** — lightweight spec, then direct implementation + review |
+| **Medium** | New feature, cross-cutting change, new abstraction | **`/planner` → `/implementer`** — full PRD + Architecture, then AFK loop until Gherkin tests pass |
+| **Large** | Entire application, "create an X" | **`/planner` → `/implementer` → `/planner` → ...** — MVP scoped into phases, each phase through the full workflow, loop back for next phase |
 
 Gate enforcement is strict. A task is not "done" until every applicable gate has passed and the evidence has been recorded. Build must succeed. Full test suite must pass. No exceptions.
 
 ## Writing for This Kit
 
-When contributing agent charters, skills, or instructions:
+When contributing role contracts, skills, or instructions:
 
-1. **Respect the analogy.** If a skill defines a method, it should be independently loadable and reusable. If an agent defines a class contract, its responsibilities should be single and clear.
-2. **Follow the existing formats.** Agents use YAML frontmatter with `description` and optional `mode: subagent`. Skills use frontmatter + body with a single, focused purpose.
-3. **Never duplicate.** If behavior is shared by multiple agents, it belongs in `instructions/` or a skill. If a skill overlaps semantically with another, converge them.
+1. **Respect the analogy.** A role contract has one responsibility. A skill is independently loadable and reusable.
+2. **Follow the existing formats.** The default Agent and skills use YAML frontmatter. Workflow role contracts are plain Markdown in `specialized-agent/references/`.
+3. **Never duplicate.** Orchestration behavior belongs only in `planner` or `implementer`; leaf-role behavior belongs only in `specialized-agent/references/`. Shared behavior belongs in `instructions/` or a skill. If a skill overlaps semantically with another, converge them.
 4. **Apply the Rule of Three.** Do not extract a skill on the first or second occurrence of a pattern. Wait for the third.
 5. **Treat markdown as code.** Naming, structure, cohesion, and coupling apply to these files exactly as they would to source code.
 
