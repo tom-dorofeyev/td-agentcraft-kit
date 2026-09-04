@@ -41,63 +41,22 @@ Run whole-file tools, but enforce thresholds only for findings that intersect th
 - Coverage fails only when changed-line coverage is at or below the configured minimum.
 - Existing out-of-scope violations elsewhere in touched files are recorded as legacy context, not forced as part of the current task.
 
-## Prerequisite
+## Run
 
-Install both tools once:
-
-```bash
-pip install lizard
-npm install -g jscpd
-```
-
-If either tool is missing when the command runs, stop and tell the user exactly what to install before continuing:
-
-- `pip install lizard`
-- `npm install -g jscpd`
-
-Do not treat a missing tool as a code failure. Treat it as an environment prerequisite that the user needs to satisfy.
-
-## How to run
-
-Run the tools directly.
-
-Complexity:
+Run the bundled script; do not construct `lizard` or `jscpd` commands manually:
 
 ```bash
-lizard --warnings_only --CCN 10 <file-or-dir> [...]
+node .apm/skills/static-code-analysis/scripts/run-static-analysis.mjs <file-or-directory> [...]
 ```
 
-Duplication:
+Pass `--report-dir <directory>` only when reports must be retained. Otherwise the script writes them to a temporary directory and prints its path. It exits non-zero for missing tools, invalid targets, complexity-tool failures, or duplication above the configured threshold.
 
-```bash
-jscpd --threshold 10 --reporters json --output .jscpd-report <file-or-dir> [...]
-```
-
-Or, without a global install:
-
-```bash
-npx jscpd --threshold 10 --reporters json --output .jscpd-report <file-or-dir> [...]
-```
-
-The tools analyze the provided paths. The caller must compare findings against the current diff and only treat overlapping findings as blocking.
-
-## Examples
-
-```bash
-# Single file
-lizard --warnings_only --CCN 10 src/app.ts
-
-# Directory duplication report
-jscpd --threshold 10 --reporters json --output .jscpd-report src/
-
-# npx fallback
-npx jscpd --threshold 10 --reporters json --output .jscpd-report src/
-```
+The caller must compare findings against the current diff and only treat overlapping findings as blocking.
 
 ## Gate Semantics
 
-- `lizard` enforces the per-function complexity budget.
-- `jscpd` reports duplication across the provided paths.
+- The script invokes `lizard` and `jscpd` with the skill's thresholds.
+- The script reports the temporary or requested JSON report directory.
 - Default thresholds come from this skill.
 - Reported findings must be scoped back to the current diff before they are treated as blocking.
-- If `lizard` or `jscpd` is not installed, the result is an environment prerequisite failure with the required install command.
+- If `lizard` or `jscpd` is not installed, the result is an environment prerequisite failure.
