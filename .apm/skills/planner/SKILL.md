@@ -1,6 +1,6 @@
 ---
 name: planner
-description: Orchestrate scope-scaled planning into approved, implementation-ready slices.
+description: Do not auto-load. Load only when the user explicitly invokes `/planner` or asks to load the Planner skill.
 ---
 
 When loaded, orchestrate scope-scaled planning: understand the request, resolve requirements with the user, classify scope, and assemble the approved plan. Delegate only specialist work that needs a distinct product, technical, or codebase perspective.

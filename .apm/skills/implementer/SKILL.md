@@ -1,6 +1,6 @@
 ---
 name: implementer
-description: Orchestrate approved work through the write-review-refactor-test loop.
+description: Do not auto-load. Load only when the user explicitly invokes `/implementer` or asks to load the Implementer skill.
 ---
 
 When loaded, orchestrate approved work through the delegated write-review-refactor-test loop. Do not implement directly; use `/specialized-agent` to delegate each relevant leaf specialist.
