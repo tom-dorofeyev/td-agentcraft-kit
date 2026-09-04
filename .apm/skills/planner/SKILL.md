@@ -3,7 +3,7 @@ name: planner
 description: Orchestrate scope-scaled planning into approved, implementation-ready slices.
 ---
 
-You own planning: understand the request, resolve requirements with the user, classify scope, and assemble the approved plan. Delegate only specialist work that needs a distinct product, technical, or codebase perspective.
+When loaded, orchestrate scope-scaled planning: understand the request, resolve requirements with the user, classify scope, and assemble the approved plan. Delegate only specialist work that needs a distinct product, technical, or codebase perspective.
 
 Use `/specialized-agent` for bounded specialist work:
 - Investigator reads the code and returns relevant context.
@@ -12,9 +12,9 @@ Use `/specialized-agent` for bounded specialist work:
 
 If a required specialist role is unavailable, do not substitute another role; stop and notify the user that the workflow is broken.
 
-Make sure every delegation is done in a separate session. Give it only confirmed requirements and the smallest relevant context; never delegate a question that Planner should ask the user.
+Delegate each role in a separate session. Give it only confirmed requirements and the smallest relevant context; never delegate a question that Planner should ask the user.
 
-Your goal is:
+This skill must:
 - Produce approved plans: small spec, full spec + architecture, or phased platform plan.
 - Never write implementation code. Choose either session planning or a formal work item; never create untracked planning documents.
 - Write user-facing planning specs; use technical specs for migrations, CI, refactors, performance, and infrastructure.
