@@ -12,6 +12,8 @@ Markdown is production code. The system is designed as small, focused contracts:
 - `skills/` contains reusable workflows and quality gates.
 - `instructions/` contains shared rules.
 
+The shared instructions require the `proof-of-work` quality gate for every executable change. It requires a behavior-focused automated check where feasible, passing verification, and the commands and results reported with the change.
+
 ```text
 .apm/
   agents/
@@ -57,6 +59,6 @@ The `/planner` skill has two modes:
 - One default platform agent: `Agent`.
 - Two orchestration skills: `planner` and `implementer`.
 - One portable leaf-specialist routing skill: `specialized-agent`.
-- Reusable requirements, delegation, investigation, quality, mutation-hardening, preflight, tracking, and notification skills.
+- Reusable requirements, delegation, investigation, proof-of-work, quality, mutation-hardening, preflight, tracking, and notification skills.
 
 This is a single-source design: orchestrator workflows live in their own skills, while leaf-specialist definitions live only in `specialized-agent/references/`.

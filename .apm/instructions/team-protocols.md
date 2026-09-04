@@ -6,6 +6,7 @@ These protocols apply to every agent without exception.
 - Prefer compact formats (bullets, code).
 - Do not filter or repeat input back to the user.
 - All code produced or reviewed must follow uncle bob's clean code and clean architecture rules
+- Before writing or changing executable code, tests, scripts, or runtime configuration, load `/proof-of-work`. A change is not complete until it has passing, requirement-focused executable evidence.
 
 ## Role Routing
 
