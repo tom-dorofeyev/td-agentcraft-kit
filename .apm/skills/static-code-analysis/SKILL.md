@@ -1,13 +1,13 @@
 ---
 name: static-code-analysis
-description: Runs a static code analysis gate using lizard for cyclomatic complexity and jscpd for duplication.
+description: Require static-analysis quality gates for every executable code change.
 ---
 
 # SKILL: Static Code Analysis
 
 ## Purpose
 
-Run a lightweight static code analysis gate for one or more source files. The skill currently enforces cyclomatic complexity via `lizard` or `lizard.exe` and duplication percentage via `jscpd`.
+Every code change must pass this gate before it is described as complete, working, or ready. Run it for the changed production code, tests, scripts, and runtime-affecting configuration. The skill enforces cyclomatic complexity via `lizard` or `lizard.exe` and duplication percentage via `jscpd`.
 
 ## Inputs
 
@@ -64,3 +64,9 @@ The caller must compare findings against the current diff and only treat overlap
 - Default thresholds come from this skill.
 - Reported findings must be scoped back to the current diff before they are treated as blocking.
 - If `lizard` or `jscpd` is not installed, the result is an environment prerequisite failure.
+
+## Gate
+
+Run this analysis after editing executable code and before declaring the change complete. Include the exact command and its pass/fail result with the completed change.
+
+If the analysis fails, resolve every finding attributable to the current change or keep the work incomplete. Legacy findings outside the change set must be reported as context, but do not block the change.
