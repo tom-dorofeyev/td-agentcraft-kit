@@ -5,12 +5,7 @@ description: Create and progress a formal Planner → Implementer work item with
 
 # Formal Work-Item Tracking
 
-Load this skill only when:
-
-- Planner has an approved formal plan that needs a durable handoff.
-- Implementer receives a canonical `.agent-craft-work/...` path.
-
-Do not load it for session planning or direct implementation without a formal work item.
+Use this workflow for an approved formal plan that needs a durable Planner → Implementer handoff, or when Implementer receives its canonical `.agent-craft-work/...` path.
 
 ## Planner
 
