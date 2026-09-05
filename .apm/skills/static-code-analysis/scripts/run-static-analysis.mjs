@@ -73,8 +73,8 @@ function createReportDirectory(requestedReportDirectory) {
   return reportDirectory;
 }
 
-function runAnalyzers(reportDirectory, targets) {
-  const complexityStatus = run('lizard', [
+function runComplexityAnalysis(targets) {
+  return run('lizard', [
     '--warnings_only',
     '--CCN',
     COMPLEXITY_LIMIT,
@@ -82,7 +82,10 @@ function runAnalyzers(reportDirectory, targets) {
     '-1',
     ...targets,
   ]);
-  const duplicationStatus = run('jscpd', [
+}
+
+function runDuplicationAnalysis(reportDirectory, targets) {
+  return run('jscpd', [
     '--threshold',
     DUPLICATION_LIMIT,
     '--reporters',
@@ -91,25 +94,24 @@ function runAnalyzers(reportDirectory, targets) {
     reportDirectory,
     ...targets,
   ]);
-
-  return complexityStatus === 0 && duplicationStatus === 0 ? 0 : 1;
 }
 
-function main(arguments_) {
-  if (arguments_.includes('--help') || arguments_.includes('-h')) {
-    usage();
-    return 0;
-  }
+function runCleanCodeAnalysis(targets) {
+  return run(process.execPath, [
+    new URL('./run-clean-code-lint.mjs', import.meta.url).pathname,
+    ...targets,
+  ]);
+}
 
-  const { error, reportDirectory: requestedReportDirectory, targets } = parseArguments(arguments_);
-  const targetError = validateTargets(targets);
+function runAnalyzers(reportDirectory, targets) {
+  const complexityStatus = runComplexityAnalysis(targets);
+  const duplicationStatus = runDuplicationAnalysis(reportDirectory, targets);
+  const cleanCodeStatus = runCleanCodeAnalysis(targets);
 
-  if (error || targetError) {
-    console.error(error ?? targetError);
-    usage();
-    return 2;
-  }
+  return complexityStatus === 0 && duplicationStatus === 0 && cleanCodeStatus === 0 ? 0 : 1;
+}
 
+function analyzeTargets(requestedReportDirectory, targets) {
   const resolvedTargets = targets.map((target) => resolve(target));
   const missingTargets = resolvedTargets.filter((target) => !existsSync(target));
 
@@ -123,6 +125,24 @@ function main(arguments_) {
   console.log(`Static analysis reports: ${reportDirectory}`);
   console.log(`Duplication report: ${join(reportDirectory, 'jscpd-report.json')}`);
   return runAnalyzers(reportDirectory, resolvedTargets);
+}
+
+function main(arguments_) {
+  if (arguments_.includes('--help') || arguments_.includes('-h')) {
+    usage();
+    return 0;
+  }
+
+  const { error, reportDirectory, targets } = parseArguments(arguments_);
+  const targetError = validateTargets(targets);
+
+  if (error || targetError) {
+    console.error(error ?? targetError);
+    usage();
+    return 2;
+  }
+
+  return analyzeTargets(reportDirectory, targets);
 }
 
 process.exitCode = main(process.argv.slice(2));

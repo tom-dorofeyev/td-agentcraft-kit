@@ -43,20 +43,24 @@ Run whole-file tools, but enforce thresholds only for findings that intersect th
 
 ## Run
 
-Run the bundled script; do not construct `lizard` or `jscpd` commands manually:
+Run the bundled script; do not construct analyzer commands manually:
 
 ```bash
 node .apm/skills/static-code-analysis/scripts/run-static-analysis.mjs <file-or-directory> [...]
 ```
 
-Pass `--report-dir <directory>` only when reports must be retained. Otherwise the script writes them to a temporary directory and prints its path. It exits non-zero for missing tools, invalid targets, complexity-tool failures, or duplication above the configured threshold.
+Pass `--report-dir <directory>` only when reports must be retained. Otherwise the script writes them to a temporary directory and prints its path. It exits non-zero for missing tools, invalid targets, complexity-tool failures, duplication above the configured threshold, or a clean-code violation.
+
+For JavaScript and TypeScript files (`.js`, `.mjs`, `.cjs`, `.ts`, `.mts`, `.cts`, `.tsx`), it also runs pinned, temporary ESLint and TypeScript parser packages with an isolated ruleset. It does not read or modify the project's ESLint configuration, dependencies, source, or ignore files. The rule set enforces functions of at most 20 non-blank, non-comment lines; at most three parameters; and no direct `true` or `false` call arguments. Without type information, it deliberately enforces boolean literals only, not boolean variables.
+
+Each JavaScript violation is an error. The runner prints its location, rule ID, and a rule-specific refactoring direction; treat that direction as required unless the rule itself is changed.
 
 The caller must compare findings against the current diff and only treat overlapping findings as blocking.
 
 ## Gate Semantics
 
-- The script invokes `lizard` and `jscpd` with the skill's thresholds.
-- The script reports the temporary or requested JSON report directory.
+- The script invokes `lizard`, `jscpd`, and the isolated JavaScript clean-code linter with its own thresholds and rules.
+- The script reports the temporary or requested JSON report directory plus the clean-code report location.
 - Default thresholds come from this skill.
 - Reported findings must be scoped back to the current diff before they are treated as blocking.
 - If `lizard` or `jscpd` is not installed, the result is an environment prerequisite failure.
