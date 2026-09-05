@@ -124,7 +124,13 @@ function analyzeTargets(requestedReportDirectory, targets) {
 
   console.log(`Static analysis reports: ${reportDirectory}`);
   console.log(`Duplication report: ${join(reportDirectory, 'jscpd-report.json')}`);
-  return runAnalyzers(reportDirectory, resolvedTargets);
+  const status = runAnalyzers(reportDirectory, resolvedTargets);
+
+  if (status === 0) {
+    console.log('Static analysis completed successfully.');
+  }
+
+  return status;
 }
 
 function main(arguments_) {

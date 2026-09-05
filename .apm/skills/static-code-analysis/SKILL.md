@@ -51,6 +51,8 @@ node .apm/skills/static-code-analysis/scripts/run-static-analysis.mjs <file-or-d
 
 Pass `--report-dir <directory>` only when reports must be retained. Otherwise the script writes them to a temporary directory and prints its path. It exits non-zero for missing tools, invalid targets, complexity-tool failures, duplication above the configured threshold, or a clean-code violation.
 
+Wait for the command to exit; partial output is not completion, and the gate passes only with exit status `0` plus `Static analysis completed successfully.`
+
 For JavaScript and TypeScript files (`.js`, `.mjs`, `.cjs`, `.ts`, `.mts`, `.cts`, `.tsx`), it also runs pinned, temporary ESLint and TypeScript parser packages with an isolated ruleset. It does not read or modify the project's ESLint configuration, dependencies, source, or ignore files. The rule set enforces functions of at most 20 non-blank, non-comment lines; at most three parameters; and no direct `true` or `false` call arguments. Without type information, it deliberately enforces boolean literals only, not boolean variables.
 
 Each JavaScript violation is an error. The runner prints its location, rule ID, and a rule-specific refactoring direction; treat that direction as required unless the rule itself is changed.
