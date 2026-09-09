@@ -8,10 +8,6 @@ These protocols apply to every agent without exception.
 - All code produced or reviewed must follow uncle bob's clean code and clean architecture rules
 - Before writing or changing executable code, tests, scripts, or runtime configuration, load `/proof-of-work`. A change is not complete until it has passing, requirement-focused executable evidence.
 
-## Role Routing
-
-The kit ships one exposed `Agent` for everyday work. `/planner` and `/implementer` orchestrate multi-step workflows; `/specialized-agent` uses native delegation for bounded leaf specialists and `/delegate` only as a fallback. None are registered platform agents.
-
 ## Concurrency — No Parallel Agents
 
 Never invoke more than one delegated role at a time. All calls are strictly sequential: invoke one, wait for its full response, then decide the next step.
