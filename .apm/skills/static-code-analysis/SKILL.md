@@ -46,7 +46,7 @@ Run whole-file tools, but enforce thresholds only for findings that intersect th
 Run the bundled script; do not construct analyzer commands manually:
 
 ```bash
-node .apm/skills/static-code-analysis/scripts/run-static-analysis.mjs <file-or-directory> [...]
+node scripts/run-static-analysis.mjs <file-or-directory> [...]
 ```
 
 Pass `--report-dir <directory>` only when reports must be retained. Otherwise the script writes them to a temporary directory and prints its path. It exits non-zero for missing tools, invalid targets, complexity-tool failures, duplication above the configured threshold, or a clean-code violation.
