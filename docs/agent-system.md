@@ -9,6 +9,7 @@ Markdown is production code. The system is designed as small, focused contracts:
 - `agents/agent.md` is the default assistant for everyday conversation and simple work.
 - `skills/planner/` and `skills/implementer/` contain the stateful workflow orchestrators.
 - `skills/specialized-agent/references/` contains canonical bounded leaf-specialist contracts.
+- The seven role files in `agents/` register native subagents and load those contracts through `specialized-agent`.
 - `skills/` contains reusable workflows and quality gates.
 - `instructions/` contains shared rules.
 
@@ -26,7 +27,7 @@ The shared instructions require the `proof-of-work` quality gate for every execu
 
 ## Workflow Roles
 
-Load `/planner` for planning and `/implementer` for approved execution. They load `specialized-agent` to select the smallest leaf specialist and use native delegation for one bounded, sequential task. If native delegation is unavailable, `specialized-agent` uses `delegate`; if neither is available, the current session follows the loaded contract.
+Load `/planner` for planning and `/implementer` for approved execution. They load `specialized-agent` to select the smallest leaf specialist; when available, prefer native agents.
 
 | Role | Purpose |
 |---|---|
@@ -38,7 +39,7 @@ Load `/planner` for planning and `/implementer` for approved execution. They loa
 | Hardener | Time-consuming mutation-test hardening; requires explicit user approval |
 | Investigator | Read-only evidence-based investigation |
 
-Roles are contracts, not platform-registered agents. This keeps their behavior available to clients that support skills and delegation but not agent-markdown registration.
+Role agents are thin adapters: responsibilities remain solely in `specialized-agent/references/`.
 
 ## Workflow
 
@@ -57,6 +58,7 @@ The `/planner` skill has two modes:
 ## What Ships
 
 - One default platform agent: `Agent`.
+- Seven native role agents, each referencing its canonical specialist contract.
 - Two orchestration skills: `planner` and `implementer`.
 - One portable leaf-specialist routing skill: `specialized-agent`.
 - Reusable requirements, delegation, investigation, proof-of-work, quality, mutation-hardening, preflight, tracking, and notification skills.

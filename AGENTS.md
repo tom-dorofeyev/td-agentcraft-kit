@@ -22,13 +22,13 @@ This analogy drives every design decision. Duplication across agents is treated 
 
 ```text
 .apm/
-  agents/        # Default Agent entry point
+  agents/        # Default Agent and thin native role adapters
   instructions/  # Shared rules inherited by every agent
   skills/        # Reusable workflows, quality gates, engineering standards
 docs/            # User-facing documentation (install guides, system overview)
 ```
 
-The default Agent and each skill use YAML frontmatter for metadata. Workflow role contracts are plain Markdown references in `specialized-agent`. The `apm.yml` manifest declares targets, version, and dependencies.
+The default Agent and each skill use YAML frontmatter for metadata. Workflow role contracts are plain Markdown references in `specialized-agent`; native role agents load them through that skill. The `apm.yml` manifest declares targets, version, and dependencies.
 
 ## Workflow Roles
 
