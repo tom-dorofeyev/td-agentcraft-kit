@@ -23,7 +23,7 @@ The role contracts are canonical. Do not restate, alter, combine, or selectively
 
 1. Select the smallest role that owns the requested outcome.
 2. Load its entire contract from `references/`.
-3. If native delegation is available to the caller, delegate one bounded task whose context includes the complete role contract and only the task-specific facts the role needs.
+3. If native delegation is available to the caller, delegate one to the registered agent whose lowercase name matches the selected role. Give it one bounded task whose context includes the complete role contract and only the task-specific facts the role needs.
 4. Otherwise, load `/delegate` and use its fallback mechanism for that bounded task.
 5. If neither mechanism is available, perform the task in the current session while following the loaded role contract exactly.
 
