@@ -1,107 +1,66 @@
 # Agent System
 
-This kit is organized as a small agent system rather than a flat set of prompts.
+This kit has one regular `Agent` entry point, two orchestration skills, and portable leaf specialists supplied by `specialized-agent`.
 
 ## Core Idea
 
-The main idea behind this kit is to treat the agent system like software that should be designed cleanly.
+Markdown is production code. The system is designed as small, focused contracts:
 
-> Exposed agents are classes. Subagents are private methods. Skills are public methods. Instructions are the base class.
+- `agents/agent.md` is the default assistant for everyday conversation and simple work.
+- `skills/planner/` and `skills/implementer/` contain the stateful workflow orchestrators.
+- `skills/specialized-agent/references/` contains canonical bounded leaf-specialist contracts.
+- The seven role files in `agents/` register native subagents and load those contracts through `specialized-agent`.
+- `skills/` contains reusable workflows and quality gates.
+- `instructions/` contains shared rules.
 
-That analogy is the point of the structure:
-
-- `instructions/` contains the shared behavior every agent inherits
-- `agents/` defines role-specific contracts — 3 exposed (Agent, Planner, Implementer) and 7 subagents
-- `skills/` holds reusable capabilities loaded when needed
-
-The layout is split into three parts:
+The shared instructions require the `proof-of-work` quality gate for every executable change. It requires a behavior-focused automated check where feasible, passing verification, and the commands and results reported with the change.
 
 ```text
 .apm/
   agents/
+    agent.md
   instructions/
   skills/
+    specialized-agent/
+      references/
 ```
 
-- `agents/` defines the team roles used by the kit
-- `instructions/` holds shared rules that apply across the whole team
-- `skills/` contains reusable workflows, quality gates, and engineering standards
+## Workflow Roles
 
-## Planning Outputs
+Load `/planner` for planning and `/implementer` for approved execution. They load `specialized-agent` to select the smallest leaf specialist; when available, prefer native agents.
 
-Planning has two modes:
-
-- **Session plan** — the plan stays in the conversation; it creates no files.
-- **Formal work item** — a durable plan with acceptance criteria, ordered slices, and a Planner → Implementer handoff.
-
-A formal item is stored outside the kit's tracked files:
-
-```text
-.agent-craft-work/
-  task/
-    2026-09-02--rename-account/
-      todo/
-      in-progress/
-      done/
-```
-
-The item type follows work scope: small work is a `task`, medium work a `user-story`, and a large work item's current phase an `epic`. Planner loads `work-item-tracking` after approving a formal plan, then hands the canonical path to Implementer. Implementer loads the same skill for the lifecycle: `todo → in-progress → done`. Review, refactoring, acceptance tests, and retries remain within `in-progress`. The skill is never loaded for a session plan.
-
-## Agent Architecture
-
-### Exposed Agents (user-facing)
-
-The user interacts directly with 3 exposed agents:
-
-| Agent | Role |
+| Role | Purpose |
 |---|---|
-| **Agent** | Default assistant — a helpful, precise, efficient AI coding assistant for everyday work |
-| **Planner** | Planning phase — produces approved docs scaled to scope: lightweight spec, full PRD + Architecture, or phased MVP rollout |
-| **Implementer** | Execution phase — AFK implementation loop adapted to plan depth, until all acceptance criteria pass |
+| Specifier | Product-facing Gherkin acceptance criteria |
+| Architect | Conceptual HLD and LLD |
+| Builder | Production implementation |
+| Reviewer | Plan or quality/architecture review |
+| Refactorer | Measured complexity and duplication reduction |
+| Hardener | Time-consuming mutation-test hardening; requires explicit user approval |
+| Investigator | Read-only evidence-based investigation |
 
-### Subagents (internal, `mode: subagent`)
-
-Exposed agents delegate specialist work to 7 subagents:
-
-| Subagent | Called By | Purpose |
-|---|---|---|
-| specifier | Planner | Product specs with Gherkin acceptance criteria |
-| architect | Planner | HLD + LLD architectural design (conceptual, no code) |
-| builder | Implementer | Production code implementation |
-| reviewer | Implementer | Quality, correctness, and security review |
-| refactorer | Implementer | Complexity/duplication reduction, metric enforcement |
-| hardener | Implementer | Mutation-testing-based test hardening |
-| investigator | Planner, Implementer | Read-only codebase investigation |
+Role agents are thin adapters: responsibilities remain solely in `specialized-agent/references/`.
 
 ## Workflow
 
-1. **Everyday tasks** → Agent (default assistant).
-2. **Anything needing planning** → Planner either plans in-session or creates a formal work item, then Implementer runs the AFK loop.
-3. **Massive scope** → Planner scopes to MVP phases. Implementer runs per phase. Planner loops back for next phase.
+1. **Everyday tasks** → `Agent`.
+2. **Planning** → load `/planner`; it may sequentially use Specifier, Architect, or Investigator through `specialized-agent`.
+3. **Implementation** → load `/implementer`; it runs the approved slice loop through leaf specialists selected by `specialized-agent`.
+4. **Large scope** → `/planner` defines MVP phases; each current phase goes through the same workflow.
 
-## What Ships In This Kit
+## Planning Outputs
 
-The agent layer includes 3 exposed agents and 7 specialist subagents covering product, architecture, engineering, review, refactoring, hardening, and investigation.
+The `/planner` skill has two modes:
 
-The skills layer includes reusable modules for:
+- **Session plan** — stays in the conversation; no files are created.
+- **Formal work item** — a durable plan with acceptance criteria, ordered slices, and a `/planner` → `/implementer` handoff in `.agent-craft-work/`.
 
-- Feature workflow orchestration (Planner → Implementer)
-- Formal work-item lifecycle tracking (work-item-tracking)
-- Requirements clarification (grill-me)
-- Investigation routing
-- Quality and review gates (static-code-analysis)
-- Mutation-testing-based test hardening
-- Preflight tool validation
-- User notifications
+## What Ships
 
-## Why The Structure Matters
+- One default platform agent: `Agent`.
+- Seven native role agents, each referencing its canonical specialist contract.
+- Two orchestration skills: `planner` and `implementer`.
+- One portable leaf-specialist routing skill: `specialized-agent`.
+- Reusable requirements, delegation, investigation, proof-of-work, quality, mutation-hardening, preflight, tracking, and notification skills.
 
-This separation keeps the system easier to evolve:
-
-- Shared rules live once in `instructions/`
-- Role-specific behavior stays in each agent file
-- Reusable guidance is extracted into skills instead of duplicated
-- Subagents are clearly distinguished from exposed agents via `mode: subagent`
-- The Planner ↔ Implementer split creates a clean handoff between planning and execution
-
-That makes the kit easier to maintain and easier to adapt across Copilot and OpenCode.
+This is a single-source design: orchestrator workflows live in their own skills, while leaf-specialist definitions live only in `specialized-agent/references/`.
