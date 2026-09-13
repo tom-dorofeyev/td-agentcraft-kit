@@ -36,6 +36,7 @@ Full global setup details: [docs/install-globally.md](docs/install-globally.md)
 
 ## Optional
 
+- Copyable work-item runner: [scripts](scripts/README.md)
 - Telegram notifications: [docs/telegram-notifications.md](docs/telegram-notifications.md)
 - Project install details: [docs/install-in-a-project.md](docs/install-in-a-project.md)
 - All docs: [docs](docs)

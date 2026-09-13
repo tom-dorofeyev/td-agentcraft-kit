@@ -6,7 +6,6 @@ local_deployed_files:
 - .agents/skills/delegate
 - .agents/skills/grill-me
 - .agents/skills/investigation
-- .agents/skills/mutation-hardening
 - .agents/skills/notify
 - .agents/skills/preflight
 - .agents/skills/static-code-analysis
@@ -14,7 +13,6 @@ local_deployed_files:
 - .github/agents/agent.agent.md
 - .github/agents/architect.agent.md
 - .github/agents/builder.agent.md
-- .github/agents/hardener.agent.md
 - .github/agents/implementer.agent.md
 - .github/agents/investigator.agent.md
 - .github/agents/planner.agent.md
@@ -24,7 +22,6 @@ local_deployed_files:
 - .opencode/agents/agent.md
 - .opencode/agents/architect.md
 - .opencode/agents/builder.md
-- .opencode/agents/hardener.md
 - .opencode/agents/implementer.md
 - .opencode/agents/investigator.md
 - .opencode/agents/planner.md
@@ -35,7 +32,6 @@ local_deployed_file_hashes:
   .github/agents/agent.agent.md: sha256:95f216a54d174b9fe883c5f19fd282ed0a4f319a3ee46068e076466d9e898cbb
   .github/agents/architect.agent.md: sha256:badd4d6bfc50f96763bf957aa48d563a40a8bd4e837c45eb2b0cc27e0ae9a0dd
   .github/agents/builder.agent.md: sha256:b9667bd9674d7e24de12e655f65bbcfd61578b1060e69cfd3f67b95a47610268
-  .github/agents/hardener.agent.md: sha256:3b96073310b9c006b71d2fb247b541307114e410a2491545f44cac8a14082a4c
   .github/agents/implementer.agent.md: sha256:3ac6be09c6ef2e8222240bfc4b597e87b8078538153abd452b3cf12262925f22
   .github/agents/investigator.agent.md: sha256:660bb6143e115da51b4f3249f4ebfb1c48fb29752716a4538d1e5f8c0cb9da3a
   .github/agents/planner.agent.md: sha256:8ae0ae42f1339b4d37767bf82db7fb8298c98701fba5780469496d234f7f0373
@@ -45,7 +41,6 @@ local_deployed_file_hashes:
   .opencode/agents/agent.md: sha256:95f216a54d174b9fe883c5f19fd282ed0a4f319a3ee46068e076466d9e898cbb
   .opencode/agents/architect.md: sha256:badd4d6bfc50f96763bf957aa48d563a40a8bd4e837c45eb2b0cc27e0ae9a0dd
   .opencode/agents/builder.md: sha256:b9667bd9674d7e24de12e655f65bbcfd61578b1060e69cfd3f67b95a47610268
-  .opencode/agents/hardener.md: sha256:3b96073310b9c006b71d2fb247b541307114e410a2491545f44cac8a14082a4c
   .opencode/agents/implementer.md: sha256:3ac6be09c6ef2e8222240bfc4b597e87b8078538153abd452b3cf12262925f22
   .opencode/agents/investigator.md: sha256:660bb6143e115da51b4f3249f4ebfb1c48fb29752716a4538d1e5f8c0cb9da3a
   .opencode/agents/planner.md: sha256:8ae0ae42f1339b4d37767bf82db7fb8298c98701fba5780469496d234f7f0373

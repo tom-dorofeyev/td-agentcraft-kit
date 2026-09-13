@@ -1,13 +1,13 @@
 ---
 name: static-code-analysis
-description: Runs a static code analysis gate using lizard for cyclomatic complexity and jscpd for duplication.
+description: Require static-analysis quality gates for every executable code change.
 ---
 
 # SKILL: Static Code Analysis
 
 ## Purpose
 
-Run a lightweight static code analysis gate for one or more source files. The skill currently enforces cyclomatic complexity via `lizard` or `lizard.exe` and duplication percentage via `jscpd`.
+Every code change must pass this gate before it is described as complete, working, or ready. Run it for the changed production code, tests, scripts, and runtime-affecting configuration. The skill enforces cyclomatic complexity via `lizard` or `lizard.exe` and duplication percentage via `jscpd`.
 
 ## Inputs
 
@@ -41,63 +41,34 @@ Run whole-file tools, but enforce thresholds only for findings that intersect th
 - Coverage fails only when changed-line coverage is at or below the configured minimum.
 - Existing out-of-scope violations elsewhere in touched files are recorded as legacy context, not forced as part of the current task.
 
-## Prerequisite
+## Run
 
-Install both tools once:
-
-```bash
-pip install lizard
-npm install -g jscpd
-```
-
-If either tool is missing when the command runs, stop and tell the user exactly what to install before continuing:
-
-- `pip install lizard`
-- `npm install -g jscpd`
-
-Do not treat a missing tool as a code failure. Treat it as an environment prerequisite that the user needs to satisfy.
-
-## How to run
-
-Run the tools directly.
-
-Complexity:
+Run the bundled script; do not construct analyzer commands manually:
 
 ```bash
-lizard --warnings_only --CCN 10 <file-or-dir> [...]
+node scripts/run-static-analysis.mjs <file-or-directory> [...]
 ```
 
-Duplication:
+Pass `--report-dir <directory>` only when reports must be retained. Otherwise the script writes them to a temporary directory and prints its path. It exits non-zero for missing tools, invalid targets, complexity-tool failures, duplication above the configured threshold, or a clean-code violation.
 
-```bash
-jscpd --threshold 10 --reporters json --output .jscpd-report <file-or-dir> [...]
-```
+Wait for the command to exit; partial output is not completion, and the gate passes only with exit status `0` plus `Static analysis completed successfully.`
 
-Or, without a global install:
+For JavaScript and TypeScript files (`.js`, `.mjs`, `.cjs`, `.ts`, `.mts`, `.cts`, `.tsx`), it also runs pinned, temporary ESLint and TypeScript parser packages with an isolated ruleset. It does not read or modify the project's ESLint configuration, dependencies, source, or ignore files. The rule set enforces functions of at most 20 non-blank, non-comment lines; at most three parameters; and no direct `true` or `false` call arguments. Without type information, it deliberately enforces boolean literals only, not boolean variables.
 
-```bash
-npx jscpd --threshold 10 --reporters json --output .jscpd-report <file-or-dir> [...]
-```
+Each JavaScript violation is an error. The runner prints its location, rule ID, and a rule-specific refactoring direction; treat that direction as required unless the rule itself is changed.
 
-The tools analyze the provided paths. The caller must compare findings against the current diff and only treat overlapping findings as blocking.
-
-## Examples
-
-```bash
-# Single file
-lizard --warnings_only --CCN 10 src/app.ts
-
-# Directory duplication report
-jscpd --threshold 10 --reporters json --output .jscpd-report src/
-
-# npx fallback
-npx jscpd --threshold 10 --reporters json --output .jscpd-report src/
-```
+The caller must compare findings against the current diff and only treat overlapping findings as blocking.
 
 ## Gate Semantics
 
-- `lizard` enforces the per-function complexity budget.
-- `jscpd` reports duplication across the provided paths.
+- The script invokes `lizard`, `jscpd`, and the isolated JavaScript clean-code linter with its own thresholds and rules.
+- The script reports the temporary or requested JSON report directory plus the clean-code report location.
 - Default thresholds come from this skill.
 - Reported findings must be scoped back to the current diff before they are treated as blocking.
-- If `lizard` or `jscpd` is not installed, the result is an environment prerequisite failure with the required install command.
+- If `lizard` or `jscpd` is not installed, the result is an environment prerequisite failure.
+
+## Gate
+
+Run this analysis after editing executable code and before declaring the change complete. Include the exact command and its pass/fail result with the completed change.
+
+If the analysis fails, resolve every finding attributable to the current change or keep the work incomplete. Legacy findings outside the change set must be reported as context, but do not block the change.
