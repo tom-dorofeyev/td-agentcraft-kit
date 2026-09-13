@@ -40,6 +40,6 @@ mv "$work_item_path/in-progress/work-item.md" "$work_item_path/done/"
 
 ## Lifecycle Ownership
 
-Any agent that begins active work on a canonical work item owns its state transitions for that work. Move the existing `work-item.md` from `todo/` to `in-progress/` before doing the work. Keep it in `in-progress/` through delegated work, reviews, retries, and all applicable gates. Move it to `done/` only after the complete work item passes every applicable completion gate, including opted-in mutation testing.
+Any agent that begins active work on a canonical work item owns its state transitions for that work. Move the existing `work-item.md` from `todo/` to `in-progress/` before doing the work. Keep it in `in-progress/` through delegated work, reviews, retries, and all applicable gates. Move it to `done/` only after the complete work item passes every applicable completion gate.
 
 An agent may hand the canonical path to another agent, but the agent that picks up active work must ensure the item is `in-progress/` before proceeding and must complete its transition to `done/` when it finishes the item. Only one state folder contains artifacts at a time. For a multi-slice item, record proof with the item and keep it in `in-progress/` until every planned slice is complete.

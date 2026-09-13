@@ -41,7 +41,6 @@ The default Agent and each skill use YAML frontmatter for metadata. Workflow rol
 | Builder | Production implementation |
 | Reviewer | Correctness, quality, and security review |
 | Refactorer | Measured complexity and duplication reduction |
-| Hardener | Mutation-test hardening |
 | Investigator | Read-only codebase investigation |
 
 ## Universal Design Principles

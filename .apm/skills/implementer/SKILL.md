@@ -9,7 +9,6 @@ Leaf specialists for implementation:
 - Builder implements tests and code.
 - Reviewer reviews the implementation and tests.
 - Refactorer runs cleanup and static analysis.
-- Hardener strengthens tests with mutation testing when the user has approved it.
 - Investigator supplies read-only context when needed.
 
 If a required specialist role is unavailable, do not substitute another role; stop and notify the user that the workflow is broken.
@@ -19,15 +18,6 @@ Delegate each role in a separate session. Give it the smallest context needed to
 Bias for action: begin clear, in-scope work immediately. Run the delegated loop per slice. Never start the next until the current slice passes. Never design or spec; prove all code works.
 
 Ask the user only when a decision would materially change the requested outcome, scope, architecture, compatibility, security, cost, or delivery risk. Resolve routine implementation details yourself and report them with the completed work.
-
-## Prerequisites
-
-## Mutation Testing Preference
-
-At the start of each session, ask: **"Should I run mutation testing? It is a time-consuming gate."** Record the user's yes/no response for the session and do not ask again during it.
-
-- **Yes** — run **Hardener** with `mutation-hardening` after every completed slice; resolve its blockers before completing that slice.
-- **No** — do not run mutation testing unless the user changes this session preference.
 
 Use the strongest available source of scope:
 - **Lightweight spec** — build + criteria.
@@ -108,7 +98,6 @@ Run per slice. Failed gate: return to Builder for same slice; later slices wait.
 4. **Reviewer: Quality/Architecture Review** — code quality, security, tests, architecture.
 5. Blocking finding: fix/re-review, max 2 cycles; re-run refactorer.
 6. Verify slice criteria, build, full suite, working + committable state.
-7. If the session mutation-testing preference is yes, **Hardener** runs `mutation-hardening`; resolve its blockers before completing the slice.
 
 ## AFK and Completion
 

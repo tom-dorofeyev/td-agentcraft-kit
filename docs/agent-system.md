@@ -36,7 +36,6 @@ Load `/planner` for planning and `/implementer` for approved execution. They loa
 | Builder | Production implementation |
 | Reviewer | Plan or quality/architecture review |
 | Refactorer | Measured complexity and duplication reduction |
-| Hardener | Time-consuming mutation-test hardening; requires explicit user approval |
 | Investigator | Read-only evidence-based investigation |
 
 Role agents are thin adapters: responsibilities remain solely in `specialized-agent/references/`.
@@ -61,6 +60,6 @@ The `/planner` skill has two modes:
 - Seven native role agents, each referencing its canonical specialist contract.
 - Two orchestration skills: `planner` and `implementer`.
 - One portable leaf-specialist routing skill: `specialized-agent`.
-- Reusable requirements, delegation, investigation, proof-of-work, quality, mutation-hardening, preflight, tracking, and notification skills.
+- Reusable requirements, delegation, investigation, proof-of-work, quality, preflight, tracking, and notification skills.
 
 This is a single-source design: orchestrator workflows live in their own skills, while leaf-specialist definitions live only in `specialized-agent/references/`.

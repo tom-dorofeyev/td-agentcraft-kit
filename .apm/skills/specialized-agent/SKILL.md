@@ -11,7 +11,6 @@ Load exactly one matching role contract before assigning work:
 |---|---|---|
 | Architect | Designs conceptual system boundaries, dependencies, and contracts without implementation detail. | `references/architect.md` |
 | Builder | Implements tested, production-grade code from approved designs or investigation findings. | `references/builder.md` |
-| Hardener | Strengthens tests with mutation testing without changing production behavior; this is a time-consuming gate. | `references/hardener.md` |
 | Investigator | Produces read-only, evidence-based answers about code, documentation, or external context. | `references/investigator.md` |
 | Refactorer | Reduces measured complexity and duplication without changing behavior. | `references/refactorer.md` |
 | Reviewer | Performs either plan review or quality and architecture review. | `references/reviewer.md` |
@@ -30,10 +29,6 @@ The role contracts are canonical. Do not restate, alter, combine, or selectively
 Never delegate multiple roles in parallel. A role handoff is complete only after its result has been received and evaluated. Do not use a substitute role when the selected role is unavailable; report the broken workflow to the caller.
 
 Architect is the sole exception to the one-role rule: it may use this skill to dispatch one or more sequential Investigator tasks when design context is missing. Use native delegation when Architect can invoke it; otherwise use `/delegate` as the fallback. Architect may not dispatch any other role.
-
-## Hardener consent
-
-Before selecting or delegating Hardener, obtain an explicit user yes to: **"Should I run mutation testing? It is a time-consuming gate."** A recorded yes for the current session satisfies this requirement. A no applies for the current session unless the user changes it.
 
 ## Delegation prompt
 
