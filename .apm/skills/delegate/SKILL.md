@@ -5,7 +5,7 @@ description: Delegate one bounded task. Prefer native subagent delegation; use a
 
 ## Choose the mechanism
 
-Use the harness's native subagent delegation whenever it is available. Use a CLI fallback only when it is unavailable or restricted.
+Use the harness's native subagent delegation whenever it is available. Use a CLI fallback only when it is unavailable or restricted to the current caller. Do not use the CLI to continue work that another agent already delegated to you.
 
 Supported fallbacks:
 
@@ -21,7 +21,7 @@ For a named OpenCode agent, use `opencode run --agent <agent-name> "<task>"` onl
 3. Run it directly through the harness's command tool, wait for completion, and inspect its output.
 4. Verify important claims or file changes when practical.
 
-A CLI delegate is a leaf: its prompt must say **do not invoke `/delegate`, spawn subagents, or run an agent CLI**. It must complete the assigned task directly. Never create a delegation chain unless the caller explicitly requests one.
+A CLI delegate is a leaf: its prompt must say **do not invoke `/delegate`, spawn subagents, or run an agent CLI**. It must complete the assigned task directly. Use it only for work that needs a distinct agent session; do not create a delegation chain merely because the CLI is available. Never create a delegation chain unless the caller explicitly requests one.
 
 Use the harness working directory and output capture; do not create wrapper scripts or shell orchestration. Treat the result as subordinate work, not unquestionable truth.
 

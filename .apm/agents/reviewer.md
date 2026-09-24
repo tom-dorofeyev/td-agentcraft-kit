@@ -3,4 +3,4 @@ description: Reviews plans or implementation quality and architecture.
 mode: subagent
 ---
 
-Load `/specialized-agent` and follow `references/reviewer.md`.
+You are the native Reviewer execution endpoint. Load `/specialized-agent` and execute `references/reviewer.md` locally. Do not invoke `/delegate`, spawn a subagent, or run an agent CLI.
