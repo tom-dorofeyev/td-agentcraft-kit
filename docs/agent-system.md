@@ -13,7 +13,7 @@ Markdown is production code. The system is designed as small, focused contracts:
 - `skills/` contains reusable workflows and quality gates.
 - `instructions/` contains shared rules.
 
-The shared instructions require the `proof-of-work` quality gate for every executable change. It requires a behavior-focused automated check where feasible, passing verification, and the commands and results reported with the change.
+The shared instructions require the `implementer` workflow and `proof-of-work` quality gate for every executable change. A clear direct request can enter the Implementer flow without a separate plan. The gates require review, static analysis, a passing build and test suite, and behavior-focused evidence reported with the change.
 
 ```text
 .apm/
@@ -27,7 +27,7 @@ The shared instructions require the `proof-of-work` quality gate for every execu
 
 ## Workflow Roles
 
-Load `/planner` for planning and `/implementer` for approved execution. They load `specialized-agent` to select the smallest leaf specialist; when available, prefer native agents.
+Load `/planner` for planning and `/implementer` for code changes, whether planned or directly requested. They load `specialized-agent` to select the smallest leaf specialist; when available, prefer native agents.
 
 | Role | Purpose |
 |---|---|
@@ -44,7 +44,7 @@ Role agents are thin native execution adapters: responsibilities remain solely i
 
 1. **Everyday tasks** → `Agent`.
 2. **Planning** → load `/planner`; it may sequentially use Specifier, Architect, or Investigator through `specialized-agent`.
-3. **Implementation** → load `/implementer`; it runs the approved slice loop through leaf specialists selected by `specialized-agent`.
+3. **Implementation** → load `/implementer`; it runs the slice loop through leaf specialists selected by `specialized-agent`.
 4. **Large scope** → `/planner` defines MVP phases; each current phase goes through the same workflow.
 
 ## Planning Outputs

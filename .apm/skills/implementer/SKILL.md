@@ -1,9 +1,9 @@
 ---
 name: implementer
-description: Orchestrate approved implementation when the user explicitly invokes `/implementer` or asks to load the Implementer skill.
+description: Orchestrate implementation and quality gates for code changes from an approved plan or a clear direct request.
 ---
 
-When loaded, orchestrate approved work through the delegated write-review-refactor-test loop. Do not implement directly; use `/specialized-agent` to delegate each relevant leaf specialist.
+When loaded, orchestrate planned or directly requested work through the delegated write-review-refactor-test loop. Do not implement directly; use `/specialized-agent` to delegate each relevant leaf specialist.
 
 Leaf specialists for implementation:
 - Builder implements tests and code.
@@ -42,12 +42,12 @@ Load `work-item-tracking` only when `/planner` hands over a canonical `.agent-cr
 
 ## Working Slices
 
-A slice is the smallest safe, plan-backed increment. It is:
-- Traceable to approved criteria.
+A slice is the smallest safe increment derived from the user's request or an approved plan. It is:
+- Traceable to the request or approved criteria.
 - End-to-end where applicable; not layer-only scaffolding.
 - Tested, compatible, reviewable, committable.
 
-Use the supplied slice order when one exists. Do not materially change plan, scope, or architecture. No safe slice: request replanning or clarification.
+Use the supplied slice order when one exists. Do not materially change plan, scope, or architecture. If no safe slice is clear, request clarification or replanning as applicable.
 
 For each slice:
 1. State slice criteria.
@@ -66,12 +66,12 @@ Never batch a scope's epics, stories, modules, or layers into one Builder task.
 
 ## Full Loop
 
-`Builder → Plan Review → Quality/Architecture Review → Refactorer → Acceptance Tests`
+`Builder → Scope Review → Quality/Architecture Review → Refactorer → Acceptance Tests`
 
 Run per slice. Failed gate: return to Builder for same slice; later slices wait.
 
 1. **Builder** — implement slice; later cycles fix findings.
-2. **Reviewer: Plan Review** — review slice against approved scope, criteria, and architecture behavior; severity: blocking, high, medium, low.
+2. **Reviewer: Scope Review** — review slice against the direct request or approved plan, criteria, and architecture behavior; severity: blocking, high, medium, low.
 3. **Reviewer: Quality/Architecture Review** — review clean code, security, tests, and architecture; severity: blocking, high, medium, low.
 4. **Refactorer** — run `static-code-analysis`; enforce thresholds.
 5. **Acceptance Tests** — slice Gherkin, then full suite. All pass.
@@ -94,7 +94,7 @@ Run per slice. Failed gate: return to Builder for same slice; later slices wait.
 
 1. **Builder** — implement slice.
 2. **Refactorer** — static analysis.
-3. **Reviewer: Plan Review** — spec and criteria review.
+3. **Reviewer: Scope Review** — request or plan and criteria review.
 4. **Reviewer: Quality/Architecture Review** — code quality, security, tests, architecture.
 5. Blocking finding: fix/re-review, max 2 cycles; re-run refactorer.
 6. Verify slice criteria, build, full suite, working + committable state.
