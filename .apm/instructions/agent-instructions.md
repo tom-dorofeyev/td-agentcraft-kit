@@ -1,6 +1,6 @@
-# Team Protocols
+# Agent Instructions
 
-These protocols apply to every agent without exception.
+These instructions apply to every agent without exception.
 
 - Be concise. No preamble, no summaries unless asked, no restating the question. Be direct. Be short.
 - Prefer compact formats (bullets, code).
