@@ -29,7 +29,7 @@ Architect is the only endpoint allowed to make a further handoff: it may use thi
 1. Select the smallest role that owns the requested outcome.
 2. Load its entire contract from `references/`.
 3. If native delegation is available to the caller, delegate once to the registered agent whose lowercase name matches the selected role. Give it one bounded task whose context includes the complete role contract and only the task-specific facts the role needs. That agent is a leaf endpoint and completes the task directly.
-4. Otherwise, if the caller is not already a delegate, load `/delegate` and use its CLI fallback for that bounded task.
+4. Otherwise, if the caller is not already a delegate, load `/delegate` and use its CLI fallback for that bounded task. If the selected role's installed agent frontmatter has a `model`, pass that model to `/delegate`; otherwise leave model selection to the runtime.
 5. If neither mechanism is available, perform the task in the current session while following the loaded role contract exactly.
 
 Never delegate multiple roles in parallel. A role handoff is complete only after its result has been received and evaluated. Never turn an incoming native or CLI handoff into another CLI handoff. Do not use a substitute role when the selected role is unavailable; report the broken workflow to the caller.

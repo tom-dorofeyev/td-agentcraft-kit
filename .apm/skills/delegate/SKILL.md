@@ -14,6 +14,8 @@ Supported fallbacks:
 
 For a named OpenCode agent, use `opencode run --agent <agent-name> "<task>"` only when the environment defines that agent or the caller requests it.
 
+When the caller supplies a model for this task, pass it with `--model <model>` to the OpenCode or Codex CLI. If no model is supplied, omit the flag so the runtime keeps its default. Native named agents use their own frontmatter model; do not override it at the call site.
+
 ## Delegate once
 
 1. Give one self-contained, bounded task with only relevant context.

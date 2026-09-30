@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "default": {
+      "agent": null,
+      "architect": null,
+      "builder": null,
+      "investigator": null,
+      "refactorer": null,
+      "reviewer": null,
+      "specifier": null
+    }
+  }
+}

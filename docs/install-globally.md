@@ -25,6 +25,14 @@ git clone https://github.com/tom-dorofeyev/td-agentcraft-kit td-agentcraft-kit
 cd td-agentcraft-kit
 ```
 
+To assign models to individual agents, edit `model-profiles.json`, add a named profile, then apply it before installing:
+
+```sh
+node scripts/configure-models.mjs my-profile
+```
+
+Use model IDs accepted by the target runtime. An omitted or `null` entry inherits that runtime's default. Run `node scripts/configure-models.mjs default` to remove all model pins. The command updates `.apm/agents/*.md` in the clone; inspect those changes before installing.
+
 Then run one of these:
 
 macOS / Linux:
