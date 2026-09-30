@@ -1,19 +1,20 @@
 # Agent System
 
-This kit has one regular `Agent` entry point, two orchestration skills, and portable leaf specialists supplied by `specialized-agent`.
+This kit has one regular `Agent` entry point, a shared code workflow, two optional orchestration skills, and portable leaf specialists supplied by `/specialized-agent`.
 
 ## Core Idea
 
 Markdown is production code. The system is designed as small, focused contracts:
 
 - `agents/agent.md` is the default assistant for everyday conversation and simple work.
-- `skills/planner/` and `skills/implementer/` contain the stateful workflow orchestrators.
+- `skills/code-workflow/` owns the Builder → Reviewer → Refactorer sequence and code quality gates.
+- `skills/planner/` and `skills/implementer/` contain the scope and slice orchestrators.
 - `skills/specialized-agent/references/` contains canonical bounded leaf-specialist contracts.
-- The seven role files in `agents/` register native subagents and load those contracts through `specialized-agent`.
+- The seven role files in `agents/` register native subagents and load those contracts through `/specialized-agent`.
 - `skills/` contains reusable workflows and quality gates.
 - `instructions/` contains shared rules.
 
-The shared instructions require the `implementer` workflow and `proof-of-work` quality gate for every executable change. A clear direct request can enter the Implementer flow without a separate plan. The gates require review, static analysis, a passing build and test suite, and behavior-focused evidence reported with the change.
+The shared instructions require `/code-workflow` for every executable change. It delegates Builder, Reviewer, and Refactorer sequentially and requires review, static analysis, a passing build and test suite, and behavior-focused evidence. A clear direct request can enter this workflow without a separate plan. `/implementer` invokes the same workflow for each planned slice when explicitly requested.
 
 ```text
 .apm/
@@ -27,7 +28,7 @@ The shared instructions require the `implementer` workflow and `proof-of-work` q
 
 ## Workflow Roles
 
-Load `/planner` for planning and `/implementer` for code changes, whether planned or directly requested. They load `specialized-agent` to select the smallest leaf specialist; when available, prefer native agents.
+Load `/planner` for planning, `/implementer` for explicitly requested slice orchestration, and `/code-workflow` for code changes. Each uses `/specialized-agent` for the relevant leaf specialist; when available, prefer native agents.
 
 | Role | Purpose |
 |---|---|
@@ -43,8 +44,8 @@ Role agents are thin native execution adapters: responsibilities remain solely i
 ## Workflow
 
 1. **Everyday tasks** → `Agent`.
-2. **Planning** → load `/planner`; it may sequentially use Specifier, Architect, or Investigator through `specialized-agent`.
-3. **Implementation** → load `/implementer`; it runs the slice loop through leaf specialists selected by `specialized-agent`.
+2. **Planning** → load `/planner`; it may sequentially use Specifier, Architect, or Investigator through `/specialized-agent`.
+3. **Implementation** → load `/code-workflow`; it runs Builder, Reviewer, Refactorer, and verification for every code change. Explicit `/implementer` work uses it per slice.
 4. **Large scope** → `/planner` defines MVP phases; each current phase goes through the same workflow.
 
 ## Planning Outputs
@@ -58,8 +59,9 @@ The `/planner` skill has two modes:
 
 - One default platform agent: `Agent`.
 - Seven native role agents, each referencing its canonical specialist contract.
-- Two orchestration skills: `planner` and `implementer`.
-- One portable leaf-specialist routing skill: `specialized-agent`.
+- Two scope orchestration skills: `/planner` and `/implementer`.
+- One shared implementation skill: `/code-workflow`.
+- One portable leaf-specialist routing skill: `/specialized-agent`.
 - Reusable requirements, delegation, investigation, proof-of-work, quality, preflight, tracking, and notification skills.
 
 This is a single-source design: orchestrator workflows live in their own skills, while leaf-specialist definitions live only in `specialized-agent/references/`.

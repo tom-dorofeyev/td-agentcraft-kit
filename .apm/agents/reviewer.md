@@ -1,5 +1,5 @@
 ---
-description: Reviews plans or implementation quality and architecture.
+description: Reviews implementation scope or quality and architecture.
 mode: subagent
 ---
 

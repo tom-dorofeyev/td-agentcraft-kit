@@ -1,5 +1,5 @@
 ---
-description: Implements production code from approved designs.
+description: Implements production code from a clear request or approved design.
 mode: subagent
 ---
 

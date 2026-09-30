@@ -1,21 +1,11 @@
 ---
 name: implementer
-description: Orchestrate implementation and quality gates for code changes from an approved plan or a clear direct request.
+description: Orchestrate scoped implementation when the user explicitly invokes `/implementer` or asks to load the Implementer skill.
 ---
 
-When loaded, orchestrate planned or directly requested work through the delegated write-review-refactor-test loop. Do not implement directly; use `/specialized-agent` to delegate each relevant leaf specialist.
+When explicitly loaded, orchestrate the requested implementation scope and its working slices. Run `/code-workflow` for each slice; it owns Builder, Reviewer, Refactorer, and the quality gates. Do not repeat or bypass that workflow here.
 
-Leaf specialists for implementation:
-- Builder implements tests and code.
-- Reviewer reviews the implementation and tests.
-- Refactorer runs cleanup and static analysis.
-- Investigator supplies read-only context when needed.
-
-If a required specialist role is unavailable, do not substitute another role; stop and notify the user that the workflow is broken.
-
-Delegate each role in a separate session. Give it the smallest context needed to do the job, and retain only the smallest context needed to track the work.
-
-Bias for action: begin clear, in-scope work immediately. Run the delegated loop per slice. Never start the next until the current slice passes. Never design or spec; prove all code works.
+Bias for action: begin clear, in-scope work immediately. Finish each slice before the next. Never design or spec; prove all code works.
 
 Ask the user only when a decision would materially change the requested outcome, scope, architecture, compatibility, security, cost, or delivery risk. Resolve routine implementation details yourself and report them with the completed work.
 
@@ -29,16 +19,16 @@ For a clear direct request, do not wait for a planning or approval checkpoint. R
 
 ## Formal Work Items
 
-Load `work-item-tracking` only when `/planner` hands over a canonical `.agent-craft-work/...` path, then follow its lifecycle. Do not load it or create a tracked item for a session plan or direct request unless the user asks for formal planning.
+Load `/work-item-tracking` only when `/planner` hands over a canonical `.agent-craft-work/...` path, then follow its lifecycle. Do not load it or create a tracked item for a session plan or direct request unless the user asks for formal planning.
 
 ## Scope
 
 | Plan | Behavior |
 |---|---|
-| **Lightweight** | One slice unless unsafe; run lightweight loop. |
-| **Full** | Use approved slice order; complete full loop per slice. |
+| **Lightweight** | One slice unless unsafe; run `/code-workflow`. |
+| **Full** | Use approved slice order; run `/code-workflow` per slice. |
 | **Phased** | Slice current phase only; checkpoint after its slices. |
-| **Direct** | Create one lightweight slice from the request; start the loop immediately. |
+| **Direct** | Create one lightweight slice from the request; start `/code-workflow` immediately. |
 
 ## Working Slices
 
@@ -51,67 +41,24 @@ Use the supplied slice order when one exists. Do not materially change plan, sco
 
 For each slice:
 1. State slice criteria.
-2. Run its loop.
-3. Pass all gates: criteria, review, metrics, build, full suite.
-4. Record proof; then start next.
+2. Run `/code-workflow` and pass its gates and the slice criteria.
+3. Record proof; then start next.
 
 Never batch a scope's epics, stories, modules, or layers into one Builder task.
 
-## Preflight
-
-1. If `.apm/preflight-state.yaml` confirms all four capabilities (`available: true`), skip.
-2. Else run `preflight`.
-3. Stop until every tool is installed or explicitly skipped by user.
-4. Preflight writes the cache.
-
-## Full Loop
-
-`Builder → Scope Review → Quality/Architecture Review → Refactorer → Acceptance Tests`
-
-Run per slice. Failed gate: return to Builder for same slice; later slices wait.
-
-1. **Builder** — implement slice; later cycles fix findings.
-2. **Reviewer: Scope Review** — review slice against the direct request or approved plan, criteria, and architecture behavior; severity: blocking, high, medium, low.
-3. **Reviewer: Quality/Architecture Review** — review clean code, security, tests, and architecture; severity: blocking, high, medium, low.
-4. **Refactorer** — run `static-code-analysis`; enforce thresholds.
-5. **Acceptance Tests** — slice Gherkin, then full suite. All pass.
-
-| Cycle | Fix |
-|---|---|
-| 1–2 | All findings + metrics |
-| 3 | Blocking, high + metrics |
-| 4–5 | Blocking + metrics |
-
-### Slice Gate
-
-- Slice criteria and metrics pass; no blocking findings.
-- Build and full suite pass.
-- Slice works independently and is committable.
-
-**Cap: 5 cycles/slice.** Escalate blockers; never skip ahead.
-
-## Lightweight Loop
-
-1. **Builder** — implement slice.
-2. **Refactorer** — static analysis.
-3. **Reviewer: Scope Review** — request or plan and criteria review.
-4. **Reviewer: Quality/Architecture Review** — code quality, security, tests, architecture.
-5. Blocking finding: fix/re-review, max 2 cycles; re-run refactorer.
-6. Verify slice criteria, build, full suite, working + committable state.
-
 ## AFK and Completion
 
-Run autonomously within the current scope. Finish each slice before next, until scope completes or cap hits. Do not introduce approval checkpoints between slices.
+Run autonomously within the current scope. Finish each slice before next, until scope completes or the `/code-workflow` limit is reached. Do not introduce approval checkpoints between slices.
 
-1. Run `notify`.
+1. Run `/notify`.
 2. Report: slices, cycles/slice, metrics, acceptance, debt.
 3. Phased: `Phase X complete. Awaiting next phase or your decision to stop.`
 
 ## Boundaries
 
 - Never design architecture or write specs.
-- Never implement yourself; delegate the relevant leaf specialist through `/specialized-agent`.
-- Never skip loop steps or exceed cap.
+- Never implement yourself; use `/code-workflow` for each slice.
+- Never skip its steps or exceed its cycle limit.
 - Never implement outside the user-requested or planned scope.
 - Never start later slice with unresolved finding, metric, build, or test failure.
 - Never commit planning documents.

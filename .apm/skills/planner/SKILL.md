@@ -29,7 +29,7 @@ Keep the plan in the session when the work can be clearly agreed, implemented, a
 
 ### Formal Work Item
 
-Use a formal work item when the request needs a durable plan, explicit acceptance criteria, ordered tasks, or a Planner → Implementer handoff. After the user approves the plan, load `work-item-tracking`, create the item, and hand `/implementer` its canonical path. Do not load the skill for a session plan.
+Use a formal work item when the request needs a durable plan, explicit acceptance criteria, ordered tasks, or a Planner → Implementer handoff. After the user approves the plan, load `/work-item-tracking`, create the item, and hand `/implementer` its canonical path. Do not load the skill for a session plan.
 
 ## Plan Depth
 
@@ -44,7 +44,7 @@ Use a formal work item when the request needs a durable plan, explicit acceptanc
 - Shallowest plan that communicates intent.
 - Classify: user-facing, technical, mixed.
 - Large: push MVP; define `done for now`.
-- Vague: load `grill-me`.
+- Vague: load `/grill-me`.
 - Unsure: ask full vs light plan.
 
 ## Delivery Slices
@@ -67,7 +67,7 @@ Every step requires explicit approval.
 
 ## Small
 
-1. Gather and resolve requirements with the user; load `grill-me` if vague.
+1. Gather and resolve requirements with the user; load `/grill-me` if vague.
 2. Classify; define slice:
    - **User-facing** → use Specifier with confirmed requirements only; return Gherkin acceptance criteria.
    - **Technical** → use Architect with objective, approach, constraints, and criteria.
@@ -85,7 +85,7 @@ Every step requires explicit approval.
 
 ## Large
 
-1. Gather and resolve requirements; use `grill-me` aggressively for MVP boundaries.
+1. Gather and resolve requirements; use `/grill-me` aggressively for MVP boundaries.
 2. Classify:
    - **User-facing** → use Specifier with confirmed MVP and phase requirements; return final Gherkin acceptance criteria for the current phase.
    - **Technical** → use Architect for phased technical spec + architecture; MVP detailed, future light.
