@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 
-import { existsSync, mkdtempSync, mkdirSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
-import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 
 const COMPLEXITY_LIMIT = '10';
@@ -66,11 +65,15 @@ function validateTargets(targets) {
 }
 
 function createReportDirectory(requestedReportDirectory) {
-  const reportDirectory = requestedReportDirectory
-    ? resolve(requestedReportDirectory)
-    : mkdtempSync(join(tmpdir(), 'static-code-analysis-'));
-  mkdirSync(reportDirectory, { recursive: true });
-  return reportDirectory;
+  if (requestedReportDirectory) {
+    const reportDirectory = resolve(requestedReportDirectory);
+    mkdirSync(reportDirectory, { recursive: true });
+    return reportDirectory;
+  }
+
+  const reportParent = resolve('.agent-craft-work', 'static-code-analysis');
+  mkdirSync(reportParent, { recursive: true });
+  return mkdtempSync(join(reportParent, 'run-'));
 }
 
 function runComplexityAnalysis(targets) {

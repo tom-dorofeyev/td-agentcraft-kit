@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { existsSync, mkdtempSync, readFileSync, readdirSync, realpathSync, statSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, realpathSync, statSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { dirname, extname, join, relative, resolve } from 'node:path';
@@ -144,7 +144,9 @@ function eslintFailure(result) {
 }
 
 function runEslint(files) {
-  const reportFile = join(mkdtempSync(join(tmpdir(), 'clean-code-lint-')), 'eslint-report.json');
+  const reportParent = resolve('.agent-craft-work', 'static-code-analysis');
+  mkdirSync(reportParent, { recursive: true });
+  const reportFile = join(mkdtempSync(join(reportParent, 'run-')), 'eslint-report.json');
   const typeScriptTools = typeScriptEslint(files);
 
   if (typeScriptTools === null) {

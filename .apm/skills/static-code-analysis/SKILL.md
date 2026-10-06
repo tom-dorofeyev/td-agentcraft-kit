@@ -49,11 +49,11 @@ Run the bundled script; do not construct analyzer commands manually:
 node scripts/run-static-analysis.mjs <file-or-directory> [...]
 ```
 
-Pass `--report-dir <directory>` only when reports must be retained. Otherwise the script writes them to a temporary directory and prints its path. It exits non-zero for missing tools, invalid targets, complexity-tool failures, duplication above the configured threshold, or a clean-code violation.
+By default, the script writes the duplication report to a per-run directory under `.agent-craft-work/static-code-analysis/` in the caller's working directory and prints its path. This keeps overlapping runs separate. Pass `--report-dir <directory>` to place the duplication report directly in that directory. It exits non-zero for missing tools, invalid targets, complexity-tool failures, duplication above the configured threshold, or a clean-code violation.
 
 Wait for the command to exit; partial output is not completion, and the gate passes only with exit status `0` plus `Static analysis completed successfully.`
 
-For JavaScript and TypeScript files (`.js`, `.mjs`, `.cjs`, `.ts`, `.mts`, `.cts`, `.tsx`), it also runs pinned, temporary ESLint and TypeScript parser packages with an isolated ruleset. It does not read or modify the project's ESLint configuration, dependencies, source, or ignore files. The rule set enforces functions of at most 20 non-blank, non-comment lines; at most three parameters; and no direct `true` or `false` call arguments. Without type information, it deliberately enforces boolean literals only, not boolean variables.
+For JavaScript and TypeScript files (`.js`, `.mjs`, `.cjs`, `.ts`, `.mts`, `.cts`, `.tsx`), it also runs pinned, temporary ESLint and TypeScript parser packages with an isolated ruleset. The ESLint report is written to its own per-run directory under `.agent-craft-work/static-code-analysis/` in the caller's working directory, including when `--report-dir` is set. It does not read or modify the project's ESLint configuration, dependencies, source, or ignore files. The rule set enforces functions of at most 20 non-blank, non-comment lines; at most three parameters; and no direct `true` or `false` call arguments. Without type information, it deliberately enforces boolean literals only, not boolean variables.
 
 Each JavaScript violation is an error. The runner prints its location, rule ID, and a rule-specific refactoring direction; treat that direction as required unless the rule itself is changed.
 
@@ -62,7 +62,7 @@ The caller must compare findings against the current diff and only treat overlap
 ## Gate Semantics
 
 - The script invokes `lizard`, `jscpd`, and the isolated JavaScript clean-code linter with its own thresholds and rules.
-- The script reports the temporary or requested JSON report directory plus the clean-code report location.
+- The script reports the default or requested JSON report directory plus the clean-code report location.
 - Default thresholds come from this skill.
 - Reported findings must be scoped back to the current diff before they are treated as blocking.
 - If `lizard` or `jscpd` is not installed, the result is an environment prerequisite failure.

@@ -1,8 +1,8 @@
 import assert from 'node:assert/strict';
-import { mkdtempSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { spawnSync } from 'node:child_process';
+import { chmodSync, existsSync, mkdtempSync, mkdirSync, readFileSync, realpathSync, writeFileSync } from 'node:fs';
+import { spawn, spawnSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
 import test from 'node:test';
 
 const script = new URL('./run-clean-code-lint.mjs', import.meta.url).pathname;
@@ -12,7 +12,7 @@ function lintSource(source, extension = 'js') {
   const sourcePath = join(directory, `subject.${extension}`);
   writeFileSync(sourcePath, source);
 
-  const result = spawnSync(process.execPath, [script, sourcePath], { encoding: 'utf8' });
+  const result = spawnSync(process.execPath, [script, sourcePath], { encoding: 'utf8', cwd: directory });
   const reportPath = result.stdout.match(/Clean-code lint report: (.+)/)?.[1];
   const report = reportPath ? JSON.parse(readFileSync(reportPath, 'utf8')) : [];
 
@@ -21,6 +21,38 @@ function lintSource(source, extension = 'js') {
 
 function ruleIds(report) {
   return report.flatMap((file) => file.messages.map((message) => message.ruleId));
+}
+
+function lintReport(output) {
+  return output.match(/Clean-code lint report: (.+)/)?.[1];
+}
+
+function runLintConcurrent(sourcePath, directory, env) {
+  return new Promise((resolve, reject) => {
+    const child = spawn(process.execPath, [script, sourcePath], { cwd: directory, env });
+    let stdout = '';
+    child.stdout.on('data', (chunk) => { stdout += chunk; });
+    child.on('error', reject);
+    child.on('close', (status) => resolve({ status, stdout }));
+  });
+}
+
+function reportFixture() {
+  const directory = mkdtempSync(join(tmpdir(), 'clean-code-lint-test-'));
+  const sourcePath = join(directory, 'subject.js');
+  writeFileSync(sourcePath, 'function createOrder(customer) { return customer; }\n');
+  const npxPath = join(directory, 'npx');
+  writeFileSync(npxPath, "#!/usr/bin/env node\nconst fs = require('node:fs'); const output = process.argv[process.argv.indexOf('--output-file') + 1]; fs.writeFileSync(output, JSON.stringify([{ messages: [] }]));\n");
+  chmodSync(npxPath, 0o755);
+  return { directory, sourcePath, env: { ...process.env, PATH: `${directory}:${process.env.PATH}` } };
+}
+
+function assertSeparateLintReports(first, second) {
+  assert.equal(first.status, 0);
+  assert.equal(second.status, 0);
+  assert.notEqual(lintReport(first.stdout), lintReport(second.stdout));
+  assert.deepEqual(JSON.parse(readFileSync(lintReport(first.stdout), 'utf8'))[0].messages, []);
+  assert.deepEqual(JSON.parse(readFileSync(lintReport(second.stdout), 'utf8'))[0].messages, []);
 }
 
 test('rejects functions with more than three parameters', () => {
@@ -68,6 +100,38 @@ test('accepts compliant JavaScript', () => {
   assert.deepEqual(result.report[0].messages, []);
 });
 
+test('writes repeated ESLint reports under one project-local parent without overwriting', () => {
+  const { directory, sourcePath, env } = reportFixture();
+  const expectedParent = join(realpathSync(directory), '.agent-craft-work', 'static-code-analysis');
+  const first = spawnSync(process.execPath, [script, sourcePath], { encoding: 'utf8', cwd: directory, env });
+  const second = spawnSync(process.execPath, [script, sourcePath], { encoding: 'utf8', cwd: directory, env });
+
+  assertSeparateLintReports(first, second);
+  assert.equal(dirname(dirname(lintReport(first.stdout))), expectedParent);
+  assert.equal(dirname(dirname(lintReport(second.stdout))), expectedParent);
+});
+
+test('keeps overlapping ESLint reports separate', async () => {
+  const { directory, sourcePath, env } = reportFixture();
+
+  const [first, second] = await Promise.all([
+    runLintConcurrent(sourcePath, directory, env),
+    runLintConcurrent(sourcePath, directory, env),
+  ]);
+
+  assertSeparateLintReports(first, second);
+});
+
+test('does not present an empty report when ESLint fails before writing one', () => {
+  const { directory, sourcePath, env } = reportFixture();
+  writeFileSync(join(directory, 'npx'), '#!/usr/bin/env node\nprocess.exit(1);\n');
+
+  const result = spawnSync(process.execPath, [script, sourcePath], { encoding: 'utf8', cwd: directory, env });
+
+  assert.equal(result.status, 1);
+  assert.ok(!existsSync(lintReport(result.stdout)));
+});
+
 test('does not inspect node_modules while collecting JavaScript files', () => {
   const directory = mkdtempSync(join(tmpdir(), 'clean-code-lint-test-'));
   const dependencyDirectory = join(directory, 'node_modules', 'dependency');
@@ -75,7 +139,7 @@ test('does not inspect node_modules while collecting JavaScript files', () => {
   writeFileSync(join(directory, 'source.js'), 'function createOrder(customer, items, address) { return customer; }\n');
   writeFileSync(join(dependencyDirectory, 'generated.js'), 'function generated(one, two, three, four) { return one; }\n');
 
-  const result = spawnSync(process.execPath, [script, directory], { encoding: 'utf8' });
+  const result = spawnSync(process.execPath, [script, directory], { encoding: 'utf8', cwd: directory });
 
   assert.equal(result.status, 0, result.stderr);
 });
