@@ -36,12 +36,13 @@ Choose the narrowest capable delegate first:
 
 | Question Type | Delegate To | Expected Output |
 |---|---|---|
-| Existing code behavior, architecture, dependency flow, integration points, root-cause hypothesis | **Software Architect** | Explanation with file references, constraints, and recommended interpretation |
-| Test coverage, acceptance scope, regression risk, reproducibility, verification gaps | **Reviewer** | Coverage/risk assessment with referenced tests or missing cases |
-| Code quality risk, review of a suspicious implementation, likely bug patterns, non-obvious correctness concerns | **Reviewer** | Findings-first review with severity and file references |
+| Existing code behavior, architecture, dependency flow, integration points, root-cause hypothesis, test locations | **Investigator** | Read-only findings with file references, relevant constraints, and uncertainty |
+| Test coverage, acceptance scope, regression risk, reproducibility, verification gaps | **Investigator**, then **Reviewer** if an assessment is needed | Evidence first; then a coverage or risk assessment grounded in it |
+| Code quality risk, review of a suspicious implementation, likely bug patterns, non-obvious correctness concerns | **Investigator**, then **Reviewer** | Relevant code evidence first; then findings with severity and file references |
+| Architectural decision for an approved plan | **Investigator**, then **Architect** | Repository evidence first; then a design decision based on it |
 | Business intent or expected user-facing behavior when the request is fundamentally product-facing rather than technical | **Specifier** | Clarified product explanation grounded in user outcomes |
 
-If one delegate's answer reveals a new unanswered dimension, the caller may route to one additional specialist. Keep the chain tight and evidence-driven.
+Pass the Investigator's concise findings and file references to the decision-making specialist. That specialist may inspect the few relevant files directly when needed. If an answer reveals a new unanswered dimension, use one targeted follow-up; keep the chain tight and sequential.
 
 ## Investigation Steps
 
@@ -52,7 +53,7 @@ If one delegate's answer reveals a new unanswered dimension, the caller may rout
    - state assumptions and uncertainty
    - do not implement changes
 3. Review the returned evidence.
-4. If the answer is incomplete, delegate one follow-up investigation to the next most relevant specialist.
+4. If the answer needs a review or design judgment, delegate that judgment with the evidence. If factual evidence is incomplete, request one targeted Investigator follow-up.
 5. Return a concise, synthesized answer to the user.
 
 ## Answer Standard

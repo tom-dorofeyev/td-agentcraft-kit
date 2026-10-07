@@ -14,6 +14,8 @@ If a required specialist role is unavailable, do not substitute another role; st
 
 Delegate each role in a separate session. Give it only confirmed requirements and the smallest relevant context; never delegate a question that Planner should ask the user.
 
+When planning depends on existing repository behavior, ask Investigator a bounded question first. Pass its concise findings and file references to Specifier or Architect as relevant. Let Architect inspect specific files or request a sequential Investigator follow-up when a design decision needs more detail.
+
 This skill must:
 - Produce approved plans: small spec, full spec + architecture, or phased platform plan.
 - Never write implementation code. Choose either session planning or a formal work item; never create untracked planning documents.
