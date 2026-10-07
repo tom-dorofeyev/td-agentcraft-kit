@@ -34,6 +34,8 @@ Do **not** use this workflow for implementation requests, even if they begin wit
 
 Choose the narrowest capable delegate first:
 
+Use Investigator for broad repository discovery: searching for where behavior lives, tracing dependencies, and reading files to gather factual context. Give downstream specialists the relevant paths and findings. They may read those specific files to verify or decide; do not send every file read back to Investigator.
+
 | Question Type | Delegate To | Expected Output |
 |---|---|---|
 | Existing code behavior, architecture, dependency flow, integration points, root-cause hypothesis, test locations | **Investigator** | Read-only findings with file references, relevant constraints, and uncertainty |

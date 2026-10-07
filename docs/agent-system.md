@@ -39,7 +39,7 @@ Load `/planner` for planning, `/implementer` for explicitly requested slice orch
 | Refactorer | Measured complexity and duplication reduction |
 | Investigator | Read-only evidence-based investigation |
 
-Role agents are thin native execution adapters: responsibilities remain solely in `specialized-agent/references/`. An orchestrator delegates to one adapter; the adapter executes its contract locally and never re-delegates the same role through the CLI. For repository questions, Investigator gathers evidence first; Reviewer or Architect then makes the requested assessment or design decision. The only nested handoffs are Architect's necessary, sequential Investigator requests when design context is missing; native delegation remains preferred, with CLI only as its fallback.
+Role agents are thin native execution adapters: responsibilities remain solely in `specialized-agent/references/`. An orchestrator delegates to one adapter; the adapter executes its contract locally and never re-delegates the same role through the CLI. Investigator handles broad searches and exploratory file reading; Reviewer or Architect can read the identified files to make the requested assessment or design decision. The only nested handoffs are Architect's necessary, sequential Investigator requests when design context is missing; native delegation remains preferred, with CLI only as its fallback.
 
 ## Workflow
 
