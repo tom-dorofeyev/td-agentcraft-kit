@@ -64,13 +64,15 @@ These are baked into the instructions layer and inherited by all agents:
 
 ## Workflow Overview
 
-The kit supports three execution paths based on scope. The Planner handles all scopes — plan depth scales, not whether to plan.
+Ordinary work uses `/code-workflow` with the request and conversation context; no formal files or mandatory Planner/Implementer handoff. Use `/planner` and `/implementer` primarily when complex work needs approved, durable planning and tracked delivery. An explicitly requested lightweight plan can stay in the session.
 
 | Scope | Signal | Path |
 |---|---|---|
-| **Small** | A change bigger than a one-liner but not a full feature | **`/planner` → `/implementer`** — lightweight spec, then direct implementation + review |
-| **Medium** | New feature, cross-cutting change, new abstraction | **`/planner` → `/implementer`** — full PRD + Architecture, then AFK loop until Gherkin tests pass |
-| **Large** | Entire application, "create an X" | **`/planner` → `/implementer` → `/planner` → ...** — MVP scoped into phases, each phase through the full workflow, loop back for next phase |
+| **Ordinary** | Clear request, including a small change | **`/code-workflow`** — sequential roles and gates, using conversation context |
+| **Complex** | Cross-cutting feature or durable handoff | **`/planner` → `/implementer`** — approved plan decomposed into independently verifiable deliverables |
+| **Large** | Application or platform | **`/planner` → `/implementer` → `/planner` → ...** — approved current-phase deliverables; later phases remain summaries until planned |
+
+Formal plans use `.agent-craft-work/<plan-slug>/plan.md` for shared scope, decisions, ordered IDs, and future phase summaries; each small deliverable has its own `todo/<KEY>-001-<title>/work-item.md` and moves as a whole directory through `in-progress/` to `done/` only after its gates pass. `/work-item-tracking` is the lifecycle and format authority; do not create executable mega-items.
 
 Gate enforcement is strict. A task is not "done" until every applicable gate has passed and the evidence has been recorded. Build must succeed. Full test suite must pass. No exceptions.
 

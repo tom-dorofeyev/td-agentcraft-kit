@@ -18,10 +18,10 @@ When planning depends on existing repository behavior, give broad searches and e
 
 This skill must:
 - Produce approved plans: small spec, full spec + architecture, or phased platform plan.
-- Never write implementation code. Choose either session planning or a formal work item; never create untracked planning documents.
+- Never write implementation code. Choose either session planning or a formal plan; never create untracked planning documents.
 - Write user-facing planning specs; use technical specs for migrations, CI, refactors, performance, and infrastructure.
-- Plan working, committable slices. `/implementer` completes one looped slice before the next.
-- Validate that the roadmap is clear and separated into small manageable tasks with user-facing and technical acceptance criteria where applicable.
+- Plan working, committable increments. For a formal plan, each current increment is its own independently verifiable deliverable; `/implementer` completes one before the next.
+- Validate that even complex plans break into small, manageable deliverables with user-facing and technical acceptance criteria where applicable. Never create a single huge executable item.
 
 ## Planning Modes
 
@@ -29,9 +29,9 @@ This skill must:
 
 Keep the plan in the session when the work can be clearly agreed, implemented, and verified without a persistent handoff. Do not create files or folders.
 
-### Formal Work Item
+### Formal Plan
 
-Use a formal work item when the request needs a durable plan, explicit acceptance criteria, ordered tasks, or a Planner → Implementer handoff. After the user approves the plan, load `/work-item-tracking`, create the item, and hand `/implementer` its canonical path. Do not load the skill for a session plan.
+Use a formal plan when the request needs a durable handoff or multiple approved deliverables tracked across sessions. After the user approves the plan and its implementation-ready deliverables, load `/work-item-tracking` to create `plan.md` and a separate `todo/` work-item directory for each deliverable; hand `/implementer` the plan slug or next ID. Do not load tracking for a session plan, including an explicitly requested lightweight plan that can be completed in the conversation.
 
 ## Plan Depth
 
@@ -49,21 +49,21 @@ Use a formal work item when the request needs a durable plan, explicit acceptanc
 - Vague: load `/grill-me`.
 - Unsure: ask full vs light plan.
 
-## Delivery Slices
+## Delivery Increments
 
-Medium/large handoffs require ordered slices. Phase and epic may contain many slices; neither is automatically committable.
+Medium/large handoffs require ordered small increments. For formal plans, each is a separate deliverable, not a slice hidden inside a phase or mega-item. A phase is shared context, not a work item.
 
-Every slice states:
+Every increment states:
 - Outcome; approved requirements and criteria covered.
-- Dependencies and compatibility constraints.
+- Dependency IDs (for formal plans) and compatibility constraints.
 - Why it works independently and is committable; end-to-end where applicable.
 - Proof: tests or acceptance scenarios.
 
-Order by dependency and value. No horizontal schema/interface/scaffold/layer slices unless safe, useful, testable alone. Stay within locked plan. Small scope: one slice unless unsafe. No safe slices: resolve with user before handoff.
+Order by dependency and value. No horizontal schema/interface/scaffold/layer increments unless safe, useful, testable alone. Stay within locked plan. Small scope: one increment unless unsafe. No safe increments: resolve with user before handoff. Keep future phases as summaries in the shared plan; add their deliverables only after later detailed approval.
 
 ## Workflow
 
-`Requirements → Plan + slices → User approval → Session handoff or formal work item → Done`
+`Requirements → Plan + deliverables → User approval → Session handoff or formal plan → Done`
 
 Every step requires explicit approval.
 
@@ -94,7 +94,7 @@ Every step requires explicit approval.
 3. Add current-phase slices; approve phased spec.
 4. User-facing: use Architect to annotate phased architecture by MVP/Phase 2/Phase 3.
 5. Approve architecture and slices.
-6. For a formal plan, create the `epic` work item. MVP: stories, tests, design, current-phase slices. Future: summaries.
+6. For a formal plan, record scope, decisions, ordered deliverable IDs, and future phase summaries in `plan.md`; create one item per approved current-phase deliverable under `todo/`.
 7. Only current phase is implementation-ready; replan future phases later.
 
 ## Boundaries

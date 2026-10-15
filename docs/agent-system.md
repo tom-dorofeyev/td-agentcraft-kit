@@ -14,7 +14,7 @@ Markdown is production code. The system is designed as small, focused contracts:
 - `skills/` contains reusable workflows and quality gates.
 - `instructions/` contains shared rules.
 
-The shared instructions require `/code-workflow` for every executable change. It delegates Builder, Reviewer, and Refactorer sequentially and requires review, static analysis, a passing build and test suite, and behavior-focused evidence. A clear direct request can enter this workflow without a separate plan. `/implementer` invokes the same workflow for each planned slice when explicitly requested.
+The shared instructions require `/code-workflow` for every executable change. It delegates Builder, Reviewer, and Refactorer sequentially and requires review, static analysis, a passing build and test suite, and behavior-focused evidence. Ordinary work enters with conversation context, without a separate plan or formal files. `/implementer` invokes the same workflow per approved deliverable when requested for complex tracked work.
 
 ```text
 .apm/
@@ -53,7 +53,7 @@ Role agents are thin native execution adapters: responsibilities remain solely i
 The `/planner` skill has two modes:
 
 - **Session plan** — stays in the conversation; no files are created.
-- **Formal work item** — a durable plan with acceptance criteria, ordered slices, and a `/planner` → `/implementer` handoff in `.agent-craft-work/`.
+- **Formal plan** — after approval, `.agent-craft-work/<plan-slug>/plan.md` holds shared scope, decisions, ordered deliverable IDs/dependencies, next unused ID number, and future phase summaries. Each approved current-phase deliverable has its own `todo/<KEY>-001-<title>/work-item.md` with acceptance and evidence; `/work-item-tracking` governs whole-directory moves through `in-progress/` and `done/`. An Implementer can resume or accept a direct handoff by plan or ID, not only an immediate Planner handoff. Blocked items stay in progress; later phases need approved detail before item creation.
 
 ## What Ships
 
