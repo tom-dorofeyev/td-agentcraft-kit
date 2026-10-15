@@ -8,6 +8,24 @@
       "refactorer": null,
       "reviewer": null,
       "specifier": null
+    },
+    "opencode-openai": {
+      "agent": null,
+      "architect": "openai/gpt-6-astra",
+      "builder": "openai/gpt-6-sol",
+      "investigator": "openai/gpt-6-luna",
+      "refactorer": "openai/gpt-6-sol",
+      "reviewer": "openai/gpt-6-sol",
+      "specifier": "openai/gpt-6-astra"
     }
+  },
+  "opencode-copilot": {
+    "agent": null,
+    "architect": "github-copilot/gpt-6-astra",
+    "builder": "github-copilot/gpt-6-sol",
+    "investigator": "github-copilot/gpt-6-luna",
+    "refactorer": "github-copilot/gpt-6-sol",
+    "reviewer": "github-copilot/claude-sonnet-5.5",
+    "specifier": "github-copilot/gpt-6-astra"
   }
 }
