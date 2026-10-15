@@ -87,7 +87,7 @@ Every step requires explicit approval.
 
 ## Large
 
-1. Gather and resolve requirements; use `/grill-me` aggressively for MVP boundaries.
+1. Gather and resolve requirements; use `/grill-me` to batch unresolved MVP-boundary questions.
 2. Classify:
    - **User-facing** → use Specifier with confirmed MVP and phase requirements; return final Gherkin acceptance criteria for the current phase.
    - **Technical** → use Architect for phased technical spec + architecture; MVP detailed, future light.
