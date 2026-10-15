@@ -17,24 +17,24 @@
       "refactorer": "openai/gpt-6-sol",
       "reviewer": "openai/gpt-6-sol",
       "specifier": "openai/gpt-6-astra"
+    },
+    "opencode-copilot": {
+      "agent": null,
+      "architect": "github-copilot/gpt-6-astra",
+      "builder": "github-copilot/gpt-6-sol",
+      "investigator": "github-copilot/gpt-6-luna",
+      "refactorer": "github-copilot/gpt-6-sol",
+      "reviewer": "github-copilot/claude-sonnet-5.5",
+      "specifier": "github-copilot/gpt-6-astra"
+    },
+    "copilot": {
+      "agent": null,
+      "architect": "GPT-6 Astra",
+      "builder": "GPT-6 Sol",
+      "investigator": "GPT-6 Luna",
+      "refactorer": "GPT-6 Sol",
+      "reviewer": "Claude Sonnet 5.5",
+      "specifier": "GPT-6 Astra"
     }
-  },
-  "opencode-copilot": {
-    "agent": null,
-    "architect": "github-copilot/gpt-6-astra",
-    "builder": "github-copilot/gpt-6-sol",
-    "investigator": "github-copilot/gpt-6-luna",
-    "refactorer": "github-copilot/gpt-6-sol",
-    "reviewer": "github-copilot/claude-sonnet-5.5",
-    "specifier": "github-copilot/gpt-6-astra"
-  },
-  "copilot": {
-    "agent": null,
-    "architect": "GPT-6 Astra",
-    "builder": "GPT-6 Sol",
-    "investigator": "GPT-6 Luna",
-    "refactorer": "GPT-6 Sol",
-    "reviewer": "Claude Sonnet 5.5",
-    "specifier": "GPT-6 Astra"
   }
 }
