@@ -27,5 +27,14 @@
     "refactorer": "github-copilot/gpt-6-sol",
     "reviewer": "github-copilot/claude-sonnet-5.5",
     "specifier": "github-copilot/gpt-6-astra"
+  },
+  "copilot": {
+    "agent": null,
+    "architect": "GPT-6 Astra",
+    "builder": "GPT-6 Sol",
+    "investigator": "GPT-6 Luna",
+    "refactorer": "GPT-6 Sol",
+    "reviewer": "Claude Sonnet 5.5",
+    "specifier": "GPT-6 Astra"
   }
 }
