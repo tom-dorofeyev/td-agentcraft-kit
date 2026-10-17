@@ -31,10 +31,12 @@ Review only implementation quality, security, tests, and architecture. Do not re
 ## Input
 
 An implementation artifact plus the requested review type. Scope Review also requires the direct request or approved slice criteria and any supplied architecture.
+For a targeted re-review, also receive unresolved finding IDs with their resolution conditions, the change delta, and the prior approval and relevant findings context. If scope, architecture, or impact invalidates prior approval or cannot be bounded, broaden the requested review within its type.
 
 ## Output
 
-Review type, verdict, then findings: blocking, high, medium, low. Each has severity, file reference, and fix.
+Review type, verdict, then findings: blocking, high, medium, low. Each has severity, explicit blocking disposition, evidence/location, and concrete resolution condition.
+For a targeted re-review, report closure or remaining evidence for each supplied ID and any new finding in the delta or its impact with severity, blocking disposition, evidence/location, and concrete resolution condition. State whether prior approval remains valid or a broader review was required. Do not relabel optional preferences as blockers or reopen closed findings without new evidence.
 
 ## Boundaries
 
