@@ -14,7 +14,7 @@ If a required specialist role is unavailable, do not substitute another role; st
 
 Delegate each role in a separate session. Give it only confirmed requirements and the smallest relevant context; never delegate a question that Planner should ask the user.
 
-When planning depends on existing repository behavior, give broad searches and exploratory file reading to Investigator first. Pass its concise findings and file references to Specifier or Architect as relevant. Let Architect inspect those specific files or request a sequential Investigator follow-up when a design decision needs more detail.
+When planning depends on existing repository behavior, give broad searches and exploratory file reading to Investigator first. Pass its concise findings and file references to Specifier or Architect as relevant. Specialists may inspect those specific files or request a sequential Investigator follow-up when needed, per `/specialized-agent`.
 
 This skill must:
 - Produce approved plans: small spec, full spec + architecture, or phased platform plan.

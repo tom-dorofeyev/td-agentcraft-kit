@@ -34,7 +34,7 @@ Do **not** use this workflow for implementation requests, even if they begin wit
 
 Choose the narrowest capable delegate first:
 
-Use Investigator for broad repository discovery: searching for where behavior lives, tracing dependencies, and reading files to gather factual context. Give downstream specialists the relevant paths and findings. They may read those specific files to verify or decide; do not send every file read back to Investigator.
+Use Investigator for broad repository discovery: searching for where behavior lives, tracing dependencies, and reading files to gather factual context. Give downstream specialists compact relevant paths and line references, findings or key excerpts, and uncertainties, not raw dumps. They may read those specific files to verify or decide; do not send every file read back to Investigator. A specialist needing further broad discovery follows `/specialized-agent`'s sequential native Investigator boundary.
 
 | Question Type | Delegate To | Expected Output |
 |---|---|---|

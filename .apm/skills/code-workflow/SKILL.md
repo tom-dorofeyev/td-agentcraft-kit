@@ -7,7 +7,7 @@ description: Run every executable code change through sequential Builder, Review
 
 Use this workflow for every change to executable code, tests, scripts, or runtime configuration. A clear user request is sufficient scope; use approved criteria or architecture when supplied. Do not start a planning or approval cycle solely to run this workflow.
 
-Load `/proof-of-work` before editing. The caller owns this workflow. Use `/specialized-agent` for each leaf role, one at a time, and wait for its result before the next handoff. Keep each task bounded to the current change. If a required role is unavailable, report the broken workflow and do not claim completion.
+Load `/proof-of-work` before editing. The caller owns this workflow. Use `/specialized-agent` for each specialist role, one at a time, and wait for its result before the next handoff. Keep each task bounded to the current change. If a required role is unavailable, report the broken workflow and do not claim completion.
 
 Every delegation in this workflow starts a fresh session, including initial calls, corrections, targeted reviews, and repeated calls to the same role. Never pass prior delegate task or session IDs, or use CLI resume, continue, or reuse commands or switches. Polling a live task for its result is allowed; starting another task in its session is not. If a fresh delegate cannot be created, report a blocker; do not reuse a session or bypass delegation locally.
 

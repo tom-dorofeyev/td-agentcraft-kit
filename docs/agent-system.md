@@ -1,6 +1,6 @@
 # Agent System
 
-This kit has one regular `Agent` entry point, a shared code workflow, two optional orchestration skills, and portable leaf specialists supplied by `/specialized-agent`.
+This kit has one regular `Agent` entry point, a shared code workflow, two optional orchestration skills, and portable specialists supplied by `/specialized-agent`.
 
 ## Core Idea
 
@@ -9,7 +9,7 @@ Markdown is production code. The system is designed as small, focused contracts:
 - `agents/agent.md` is the default assistant for everyday conversation and simple work.
 - `skills/code-workflow/` owns the Builder → Reviewer → Refactorer sequence and code quality gates.
 - `skills/planner/` and `skills/implementer/` contain the scope and slice orchestrators.
-- `skills/specialized-agent/references/` contains canonical bounded leaf-specialist contracts.
+- `skills/specialized-agent/references/` contains canonical bounded specialist contracts.
 - The seven role files in `agents/` register native subagents and load those contracts through `/specialized-agent`.
 - `skills/` contains reusable workflows and quality gates.
 - `instructions/` contains shared rules.
@@ -28,7 +28,7 @@ The shared instructions require `/code-workflow` for every executable change. It
 
 ## Workflow Roles
 
-Load `/planner` for planning, `/implementer` for explicitly requested slice orchestration, and `/code-workflow` for code changes. Each uses `/specialized-agent` for the relevant leaf specialist; when available, prefer native agents.
+Load `/planner` for planning, `/implementer` for explicitly requested slice orchestration, and `/code-workflow` for code changes. Each uses `/specialized-agent` for the relevant specialist; when available, prefer native agents.
 
 | Role | Purpose |
 |---|---|
@@ -39,7 +39,7 @@ Load `/planner` for planning, `/implementer` for explicitly requested slice orch
 | Refactorer | Measured complexity and duplication reduction |
 | Investigator | Read-only evidence-based investigation |
 
-Role agents are thin native execution adapters: responsibilities remain solely in `specialized-agent/references/`. An orchestrator delegates to one adapter; the adapter executes its contract locally and never re-delegates the same role through the CLI. Investigator handles broad searches and exploratory file reading; Reviewer or Architect can read the identified files to make the requested assessment or design decision. The only nested handoffs are Architect's necessary, sequential Investigator requests when design context is missing; native delegation remains preferred, with CLI only as its fallback.
+Role agents are thin native execution adapters: role responsibilities remain in `specialized-agent/references/`, and shared discovery routing lives in `/specialized-agent`. Every specialist except Investigator sends broad searches and exploratory file reading to Investigator, unless supplied findings suffice. Specialists read identified relevant files locally and own their role work. Only bounded, sequential native Investigator handoffs are allowed within a specialist; if native discovery is unavailable, it returns a missing-context question to its caller for an Investigator handoff and fresh specialist task, never a nested CLI. Investigator does not delegate and returns compact findings with paths, line references, and uncertainty, not raw dumps. Ordinary callers may still use the CLI fallback to start a specialist task.
 
 ## Workflow
 
@@ -61,7 +61,7 @@ The `/planner` skill has two modes:
 - Seven native role agents, each referencing its canonical specialist contract.
 - Two scope orchestration skills: `/planner` and `/implementer`.
 - One shared implementation skill: `/code-workflow`.
-- One portable leaf-specialist routing skill: `/specialized-agent`.
+- One portable specialist routing skill: `/specialized-agent`.
 - Reusable requirements, delegation, investigation, proof-of-work, quality, preflight, tracking, and notification skills.
 
-This is a single-source design: orchestrator workflows live in their own skills, while leaf-specialist definitions live only in `specialized-agent/references/`.
+This is a single-source design: orchestrator workflows live in their own skills, while specialist definitions live only in `specialized-agent/references/`.

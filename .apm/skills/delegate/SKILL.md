@@ -23,7 +23,7 @@ When the caller supplies a model for this task, pass it with `--model <model>` t
 3. Run it directly through the harness's command tool, wait for completion, and inspect its output.
 4. Verify important claims or file changes when practical.
 
-A CLI delegate is a leaf: its prompt must say **do not invoke `/delegate`, spawn subagents, or run an agent CLI**. It must complete the assigned task directly. Use it only for work that needs a distinct agent session; do not create a delegation chain merely because the CLI is available. Never create a delegation chain unless the caller explicitly requests one.
+A generic or Investigator CLI delegate is a leaf: its prompt must say **do not invoke `/delegate`, spawn subagents, or run an agent CLI**. For a non-Investigator specialist assigned through `/specialized-agent`, the prompt instead permits only bounded, sequential native Investigator discovery if supported; it forbids `/delegate` and nested agent CLIs. If native discovery is unavailable, the specialist returns a bounded missing-context question to its caller rather than searching broadly or starting another CLI. Wait for each native result before continuing. Use CLI only for work that needs a distinct agent session; never create a nested CLI chain, even when the caller requests one.
 
 Use the harness working directory and output capture; do not create wrapper scripts or shell orchestration. Treat the result as subordinate work, not unquestionable truth.
 

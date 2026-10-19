@@ -12,7 +12,7 @@ A reusable APM kit that ships a multi-agent engineering workflow system to Copil
 
 - **Agent** → default user-facing entry point
 - **Orchestration skills** → Planner and Implementer workflows
-- **Workflow roles** → portable leaf-role contracts loaded by `specialized-agent`
+- **Workflow roles** → portable role contracts loaded by `specialized-agent`
 - **Skills** → reusable capabilities loaded on demand
 - **Instructions** → base class (shared rules inherited by all agents)
 
@@ -32,7 +32,7 @@ The default Agent and each skill use YAML frontmatter for metadata. Workflow rol
 
 ## Workflow Roles
 
-`planner` and `implementer` orchestrate their workflows. `specialized-agent` loads these portable leaf contracts and uses native delegation for one bounded, sequential task; `delegate` is its fallback:
+`planner` and `implementer` orchestrate their workflows. `specialized-agent` loads these portable contracts and uses native delegation for one bounded, sequential task; `delegate` is its fallback for ordinary callers. Specialists may make only bounded native Investigator handoffs for missing broad discovery; Investigator never delegates:
 
 | Role | Purpose |
 |---|---|---|
@@ -82,7 +82,7 @@ When contributing role contracts, skills, or instructions:
 
 1. **Respect the analogy.** A role contract has one responsibility. A skill is independently loadable and reusable.
 2. **Follow the existing formats.** The default Agent and skills use YAML frontmatter. Workflow role contracts are plain Markdown in `specialized-agent/references/`.
-3. **Never duplicate.** Orchestration behavior belongs only in `planner` or `implementer`; leaf-role behavior belongs only in `specialized-agent/references/`. Shared behavior belongs in `instructions/` or a skill. If a skill overlaps semantically with another, converge them.
+3. **Never duplicate.** Orchestration behavior belongs only in `planner` or `implementer`; role behavior belongs only in `specialized-agent/references/`. Shared discovery routing belongs in `specialized-agent`, not shared instructions. If a skill overlaps semantically with another, converge them.
 4. **Apply the Rule of Three.** Do not extract a skill on the first or second occurrence of a pattern. Wait for the third.
 5. **Treat markdown as code.** Naming, structure, cohesion, and coupling apply to these files exactly as they would to source code.
 
