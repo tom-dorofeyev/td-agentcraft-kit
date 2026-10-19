@@ -21,19 +21,19 @@
     "opencode-copilot": {
       "agent": null,
       "architect": "github-copilot/gpt-6-astra",
-      "builder": "github-copilot/gpt-6-sol",
+      "builder": "github-copilot/claude-sonnet-5.5",
       "investigator": "github-copilot/gpt-6-luna",
       "refactorer": "github-copilot/gpt-6-sol",
-      "reviewer": "github-copilot/claude-sonnet-5.5",
+      "reviewer": "github-copilot/gpt-6-sol",
       "specifier": "github-copilot/gpt-6-astra"
     },
     "copilot": {
       "agent": null,
       "architect": "GPT-6 Astra",
-      "builder": "GPT-6 Sol",
+      "builder": "Claude Sonnet 5.5",
       "investigator": "GPT-6 Luna",
       "refactorer": "GPT-6 Sol",
-      "reviewer": "Claude Sonnet 5.5",
+      "reviewer": "GPT-6 Sol",
       "specifier": "GPT-6 Astra"
     }
   }
