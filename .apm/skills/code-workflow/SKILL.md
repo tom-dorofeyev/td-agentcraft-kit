@@ -25,4 +25,12 @@ Run the initial stages in order, with separate reviews:
 
 For corrections, return open blockers to Builder with their IDs and resolution conditions; Builder fixes them and reports change and proof evidence. After a fix or refactor, request targeted re-review from each relevant Reviewer type: verify closure of its unresolved IDs and examine the change delta and regression impact within that review type. The caller updates the findings list only after the relevant Reviewer verifies closure with evidence. Retain unaffected approvals; broaden a review when changed scope, architecture, or impact invalidates its approval or the impact cannot be bounded. A previously unperformed initial stage still requires its full first pass, never a targeted substitute. Keep Scope Review and Quality/Architecture Review separate; do not weaken either gate. Re-run affected checks after corrections, including `/static-code-analysis` and `/proof-of-work` evidence where applicable, and complete all required final project checks. Count the initial sequence and each correction pass toward the five-cycle cap; do not restart the count on targeted re-review. If the limit is reached or a required gate cannot pass, report the blocker and leave the change incomplete. Do not move to another planned slice with an unresolved failure.
 
+### Cycle artifacts
+
+- Caller tracks exact created paths across sessions; delegates return paths. No new tracking file required. Track jscpd and separate ESLint directories, even with `--report-dir`.
+- Every cycle, including blocked exits: record commands, results, metrics, findings in session/applicable formal evidence. Evidence must survive artifact deletion.
+- After producers/consumers finish, delete unnecessary workflow-owned artifacts by exact exclusive path. No shared-parent deletion or glob sweeps.
+- Retain failure reports across cycles until verified resolution and evidence capture; then delete unless explicitly retained.
+- Never delete preexisting files, other runs' or active artifacts, deliverables, explicitly retained evidence. Unclear ownership or cleanup failure: preserve files, report limitation.
+
 Completion requires the requested behavior, no blocking review findings, passing `/static-code-analysis`, passing behavior-focused evidence from `/proof-of-work`, and passing project checks and full relevant test suite when available. Report the exact verification commands and results, review outcome, metrics, and any remaining limitations.
