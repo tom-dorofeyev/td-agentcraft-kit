@@ -1,3 +1,7 @@
+---
+description: Shared engineering workflow and agent collaboration rules.
+applyTo: '**'
+---
 # Agent Instructions
 
 These instructions apply to every agent without exception.
