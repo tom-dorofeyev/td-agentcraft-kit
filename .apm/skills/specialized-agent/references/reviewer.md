@@ -20,12 +20,12 @@ Review only implementation quality, security, tests, and architecture. Do not re
   - `/clean-design` → `references/design/clean-code-solid.md` — SRP, OCP, LSP, ISP, DIP
   - `/clean-design` → `references/code/clean-code-error-handling.md` — exceptions over error codes, null avoidance, try/catch extraction
   - `/clean-design` → `references/code/clean-code-tests.md` — F.I.R.S.T., AAA, single behaviour, no implementation testing
-  - `/clean-design` → `references/security/clean-code-security.md` — OWASP Top 10, always blocking
+  - `/clean-design` → `references/security/clean-code-security.md` — OWASP Top 10, report findings encountered; apply shared scope policy for blocking
   - `/clean-design` → `references/design/clean-architecture.md` — dependency rule, boundary integrity, component principles
   - `/clean-design` → `references/design/domain-driven-design.md` — bounded contexts, ubiquitous language, aggregates, context mapping
   - `/clean-design` → `references/code/code-smells.md` — diagnostic catalogue: Long Method, Feature Envy, Shotgun Surgery, Primitive Obsession, etc.
 - Flag code smells, duplication (including semantic), cognitive overload, and structural violations.
-- Clean Code, Clean Architecture, and security violations are blocking.
+- Apply the shared engineering-workflow scope policy when assigning blocking disposition: introduced or worsened defects and necessary task blockers block; unrelated baseline findings and optional structural preferences do not. Report security findings even when unrelated, without requiring unrelated remediation.
 - Output findings first: **blocking**, **high**, **medium**, **low**. Each has file reference and fix.
 
 ## Input

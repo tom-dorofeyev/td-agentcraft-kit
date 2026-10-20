@@ -17,7 +17,7 @@
 - **No side effects**: functions that appear to query should not secretly mutate state. Temporal coupling and hidden state changes are the result.
 - **Prefer exceptions to error codes**: returning error codes forces callers to handle errors inline and pollutes the call site. Throw typed exceptions instead.
 - **Extract try/catch bodies**: the body of a try block and the catch block should each be extracted into their own functions. Error handling is its own concern.
-- **DRY**: every occurrence of duplicated logic is a missed abstraction. Apply the Rule of Three — extract on the third occurrence, not the first or second.
+- **DRY**: consider extraction when logic repeats; the Rule of Three is a prompt to assess demonstrated benefit, not an automatic extraction trigger. Prefer the simplest adequate solution.
 
 ## When Writing
 

@@ -2,7 +2,7 @@
 
 Aligned with the [OWASP Top 10:2025](https://owasp.org/Top10/2025/), the latest released web application edition. Verified 2026-10-20. Category IDs below refer to this edition.
 
-Security findings are always **BLOCKING**. There is no such thing as a non-blocking security issue in production code.
+Report security findings encountered in the review even when unrelated to the change. Apply the shared engineering-workflow scope policy: introduced or worsened vulnerabilities and necessary task blockers are blocking; unrelated baseline issues stay visible without automatic remediation. Never mark a baseline failure as passing.
 
 Citation format: `[SECURITY/<category>] <file>:<line> — <what the vulnerability is and why it is dangerous>`
 

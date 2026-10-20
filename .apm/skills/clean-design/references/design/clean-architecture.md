@@ -49,7 +49,7 @@ Before committing any cross-layer code:
 4. Could I write an `InMemoryRepository` in under 20 lines from the current interface?
 5. Do my top-level folders reflect business capabilities, not technical constructs?
 
-Fix any "no" before committing.
+Use these checks where the architecture and task call for them; apply the shared engineering-workflow scope policy before requiring a fix. Do not introduce layers or interfaces solely to satisfy a hypothetical swap.
 
 ## When Reviewing
 

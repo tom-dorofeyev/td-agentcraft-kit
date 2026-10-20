@@ -88,7 +88,7 @@ Before committing any unit of code, run through the five checks:
 | **ISP** | Does every consumer of this interface/API use everything it exposes? |
 | **DIP** | Does this unit depend on a concrete infrastructure type — database, clock, HTTP, SDK? |
 
-Any "no" is a design problem to fix before the code is submitted.
+Use these questions to identify concrete problems; apply the shared engineering-workflow scope policy before requiring a fix. Do not add extension points for hypothetical variants.
 
 ---
 

@@ -61,7 +61,7 @@ This skill is a diagnostic lens — a catalogue of recognisable patterns that si
 | Smell | Signal |
 |---|---|
 | **Magic Number / Literal** | Bare numeric or string literal with domain meaning |
-| **Duplicate Code** | Same logic in two or more places (Rule of Three: extract on third) |
+| **Duplicate Code** | Same logic in two or more places (Rule of Three: consider extraction when beneficial) |
 | **Dead Code** | Unreachable branch, unused variable, commented-out block |
 | **Negative Conditional** | `!isNotActive` style — rewrite as a positive predicate |
 | **Switch on Type** | `switch (type)` or `if/else if` chain for variants; usually signals a missing polymorphism |

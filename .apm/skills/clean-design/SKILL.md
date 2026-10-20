@@ -25,7 +25,7 @@ This skill contains the existing clean-code and clean-design standards as refere
 
 ## Security reference
 
-- For external input, authentication, authorisation, data persistence, secrets, cryptography, user-controlled URLs or paths, deserialisation, or a security review, load [Security](references/security/clean-code-security.md). Every security finding is blocking.
+- For external input, authentication, authorisation, data persistence, secrets, cryptography, user-controlled URLs or paths, deserialisation, or a security review, load [Security](references/security/clean-code-security.md). Report security findings encountered in the review; use the shared engineering-workflow scope policy for blocking disposition.
 
 ## Review selection
 
