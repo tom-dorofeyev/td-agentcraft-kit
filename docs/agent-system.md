@@ -7,6 +7,7 @@ This kit has one regular `Agent` entry point, a shared code workflow, two option
 Markdown is production code. The system is designed as small, focused contracts:
 
 - `agents/agent.md` is the default assistant for everyday conversation and simple work.
+- Load `/coordinator` in a session to coordinate through native delegation instead of doing substantive work locally.
 - `skills/code-workflow/` owns the Builder → Reviewer → Refactorer sequence and code quality gates.
 - `skills/planner/` and `skills/implementer/` contain the scope and slice orchestrators.
 - `skills/specialized-agent/references/` contains canonical bounded specialist contracts.
@@ -24,6 +25,8 @@ The shared instructions require `/code-workflow` for every executable change. It
   skills/
     specialized-agent/
       references/
+    coordinator/
+      SKILL.md
 ```
 
 ## Workflow Roles
@@ -43,7 +46,7 @@ Role agents are thin native execution adapters: role responsibilities remain in 
 
 ## Workflow
 
-1. **Everyday tasks** → `Agent`.
+1. **Everyday tasks** → `Agent`. Load `/coordinator` explicitly for a coordination-only session until you ask to exit the mode.
 2. **Planning** → load `/planner`; it uses Investigator for needed repository evidence before sequential Specifier or Architect handoffs through `/specialized-agent`.
 3. **Implementation** → load `/code-workflow`; it runs Builder, Reviewer, Refactorer, and verification for every code change. Explicit `/implementer` work uses it per slice.
 4. **Large scope** → `/planner` defines MVP phases; each current phase goes through the same workflow.
@@ -62,6 +65,9 @@ The `/planner` skill has two modes:
 - Two scope orchestration skills: `/planner` and `/implementer`.
 - One shared implementation skill: `/code-workflow`.
 - One portable specialist routing skill: `/specialized-agent`.
+- One optional session skill: `/coordinator`.
 - Reusable requirements, delegation, investigation, proof-of-work, quality, preflight, tracking, and notification skills.
 
 This is a single-source design: orchestrator workflows live in their own skills, while specialist definitions live only in `specialized-agent/references/`.
+
+`/coordinator` is a session behavior instruction, not a tool sandbox. It requires native delegation for substantive work and stops if unavailable; do not rely on it as a security boundary.

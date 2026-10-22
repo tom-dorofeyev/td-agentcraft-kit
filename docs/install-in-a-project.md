@@ -10,6 +10,8 @@ apm install https://github.com/tom-dorofeyev/td-agentcraft-kit#main
 
 If you also want Telegram notifications, see [telegram-notifications.md](telegram-notifications.md).
 
+To coordinate without doing substantive work in the current session, explicitly load `/coordinator`. The mode lasts until you ask to exit it. It requires native delegation and stops when unavailable; its no-command/no-edit rules are session instructions, not a tool sandbox.
+
 ## Select Models Per Agent
 
 Clone the kit, edit `model-profiles.json`, and add a profile with model IDs for the agents you want to pin. Apply it before installing from the local clone:
