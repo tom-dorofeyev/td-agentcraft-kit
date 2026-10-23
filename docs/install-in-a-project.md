@@ -6,7 +6,12 @@ Use this when you want the kit inside a specific repository.
 cd your-project
 apm init --target opencode,copilot
 apm install https://github.com/tom-dorofeyev/td-agentcraft-kit#main
+apm compile
 ```
+
+`apm install` deploys the agents, skills, and Copilot instructions. `apm compile` writes the root `AGENTS.md` that OpenCode reads for shared instructions when that file is absent or APM-generated. APM preserves an existing hand-written `AGENTS.md`; if your project has one, use [managed-section mode](https://microsoft.github.io/apm/producer/compile/#managed-section-mode) to add the shared instructions without replacing your own content.
+
+Commit the resulting `apm.yml`, `apm.lock.yaml`, and APM-deployed files in your project, including agents, skills, instructions, and any generated `AGENTS.md`. Keep `apm_modules/` ignored; contributors run `apm install` after cloning to restore package resources.
 
 If you also want Telegram notifications, see [telegram-notifications.md](telegram-notifications.md).
 
@@ -22,6 +27,7 @@ cd td-agentcraft-kit
 node scripts/configure-models.mjs my-profile
 cd ../your-project
 apm install ../td-agentcraft-kit
+apm compile
 ```
 
 For example, `model-profiles.json` can assign `builder` and `reviser` independently:

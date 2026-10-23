@@ -2,18 +2,22 @@
 
 Use this when you want the kit available in your user config for all projects.
 
+If you already have a user-level APM setup, check [Global Target Scope](#global-target-scope) before running `apm compile --global`.
+
 ## Install Directly From GitHub
 
 macOS / Linux:
 
 ```sh
 apm install --global https://github.com/tom-dorofeyev/td-agentcraft-kit#main --target opencode,copilot
+apm compile --global
 ```
 
 Windows PowerShell:
 
 ```powershell
 apm install --global https://github.com/tom-dorofeyev/td-agentcraft-kit#main --target opencode,copilot
+apm compile --global
 ```
 
 ## Install From A Local Clone
@@ -39,15 +43,29 @@ macOS / Linux:
 
 ```sh
 apm install --global "$PWD" --target opencode,copilot
+apm compile --global
 ```
 
 Windows PowerShell:
 
 ```powershell
 apm install --global $PWD.Path --target opencode,copilot
+apm compile --global
 ```
 
+## Global Target Scope
+
+On a fresh user-level APM setup, install records the selected targets. If `~/.apm/apm.yml` already exists (Windows: `%USERPROFILE%\.apm\apm.yml`), check its `targets:` before compiling. To limit compilation to this kit's two targets, use:
+
+```yaml
+targets: [opencode, copilot]
+```
+
+`apm compile --global` reads the manifest's targets, not the preceding install command's `--target` flag. If the manifest declares no targets, it writes context files for every supported user-level target.
+
 ## Deployment Paths
+
+`apm compile --global` writes the user-level `AGENTS.md` for OpenCode. APM preserves an existing hand-written root context file; review the compile output if one is already present. Global APM metadata and the lockfile live under `~/.apm/` (or `%USERPROFILE%\.apm\` on Windows).
 
 Global files are deployed to:
 

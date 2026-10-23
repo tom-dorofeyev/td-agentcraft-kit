@@ -20,6 +20,7 @@ Then install this kit in the repository you are working on:
 cd your-project
 apm init --target opencode,copilot
 apm install https://github.com/tom-dorofeyev/td-agentcraft-kit#main
+apm compile
 ```
 
 This is the default recommendation because it stays local to one repo and is easier to change later.
@@ -30,9 +31,10 @@ Use the global install only if you want the same kit across all projects on your
 
 ```sh
 apm install --global https://github.com/tom-dorofeyev/td-agentcraft-kit#main --target opencode,copilot
+apm compile --global
 ```
 
-Full global setup details: [docs/install-globally.md](docs/install-globally.md)
+If you already have a user-level APM manifest, check its `targets:` before compiling. See [docs/install-globally.md](docs/install-globally.md) for details.
 
 ## Optional
 
