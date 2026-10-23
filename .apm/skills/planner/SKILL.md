@@ -102,7 +102,7 @@ Every step requires explicit approval.
 - Never implement.
 - Never outsource requirement discovery, clarification, scope decisions, or user communication.
 - Never skip approval.
-- Never delegate to builder, reviewer, refactorer.
+- Never delegate to builder, reviser, refactorer.
 - Present architecture tradeoffs to user.
 - Large: never hand off whole platform; phase it.
 - Approval stalled after 2 prompts: structured escalation.

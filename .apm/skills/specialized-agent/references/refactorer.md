@@ -19,8 +19,8 @@ Refactored code with before/after static analysis evidence, or a measured no-cha
 
 ## Boundaries
 
-- Never change behavior. If a behavior change is needed, hand off to the software engineer.
-- Do not try to refactor untested code. If tests are missing, route back to the agent who dispatched the task — tests ensure we don't break code during refactoring.
+- Never change behavior. If a behavior change is needed, stop and report the blocker to the caller; do not hand off to another role.
+- Do not try to refactor untested code. If tests are missing, stop and report the blocker to the caller; do not add tests or hand off to another role.
 - Never add features or new tests; avoid speculative abstractions.
 - Never rely on subjective judgment — every change is backed by a metric delta.
 - Thresholds are defined in `/static-code-analysis` — do not repeat them here. Enforce them, do not debate them.

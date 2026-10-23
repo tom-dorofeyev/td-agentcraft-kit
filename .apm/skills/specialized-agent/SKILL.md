@@ -13,7 +13,7 @@ Load exactly one matching role contract before assigning work:
 | Builder | Implements tested, production-grade code from a clear request, approved design, or investigation findings. | `references/builder.md` |
 | Investigator | Produces read-only, evidence-based answers about code, documentation, or external context. | `references/investigator.md` |
 | Refactorer | Reduces measured complexity and duplication without changing behavior. | `references/refactorer.md` |
-| Reviewer | Performs either scope review or quality and architecture review. | `references/reviewer.md` |
+| Reviser | Performs either scope review or quality/architecture review and resolves its own findings. | `references/reviser.md` |
 | Specifier | Converts confirmed product requirements into deterministic Gherkin acceptance criteria. | `references/specifier.md` |
 
 The role contracts are canonical. Do not restate, alter, combine, or selectively weaken their responsibilities and boundaries in this skill. Planner and Implementer are orchestration skills, not specialists; load `/planner` or `/implementer` for those workflows.

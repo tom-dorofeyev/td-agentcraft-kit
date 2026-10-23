@@ -6,7 +6,7 @@
       "builder": null,
       "investigator": null,
       "refactorer": null,
-      "reviewer": null,
+      "reviser": null,
       "specifier": null
     },
     "opencode-openai": {
@@ -15,7 +15,7 @@
       "builder": "openai/gpt-6-sol",
       "investigator": "openai/gpt-6-luna",
       "refactorer": "openai/gpt-6-sol",
-      "reviewer": "openai/gpt-6-sol",
+      "reviser": "openai/gpt-6-sol",
       "specifier": "openai/gpt-6-astra"
     },
     "opencode-copilot": {
@@ -24,7 +24,7 @@
       "builder": "github-copilot/claude-sonnet-5.5",
       "investigator": "github-copilot/gpt-6-luna",
       "refactorer": "github-copilot/gpt-6-sol",
-      "reviewer": "github-copilot/gpt-6-sol",
+      "reviser": "github-copilot/gpt-6-sol",
       "specifier": "github-copilot/gpt-6-astra"
     },
     "copilot": {
@@ -33,7 +33,7 @@
       "builder": "Claude Sonnet 5.5",
       "investigator": "GPT-6 Luna",
       "refactorer": "GPT-6 Sol",
-      "reviewer": "GPT-6 Sol",
+      "reviser": "GPT-6 Sol",
       "specifier": "GPT-6 Astra"
     }
   }

@@ -39,7 +39,7 @@ The default Agent and each skill use YAML frontmatter for metadata. Workflow rol
 | Specifier | Gherkin acceptance criteria |
 | Architect | HLD + LLD architectural design |
 | Builder | Production implementation |
-| Reviewer | Correctness, quality, and security review |
+| Reviser | Separate scope or quality/architecture review with in-review remediation |
 | Refactorer | Measured complexity and duplication reduction |
 | Investigator | Read-only codebase investigation |
 

@@ -24,7 +24,7 @@ cd ../your-project
 apm install ../td-agentcraft-kit
 ```
 
-For example, `model-profiles.json` can assign `builder` and `reviewer` independently:
+For example, `model-profiles.json` can assign `builder` and `reviser` independently:
 
 ```json
 {
@@ -32,7 +32,7 @@ For example, `model-profiles.json` can assign `builder` and `reviewer` independe
     "default": {},
     "my-profile": {
       "builder": "provider/model-id",
-      "reviewer": "provider/another-model-id"
+      "reviser": "provider/another-model-id"
     }
   }
 }

@@ -39,12 +39,12 @@ Use Investigator for broad repository discovery: searching for where behavior li
 | Question Type | Delegate To | Expected Output |
 |---|---|---|
 | Existing code behavior, architecture, dependency flow, integration points, root-cause hypothesis, test locations | **Investigator** | Read-only findings with file references, relevant constraints, and uncertainty |
-| Test coverage, acceptance scope, regression risk, reproducibility, verification gaps | **Investigator**, then **Reviewer** if an assessment is needed | Evidence first; then a coverage or risk assessment grounded in it |
-| Code quality risk, review of a suspicious implementation, likely bug patterns, non-obvious correctness concerns | **Investigator**, then **Reviewer** | Relevant code evidence first; then findings with severity and file references |
+| Test coverage, acceptance scope, regression risk, reproducibility, verification gaps | **Investigator**, then **Reviser** if an assessment is needed | Evidence first; then a coverage or risk assessment grounded in it |
+| Code quality risk, review of a suspicious implementation, likely bug patterns, non-obvious correctness concerns | **Investigator**, then **Reviser** | Relevant code evidence first; then findings with severity and file references |
 | Architectural decision for an approved plan | **Investigator**, then **Architect** | Repository evidence first; then a design decision based on it |
 | Business intent or expected user-facing behavior when the request is fundamentally product-facing rather than technical | **Specifier** | Clarified product explanation grounded in user outcomes |
 
-Pass the Investigator's concise findings and file references to the decision-making specialist. That specialist may inspect the few relevant files directly when needed. If an answer reveals a new unanswered dimension, use one targeted follow-up; keep the chain tight and sequential.
+Pass the Investigator's concise findings and file references to the decision-making specialist. That specialist may inspect the few relevant files directly when needed. Reviser handoffs here request the appropriate review type as a read-only assessment: no fixes or edits. If an answer reveals a new unanswered dimension, use one targeted follow-up; keep the chain tight and sequential.
 
 ## Investigation Steps
 

@@ -3,7 +3,7 @@ name: implementer
 description: Orchestrate scoped implementation when the user explicitly invokes `/implementer` or asks to load the Implementer skill.
 ---
 
-When explicitly loaded, orchestrate the requested implementation scope and its working increments. Run `/code-workflow` for each increment; it owns Builder, Reviewer, Refactorer, and the quality gates. Do not repeat or bypass that workflow here.
+When explicitly loaded, orchestrate the requested implementation scope and its working increments. Run `/code-workflow` for each increment; it owns Builder, separate Reviser scope and quality/architecture reviews, Refactorer, and the quality gates. Do not repeat or bypass that workflow here.
 
 Bias for action: begin clear, in-scope work immediately. Finish each increment before the next. Never design or spec; prove all code works.
 
@@ -49,17 +49,17 @@ Never batch multiple deliverables or unrelated work into one Builder task. A sin
 
 ## AFK and Completion
 
-Run autonomously within the approved scope. Finish each increment before next, until scope completes or the `/code-workflow` limit is reached. Do not introduce approval checkpoints between approved increments; later phases require approved detail before creating their items.
+Run autonomously within the approved scope. Finish each increment before the next; stop incomplete if `/code-workflow` cannot pass a gate. Do not introduce approval checkpoints between approved increments; later phases require approved detail before creating their items.
 
 1. Run `/notify`.
-2. Report: increments, cycles/increment, metrics, acceptance, debt.
+2. Report: increments, stage evidence/increment, metrics, acceptance, debt.
 3. Phased: `Phase X complete. Awaiting next phase or your decision to stop.`
 
 ## Boundaries
 
 - Never design architecture or write specs.
 - Never implement yourself; use `/code-workflow` for each slice.
-- Never skip its steps or exceed its cycle limit.
+- Never skip its steps or return to an earlier role for corrections.
 - Never implement outside the user-requested or planned scope.
 - Never start a later increment with an unresolved finding, metric, build, or test failure.
 - Never commit planning documents.

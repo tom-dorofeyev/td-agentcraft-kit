@@ -26,16 +26,17 @@ async function assertAgentModel(root, agent, model) {
   assert.deepEqual(frontmatter.split('\n').filter((line) => line.startsWith('model: ')), [`model: ${JSON.stringify(model)}`]);
 }
 
-for (const [profile, builder, reviewer] of [
+for (const [profile, builder, reviser] of [
   ['opencode-copilot', 'github-copilot/claude-sonnet-5.5', 'github-copilot/gpt-6-sol'],
   ['copilot', 'Claude Sonnet 5.5', 'GPT-6 Sol'],
 ]) {
-  test(`shipped ${profile} sets builder and reviewer models`, async (t) => {
+  test(`shipped ${profile} sets builder and reviser models without a reviewer adapter`, async (t) => {
     const root = await fixture(t);
 
     await configureModels(root, profile);
 
     await assertAgentModel(root, 'builder', builder);
-    await assertAgentModel(root, 'reviewer', reviewer);
+    await assertAgentModel(root, 'reviser', reviser);
+    assert.ok(!(await readdir(join(root, '.apm', 'agents'))).includes('reviewer.md'));
   });
 }
