@@ -40,5 +40,5 @@ If you already have a user-level APM manifest, check its `targets:` before compi
 
 - Telegram notifications: [docs/telegram-notifications.md](docs/telegram-notifications.md)
 - Project install details: [docs/install-in-a-project.md](docs/install-in-a-project.md)
-- Per-agent model profiles: [docs/install-in-a-project.md](docs/install-in-a-project.md#select-models-per-agent)
+- One-command model profile setup from a local clone: [project](docs/install-in-a-project.md#select-models-per-agent) or [global](docs/install-globally.md#install-from-a-local-clone-with-a-model-profile)
 - All docs: [docs](docs)

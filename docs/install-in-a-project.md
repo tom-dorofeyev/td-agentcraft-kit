@@ -19,29 +19,31 @@ To coordinate without doing substantive work in the current session, explicitly 
 
 ## Select Models Per Agent
 
-Clone the kit, edit `model-profiles.json`, and add a profile with model IDs for the agents you want to pin. Apply it before installing from the local clone:
+Clone the kit and run one setup command. It asks which profile to use, applies its agent models, then runs APM install and compile in the project:
 
 ```sh
 git clone https://github.com/tom-dorofeyev/td-agentcraft-kit td-agentcraft-kit
-cd td-agentcraft-kit
-node scripts/configure-models.mjs my-profile
-cd ../your-project
-apm install ../td-agentcraft-kit
-apm compile
+node td-agentcraft-kit/scripts/install.mjs --project ./your-project
 ```
 
-For example, `model-profiles.json` can assign `builder` and `reviser` independently:
+For automation, pass `--profile opencode-openai`, `--profile opencode-copilot`, `--profile copilot`, or `--profile default`. Noninteractive runs require `--profile`.
+
+Add a custom profile to `model-profiles.json` before running the command:
 
 ```json
 {
   "profiles": {
-    "default": {},
     "my-profile": {
-      "builder": "provider/model-id",
-      "reviser": "provider/another-model-id"
+      "target": "opencode",
+      "models": {
+        "builder": "provider/model-id",
+        "reviser": "provider/another-model-id"
+      }
     }
   }
 }
 ```
 
-Use the model ID syntax supported by your target runtime. Omitted agents and `null` values inherit its default. Select `default` to remove all pins before another install. Model profiles are applied to the source agent files, so use a separate clone or reapply the appropriate profile when installing into different setups.
+Use `target: "copilot"` for Copilot model names or `target: "opencode,copilot"` only when all model pins work on both runtimes. Omitted agents and `null` values inherit the runtime default. The command updates `.apm/agents/*.md` in the local clone before installation; select `default` to remove all pins. Use a separate clone or select the desired profile again when installing into another setup.
+
+Keep the local clone at a stable path: the consuming project's APM dependency points to it. The setup command passes the profile's target to both install and compile, including when the project already has `apm.yml` with other targets. For later bare `apm install` or `apm compile` runs, set that manifest's `targets:` to the profile's target.

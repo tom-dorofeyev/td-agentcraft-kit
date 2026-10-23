@@ -28,3 +28,12 @@ test('an unknown agent fails before changing any agent', async () => {
   await assert.rejects(configureModels(root, 'broken'), /Unknown agent/);
   assert.equal(await readFile(path, 'utf8'), before);
 });
+
+test('unknown and malformed profiles fail before changing an agent', async () => {
+  const { root, path } = await fixture({ broken: { models: [] } });
+  const before = await readFile(path, 'utf8');
+
+  await assert.rejects(configureModels(root, 'missing'), /Unknown model profile/);
+  await assert.rejects(configureModels(root, 'broken'), /Invalid model profile/);
+  assert.equal(await readFile(path, 'utf8'), before);
+});
