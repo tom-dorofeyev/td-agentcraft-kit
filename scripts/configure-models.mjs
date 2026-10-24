@@ -28,31 +28,22 @@ function validateProfile(profile, profileName, agents) {
 }
 
 export async function configureModels(root, profileName = 'default') {
-  const models = await loadModels(root, profileName);
-  const agentsDir = join(root, '.apm', 'agents');
-  const agents = (await readdir(agentsDir)).filter((name) => name.endsWith('.md'));
-  validateProfile(models, profileName, agents);
-  const changes = await Promise.all(agents.map(async (file) => {
-    const name = file.slice(0, -3);
-    const path = join(agentsDir, file);
-    const source = await readFile(path, 'utf8');
-    return { path, content: updateFrontmatter(source, models[name] ?? null, name) };
-  }));
-  await Promise.all(changes.map(({ path, content }) => writeFile(path, content)));
-  return profileName;
-}
-
-async function loadModels(root, profileName) {
   const config = JSON.parse(await readFile(join(root, 'model-profiles.json'), 'utf8'));
   const profile = config.profiles?.[profileName];
   if (!profile || typeof profile !== 'object' || Array.isArray(profile)) {
     throw new Error(`Unknown model profile: ${profileName}`);
   }
-  const models = profile.models ?? profile;
-  if (!models || typeof models !== 'object' || Array.isArray(models)) {
-    throw new Error(`Invalid model profile: ${profileName}`);
-  }
-  return models;
+  const agentsDir = join(root, '.apm', 'agents');
+  const agents = (await readdir(agentsDir)).filter((name) => name.endsWith('.md'));
+  validateProfile(profile, profileName, agents);
+  const changes = await Promise.all(agents.map(async (file) => {
+    const name = file.slice(0, -3);
+    const path = join(agentsDir, file);
+    const source = await readFile(path, 'utf8');
+    return { path, content: updateFrontmatter(source, profile[name] ?? null, name) };
+  }));
+  await Promise.all(changes.map(({ path, content }) => writeFile(path, content)));
+  return profileName;
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

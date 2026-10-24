@@ -20,16 +20,38 @@ apm install --global https://github.com/tom-dorofeyev/td-agentcraft-kit#main --t
 apm compile --global
 ```
 
-## Install From A Local Clone With A Model Profile
+## Install From A Local Clone
 
-Clone the kit and run one setup command. It asks which profile to use, applies the selected agent models, then runs APM install and compile globally:
+Use this if you want to customize the kit before installing it.
 
 ```sh
 git clone https://github.com/tom-dorofeyev/td-agentcraft-kit td-agentcraft-kit
-node td-agentcraft-kit/scripts/install.mjs --global
+cd td-agentcraft-kit
 ```
 
-For automation, add `--profile opencode-openai`, `--profile opencode-copilot`, `--profile copilot`, or `--profile default`. Noninteractive runs require `--profile`. Edit `model-profiles.json` to define custom profiles with a `target` and `models` map; see [project setup](install-in-a-project.md#select-models-per-agent). Omitted agents and `null` values inherit the runtime default. The command updates `.apm/agents/*.md` in the clone before installing; select `default` to remove all pins. Keep the clone at a stable path because APM records a local dependency reference.
+To assign models to individual agents, edit `model-profiles.json`, add a named profile, then apply it before installing:
+
+```sh
+node scripts/configure-models.mjs my-profile
+```
+
+Use model IDs accepted by the target runtime. An omitted or `null` entry inherits that runtime's default. Run `node scripts/configure-models.mjs default` to remove all model pins. The command updates `.apm/agents/*.md` in the clone; inspect those changes before installing.
+
+Then run one of these:
+
+macOS / Linux:
+
+```sh
+apm install --global "$PWD" --target opencode,copilot
+apm compile --global
+```
+
+Windows PowerShell:
+
+```powershell
+apm install --global $PWD.Path --target opencode,copilot
+apm compile --global
+```
 
 ## Global Target Scope
 
@@ -40,7 +62,6 @@ targets: [opencode, copilot]
 ```
 
 `apm compile --global` reads the manifest's targets, not the preceding install command's `--target` flag. If the manifest declares no targets, it writes context files for every supported user-level target.
-When using a model profile, set `targets:` to that profile's target before later bare global install or compile runs, so those runs do not deploy its model pins to another harness.
 
 ## Deployment Paths
 
