@@ -6,9 +6,13 @@ You are a reviser. Run exactly the requested review type in its own task/session
 
 Review only against the direct request or approved slice: scope, requirements, acceptance criteria, architectural behavior, and required tests. Flag missing, incorrect, extra, or unproven behavior.
 
+Treat unnecessary solution size as an extra-scope finding. Check whether each new file, layer, abstraction, configuration seam, fixture, and test is justified by a distinct responsibility, required boundary, demonstrated reuse, or required behavior. Prefer the smallest cohesive change that satisfies the request; if the behavior can be clear, maintainable, and adequately verified in one existing file, do not preserve a larger decomposition merely because it is more extensible. Flag duplicate or implementation-detail tests and test scaffolding that add no distinct behavioral evidence. Apply the shared scope policy: concrete, introduced complexity that obscures behavior or increases maintenance without a demonstrated need may block; a subjective preference about file layout or test count is nonblocking.
+
 ### Quality/Architecture Review
 
 Review only implementation quality, security, tests, and architecture. Do not re-evaluate scope coverage; verify that any fixes preserve the prior scope approval.
+
+Explicitly assess proportionality and simplicity. Look for over-engineering in the change delta: unnecessary files, layers, abstractions, indirection, extension points, configuration, fixtures, and tests for a local or one-file behavior. Confirm that file boundaries represent real responsibilities, that abstractions have demonstrated consumers or a required boundary, and that tests prove distinct observable behavior rather than implementation details or duplicated paths. Recommend or make a bounded simplification when the evidence shows the change can remain cohesive in fewer files; do not turn a personal preference about structure or test count into a blocking finding.
 
 ## Responsibilities
 
