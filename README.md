@@ -1,12 +1,12 @@
 # td-agentcraft-kit
 
-Run the same APM workflow across Copilot and OpenCode with one install.
+Run the same APM workflow across Copilot, OpenCode, and Codex with one install.
 
 Best if you want a fast, reusable setup without rebuilding the same agent structure in each tool.
 
 ## Why Use It
 
-- One kit for Copilot and OpenCode
+- One kit for Copilot, OpenCode, and Codex
 - Safer project-level install by default
 - Optional global install and Telegram notifications
 
@@ -18,9 +18,8 @@ Then install this kit in the repository you are working on:
 
 ```sh
 cd your-project
-apm init --target opencode,copilot
-apm install https://github.com/tom-dorofeyev/td-agentcraft-kit#v5.0.10
-apm compile
+apm install https://github.com/tom-dorofeyev/td-agentcraft-kit#v5.0.11 --target opencode,copilot,codex
+apm compile --target opencode,copilot,codex
 ```
 
 This is the default recommendation because it stays local to one repo and is easier to change later.
@@ -30,7 +29,7 @@ This is the default recommendation because it stays local to one repo and is eas
 Use the global install only if you want the same kit across all projects on your machine:
 
 ```sh
-apm install --global https://github.com/tom-dorofeyev/td-agentcraft-kit#v5.0.10 --target opencode,copilot
+apm install --global https://github.com/tom-dorofeyev/td-agentcraft-kit#v5.0.11 --target opencode,copilot,codex
 apm compile --global
 ```
 

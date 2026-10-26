@@ -4,12 +4,13 @@ Use this when you want the kit inside a specific repository.
 
 ```sh
 cd your-project
-apm init --target opencode,copilot
-apm install https://github.com/tom-dorofeyev/td-agentcraft-kit#v5.0.10
-apm compile
+apm install https://github.com/tom-dorofeyev/td-agentcraft-kit#v5.0.11 --target opencode,copilot,codex
+apm compile --target opencode,copilot,codex
 ```
 
-`apm install` deploys the agents, skills, and Copilot instructions. `apm compile` writes the root `AGENTS.md` that OpenCode reads for shared instructions when that file is absent or APM-generated. APM preserves an existing hand-written `AGENTS.md`; if your project has one, use [managed-section mode](https://microsoft.github.io/apm/producer/compile/#managed-section-mode) to add the shared instructions without replacing your own content.
+`apm install` deploys agents and skills for all three targets, plus Copilot instructions. Codex agents go to `.codex/agents/`, and shared skills go to `.agents/skills/`. `apm compile` writes the root `AGENTS.md` that Codex and OpenCode read for shared instructions when that file is absent or APM-generated. APM preserves an existing hand-written `AGENTS.md`; if your project has one, use [managed-section mode](https://microsoft.github.io/apm/producer/compile/#managed-section-mode) to add the shared instructions without replacing your own content.
+
+For later installs and compiles without `--target`, add `targets: [opencode, copilot, codex]` to the generated `apm.yml`.
 
 Commit the resulting `apm.yml`, `apm.lock.yaml`, and APM-deployed files in your project, including agents, skills, instructions, and any generated `AGENTS.md`. Keep `apm_modules/` ignored; contributors run `apm install` after cloning to restore package resources.
 
@@ -26,8 +27,8 @@ git clone https://github.com/tom-dorofeyev/td-agentcraft-kit td-agentcraft-kit
 cd td-agentcraft-kit
 node scripts/configure-models.mjs my-profile
 cd ../your-project
-apm install ../td-agentcraft-kit
-apm compile
+apm install ../td-agentcraft-kit --target opencode,copilot,codex
+apm compile --target opencode,copilot,codex
 ```
 
 For example, `model-profiles.json` can assign `builder` and `reviser` independently:

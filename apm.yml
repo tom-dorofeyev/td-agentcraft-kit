@@ -1,14 +1,15 @@
 name: td-agentcraft-kit
-version: 5.0.10
+version: 5.0.11
 description: APM project for td-agentcraft-kit
 author: Tom Dorofeyev
 license: MIT
 # Which agent platforms to deploy to.
 # Resolution order: --target flag > this field > auto-detect from filesystem.
-# Supported targets: copilot, opencode
+# Supported targets: copilot, opencode, codex
 targets:
 - opencode
 - copilot
+- codex
 dependencies:
   apm: []
   mcp: []
