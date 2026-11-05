@@ -4,7 +4,7 @@ Use this when you want the kit inside a specific repository.
 
 ```sh
 cd your-project
-apm install https://github.com/tom-dorofeyev/td-agentcraft-kit#v5.0.11 --target opencode,copilot,codex
+apm install https://github.com/tom-dorofeyev/td-agentcraft-kit#v5.0.12 --target opencode,copilot,codex
 apm compile --target opencode,copilot,codex
 ```
 

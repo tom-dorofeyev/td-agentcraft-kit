@@ -5,7 +5,7 @@ description: Route one bounded specialist task to a native endpoint, or use a CL
 
 ## Role contracts
 
-Load exactly one matching role contract before assigning work:
+Select one role from this table. The executing agent loads its matching contract; the caller need not load it merely to route a task:
 
 | Role | Purpose | Contract |
 |---|---|---|
@@ -18,9 +18,9 @@ Load exactly one matching role contract before assigning work:
 
 The role contracts are canonical. Do not restate, alter, combine, or selectively weaken their responsibilities and boundaries in this skill. Planner and Implementer are orchestration skills, not specialists; load `/planner` or `/implementer` for those workflows.
 
-## Native role endpoints
+## Role executors
 
-The registered native role agents are execution endpoints, not role orchestrators. When this skill is loaded by one of those agents, load its fixed contract and own the assigned role work locally. Never delegate to the same role or another role for that work. The sole nested handoff allowed is the discovery routing below; Investigator never delegates.
+The registered native role agents are execution endpoints, not role orchestrators. When this skill is loaded by one of those agents, load its fixed contract and own the assigned role work locally. A generic delegate assigned a role likewise loads the selected contract and owns the work locally. Never delegate to the same role or another role for that work. The sole nested handoff allowed is the discovery routing below; Investigator never delegates.
 
 ## Discovery routing
 
@@ -31,21 +31,16 @@ If native Investigator delegation is supported, make only necessary, sequential 
 ## Route one role
 
 1. Select the smallest role that owns the requested outcome.
-2. Load its entire contract from `references/`.
-3. If native delegation is available to the caller, delegate once to the registered agent whose lowercase name matches the selected role. Give it one bounded task whose context includes the complete role contract, the discovery routing above, and only the task-specific facts the role needs. That agent owns the role task directly, subject only to bounded native Investigator discovery.
-4. Otherwise, if the caller is not already a delegate, load `/delegate` and use its CLI fallback for that bounded task. If the selected role's installed agent frontmatter has a `model`, pass that model to `/delegate`; otherwise leave model selection to the runtime.
-5. If neither mechanism is available, perform the task in the current session while following the loaded role contract exactly.
+2. If native delegation is available to the caller, prefer the registered agent whose lowercase name matches the selected role. Its adapter loads this skill and its fixed contract; send only the bounded task and task-specific context. If no matching endpoint is registered, use a generic native delegate with the loader instruction below. A missing named endpoint alone is not a reason to use CLI fallback. This also applies to bounded Investigator discovery handoffs.
+3. Only when native delegation is unavailable or restricted to the caller, and the caller is not already a delegate, load `/delegate` and use its CLI fallback for that bounded task. Use the named role endpoint when supported; otherwise use a generic CLI delegate with the same loader instruction below. If the selected role's installed agent frontmatter has a `model`, pass that model to `/delegate`; otherwise leave model selection to the runtime.
+4. If neither mechanism is available, load the selected contract and perform the task in the current session while following it exactly.
 
-Never delegate multiple roles in parallel. A role handoff is complete only after its result has been received and evaluated. Never turn an incoming native or CLI handoff into another CLI handoff. Do not use a substitute role when the selected role is unavailable; report the broken workflow to the caller. The fallback in step 4 is for an ordinary caller, not a nested specialist handoff.
+Never delegate multiple roles in parallel. A role handoff is complete only after its result has been received and evaluated. Never turn an incoming native or CLI handoff into another CLI handoff. A generic executor loading the selected contract is not a substitute role. If the selected role cannot be executed, report the broken workflow rather than assign a different role. The fallback in step 3 is for an ordinary caller, not a nested specialist handoff.
 
 ## Delegation prompt
 
-For native and CLI handoffs, provide:
+For native and CLI handoffs, provide one self-contained task, relevant facts and file references, and task-specific constraints or requested evidence (for example, the Reviser review type). Do not repeat identity, responsibilities, output format, boundaries, or discovery rules already supplied by the endpoint and loaded contract.
 
-- the complete selected role contract;
-- one self-contained task and its relevant context;
-- the role's required output format and boundaries;
-- the discovery routing above, including the native-only Investigator exception for non-Investigators, the missing-context return when native discovery is unavailable, and the requirement to await each result; and
-- for Investigator: `Do not delegate. Complete the read-only question directly.`
+For a generic native or CLI delegate, add only this bootstrap instruction: load `/specialized-agent` and the selected `references/<role>.md`, then own that role work locally under the skill's discovery routing without redispatching it. Supply resolvable installed paths to both the skill and contract if skill loading is unavailable; never paste their contents. If the executor cannot load the required skill or contract, it must report a blocker rather than proceed without them.
 
 The delegated task must not change the role contract. The delegate returns its result to the caller, which decides whether another sequential role is needed.

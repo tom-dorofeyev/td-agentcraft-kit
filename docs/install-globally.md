@@ -9,14 +9,14 @@ If you already have a user-level APM setup, check [Global Target Scope](#global-
 macOS / Linux:
 
 ```sh
-apm install --global https://github.com/tom-dorofeyev/td-agentcraft-kit#v5.0.11 --target opencode,copilot,codex
+apm install --global https://github.com/tom-dorofeyev/td-agentcraft-kit#v5.0.12 --target opencode,copilot,codex
 apm compile --global
 ```
 
 Windows PowerShell:
 
 ```powershell
-apm install --global https://github.com/tom-dorofeyev/td-agentcraft-kit#v5.0.11 --target opencode,copilot,codex
+apm install --global https://github.com/tom-dorofeyev/td-agentcraft-kit#v5.0.12 --target opencode,copilot,codex
 apm compile --global
 ```
 
