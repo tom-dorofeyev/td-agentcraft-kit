@@ -9,14 +9,14 @@ If you already have a user-level APM setup, check [Global Target Scope](#global-
 macOS / Linux:
 
 ```sh
-apm install --global https://github.com/tom-dorofeyev/td-agentcraft-kit#v5.0.12 --target opencode,copilot,codex
+apm install --global https://github.com/tom-dorofeyev/td-agentcraft-kit#v5.0.13 --target opencode,copilot,codex
 apm compile --global
 ```
 
 Windows PowerShell:
 
 ```powershell
-apm install --global https://github.com/tom-dorofeyev/td-agentcraft-kit#v5.0.12 --target opencode,copilot,codex
+apm install --global https://github.com/tom-dorofeyev/td-agentcraft-kit#v5.0.13 --target opencode,copilot,codex
 apm compile --global
 ```
 
@@ -29,7 +29,7 @@ git clone https://github.com/tom-dorofeyev/td-agentcraft-kit td-agentcraft-kit
 cd td-agentcraft-kit
 ```
 
-For model capability recommendations by agent, see [Choosing Models](model-selection.md). Select models in your runtime; the kit does not pin them.
+For model capability recommendations and setup, see [Choosing Models](models/README.md). Select models in your runtime; the kit does not pin them.
 
 Then run one of these:
 

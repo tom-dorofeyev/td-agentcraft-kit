@@ -4,7 +4,7 @@ Use this when you want the kit inside a specific repository.
 
 ```sh
 cd your-project
-apm install https://github.com/tom-dorofeyev/td-agentcraft-kit#v5.0.12 --target opencode,copilot,codex
+apm install https://github.com/tom-dorofeyev/td-agentcraft-kit#v5.0.13 --target opencode,copilot,codex
 apm compile --target opencode,copilot,codex
 ```
 
@@ -20,4 +20,4 @@ To coordinate without doing substantive work in the current session, explicitly 
 
 ## Choosing Models
 
-See [Choosing Models](model-selection.md) for capability recommendations for each agent. Select models in your runtime; the kit does not pin them.
+See [Choosing Models](models/README.md) for capability recommendations and setup for your tool. Select models in your runtime; the kit does not pin them.

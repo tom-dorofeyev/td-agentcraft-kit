@@ -18,7 +18,7 @@ Then install this kit in the repository you are working on:
 
 ```sh
 cd your-project
-apm install https://github.com/tom-dorofeyev/td-agentcraft-kit#v5.0.12 --target opencode,copilot,codex
+apm install https://github.com/tom-dorofeyev/td-agentcraft-kit#v5.0.13 --target opencode,copilot,codex
 apm compile --target opencode,copilot,codex
 ```
 
@@ -29,7 +29,7 @@ This is the default recommendation because it stays local to one repo and is eas
 Use the global install only if you want the same kit across all projects on your machine:
 
 ```sh
-apm install --global https://github.com/tom-dorofeyev/td-agentcraft-kit#v5.0.12 --target opencode,copilot,codex
+apm install --global https://github.com/tom-dorofeyev/td-agentcraft-kit#v5.0.13 --target opencode,copilot,codex
 apm compile --global
 ```
 
@@ -39,5 +39,5 @@ If you already have a user-level APM manifest, check its `targets:` before compi
 
 - Telegram notifications: [docs/telegram-notifications.md](docs/telegram-notifications.md)
 - Project install details: [docs/install-in-a-project.md](docs/install-in-a-project.md)
-- Model capability guidance: [docs/model-selection.md](docs/model-selection.md)
+- Model selection and setup: [docs/models](docs/models/README.md)
 - All docs: [docs](docs)
