@@ -3,22 +3,22 @@
 ## Rules
 
 ### F.I.R.S.T.
-- **Fast**: tests must run in milliseconds. Slow tests stop being run. If a test is slow, it is hitting real infrastructure — inject a test double instead.
+- **Fast**: keep tests as fast as their purpose permits. Use test doubles for slow or unreliable dependencies when they do not obscure the behaviour under test.
 - **Independent**: tests must not depend on each other. Any test can run in any order, in isolation, and must produce the same result. Shared mutable state between tests is a violation.
-- **Repeatable**: tests produce identical results in any environment — dev machine, CI, any time of day. No reliance on network, real filesystem, wall-clock time, or random values.
+- **Repeatable**: tests produce consistent results across environments. Control external dependencies, time, and randomness; use isolated temporary files when filesystem behaviour matters.
 - **Self-validating**: a test passes or fails — no manual inspection of output or logs. Every test has an assertion.
 - **Timely**: tests are written before or alongside the code they cover, never weeks later.
 
 ### Test Structure and Clarity
-- **One behaviour per test**: each test verifies exactly one observable outcome. A failing test name alone must identify what broke — without reading the body.
+- **One behaviour per test**: focus each test on one behaviour; related assertions may verify its observable outcomes. A failing test name must identify what broke.
 - **No `should` prefix**: `should return user when found` — remove "should". Name tests as statements of fact: `returnsUserForValidId`, `throws when id is missing`.
-- **AAA — Arrange, Act, Assert**: one setup block, one action, one assertion block. Never interleave setup and assertions. Never repeat the action.
-- **Short tests signal healthy design**: aim for under 15 lines per test body. Long tests signal repeated setup (extract a factory/fixture) or multiple behaviours (split into focused tests).
-- **Extract shared setup**: repeated arrange code across tests must be extracted into factory helpers or a `beforeEach` fixture. Test code follows the same DRY rule as production code.
+- **AAA — Arrange, Act, Assert**: keep setup, actions, and assertions clear. Multiple actions are appropriate when the behaviour requires a sequence.
+- **Short tests signal healthy design**: keep tests focused and readable; extract setup or split behaviours when it improves clarity.
+- **Extract shared setup**: use factories or fixtures when they reduce duplication without hiding relevant test details.
 
 ### Test Scope and Integrity
-- **Test observable outcomes, not implementation**: assert on the public, visible result. Never assert on internal state, private methods, or the sequence of method calls. An equivalent refactor that produces the same output must not break any test.
-- **Never test internals via mocks**: if you need a mock to assert that a private collaborator was called in a certain way, the production design likely needs refactoring.
+- **Test observable outcomes, not implementation**: derive expected results from requirements, examples, or contracts, not by repeating production logic. An equivalent refactor must not break the test.
+- **Use doubles at boundaries**: avoid asserting private collaboration or call order unless an interaction is itself required behaviour. Do not mock the behaviour being tested.
 - **Test code is production code**: Clean Code, naming, functions, and comments rules apply equally to test files.
 - **No magic values in tests**: use named constants or descriptive builder parameters — `userId: KNOWN_ACTIVE_USER_ID` instead of bare `42`.
 
@@ -26,21 +26,22 @@
 
 Before committing any test:
 1. Does the test name state a fact about behaviour without "should"?
-2. Is there exactly one action and one assertion focus?
-3. Is the test touching real network, filesystem, clock, or random values? Replace with test doubles.
+2. Does the test focus on one behaviour, with expected results independent of the implementation?
+3. Are external dependencies, time, and randomness controlled without replacing the behaviour under test?
 4. Would a semantically equivalent refactor of the production code break this test? If yes, it is testing implementation — rewrite.
-5. Does the arrange block exceed 5–8 lines? Extract a factory or fixture.
-6. Does one production code change break several test? This should point out the test is probably not written well
+5. Would a plausible defect in the requested behaviour make the test fail?
+6. Does shared setup improve clarity without hiding the scenario?
 
 ## When Reviewing
 
 Flag any test that:
 - Has `should` in its name
-- Asserts on internal state, private methods, or call order rather than on observable output
+- Derives expected results from production logic or would pass despite a plausible behavioural defect
+- Asserts on internals or incidental interactions rather than observable behaviour
 - Would break if the production code was correctly refactored to produce the same output
-- Has an arrange block longer than ~8 lines without extraction
+- Has setup or fixtures that obscure the scenario
 - Has more than one distinct behaviour as its subject
-- Relies on wall-clock time, real I/O, real network, or environment variables
+- Relies on uncontrolled time, external I/O, network, randomness, or environment variables
 - Has no assertion (silent pass)
 - Has test code that violates naming, functions, or comments rules
 - Contains bare magic literals with no explanation
