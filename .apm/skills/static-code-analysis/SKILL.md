@@ -30,6 +30,8 @@ All quality thresholds live in this skill.
 - Changed-line duplication: max `10%`
 - Changed-line coverage: must be above `90%`
 
+Coverage identifies untested lines; it does not prove assertions detect incorrect behavior. When practical, use a targeted mutation or deliberate fault to check test effectiveness.
+
 Do not repeat numeric thresholds anywhere else. Reference this skill instead.
 
 ## Scope Policy
