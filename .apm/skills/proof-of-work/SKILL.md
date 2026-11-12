@@ -9,11 +9,11 @@ Every code change needs evidence that the requested behavior works. Before editi
 
 ## Required Evidence
 
-- Add or update a test that would fail if the requested behavior were absent or wrong. Test observable behavior, not implementation details.
+- Add or update a test with expectations derived from requirements, examples, or contracts, not production logic. Check that it would fail for a plausible defect in the requested behavior.
 - Run that focused test after the change. Run the project's build and full relevant test suite when available.
 - Report the exact commands and their pass/fail results with the completed change.
 
-Use the repository's existing test framework and conventions. For a bug fix, first reproduce the defect with a failing test where practical. For a new behavior, write the acceptance or unit/integration test before or alongside the implementation.
+Use the repository's existing test framework and conventions. For a bug fix, first reproduce the defect with a failing test where practical. For a new behavior, write the acceptance or unit/integration test before or alongside the implementation. When testing first, confirm the failure reflects missing behavior, not broken setup.
 
 ## Valid Alternatives
 
