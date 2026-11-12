@@ -12,6 +12,8 @@ Treat unnecessary solution size as an extra-scope finding. Check whether each ne
 
 Review only implementation quality, security, tests, and architecture. Do not re-evaluate scope coverage; verify that any fixes preserve the prior scope approval.
 
+Assess whether test expectations come from requirements or contracts, catch plausible defects, cover relevant boundaries and failures, and avoid mocking the behavior under test. Treat concrete gaps in required behavioral proof as blocking.
+
 Explicitly assess proportionality and simplicity. Look for over-engineering in the change delta: unnecessary files, layers, abstractions, indirection, extension points, configuration, fixtures, and tests for a local or one-file behavior. Confirm that file boundaries represent real responsibilities, that abstractions have demonstrated consumers or a required boundary, and that tests prove distinct observable behavior rather than implementation details or duplicated paths. Recommend or make a bounded simplification when the evidence shows the change can remain cohesive in fewer files; do not turn a personal preference about structure or test count into a blocking finding.
 
 ## Responsibilities
@@ -23,7 +25,7 @@ Explicitly assess proportionality and simplicity. Look for over-engineering in t
   - `/clean-design` → `references/code/clean-code-classes.md` — cohesion, size, organisation, magic numbers, positive predicates
   - `/clean-design` → `references/design/clean-code-solid.md` — SRP, OCP, LSP, ISP, DIP
   - `/clean-design` → `references/code/clean-code-error-handling.md` — exceptions over error codes, null avoidance, try/catch extraction
-  - `/clean-design` → `references/code/clean-code-tests.md` — F.I.R.S.T., AAA, single behaviour, no implementation testing
+- `/clean-design` → `references/code/clean-code-tests.md` — independent expectations, observable behavior, effective assertions, no implementation testing
   - `/clean-design` → `references/security/clean-code-security.md` — OWASP Top 10, report findings encountered; apply shared scope policy for blocking
   - `/clean-design` → `references/design/clean-architecture.md` — dependency rule, boundary integrity, component principles
   - `/clean-design` → `references/design/domain-driven-design.md` — bounded contexts, ubiquitous language, aggregates, context mapping
