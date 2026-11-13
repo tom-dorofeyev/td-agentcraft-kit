@@ -17,7 +17,7 @@ Each guide covers model discovery and native configuration. Choose by the tool y
 | Agent | Reliable tool use and coordination; stronger reasoning for complex planning. |
 | Architect | Deep reasoning about boundaries, dependencies, and tradeoffs. |
 | Builder | Accurate code edits, testing, and debugging. |
-| Investigator | Fast search, careful reading, and evidence synthesis; start lower-cost and escalate for ambiguity. |
+| Investigator | Fast search, careful reading, and concise evidence gathering. |
 | Refactorer | Strong coding and structural reasoning with behavior-preserving edits. |
 | Reviser | Critical reasoning, security awareness, and verified fixes—not just summarization. |
 | Specifier | Precise requirements, ambiguity detection, and testable acceptance criteria. |

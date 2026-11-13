@@ -38,7 +38,7 @@ Use Investigator for broad repository discovery: searching for where behavior li
 
 | Question Type | Delegate To | Expected Output |
 |---|---|---|
-| Existing code behavior, architecture, dependency flow, integration points, root-cause hypothesis, test locations | **Investigator** | Read-only findings with file references, relevant constraints, and uncertainty |
+| Existing code behavior, architecture, dependency flow, integration points, root-cause evidence, test locations | **Investigator** | Read-only findings with file references, relevant constraints, and uncertainty |
 | Test coverage, acceptance scope, regression risk, reproducibility, verification gaps | **Investigator**, then **Reviser** if an assessment is needed | Evidence first; then a coverage or risk assessment grounded in it |
 | Code quality risk, review of a suspicious implementation, likely bug patterns, non-obvious correctness concerns | **Investigator**, then **Reviser** | Relevant code evidence first; then findings with severity and file references |
 | Architectural decision for an approved plan | **Investigator**, then **Architect** | Repository evidence first; then a design decision based on it |
@@ -55,7 +55,7 @@ Pass the Investigator's concise findings and file references to the decision-mak
    - state assumptions and uncertainty
    - do not implement changes
 3. Review the returned evidence.
-4. If the answer needs a review or design judgment, delegate that judgment with the evidence. If factual evidence is incomplete, request one targeted Investigator follow-up.
+4. Use the evidence for diagnosis and other judgments; delegate review or design judgments to the appropriate specialist. If evidence is incomplete, request one targeted Investigator follow-up.
 5. Return a concise, synthesized answer to the user.
 
 ## Answer Standard
