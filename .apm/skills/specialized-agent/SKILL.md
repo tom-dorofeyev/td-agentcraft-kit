@@ -24,7 +24,7 @@ The registered native role agents are execution endpoints, not role orchestrator
 
 ## Discovery routing
 
-Every specialist except Investigator gives broad discovery (repository searches and exploratory file reading) to Investigator, with a precise, bounded question. Use sufficient supplied findings rather than repeating discovery; read identified relevant files locally for role-specific decisions. Investigator's read-only questions may also concern documentation, external context, behavior, architecture, and risk; discovery routing does not narrow its scope.
+Every specialist except Investigator gives broad, read-only discovery (repository searches and exploratory file reading) to Investigator, with a precise, bounded factual question. Use sufficient supplied findings rather than repeating discovery; read identified relevant files locally for role-specific analysis and decisions.
 
 If native Investigator delegation is supported, make only necessary, sequential handoffs and wait for each result before resuming the specialist task. Do not dispatch another role, invoke `/delegate`, or run a nested agent CLI. If native delegation is unavailable, do not bypass broad discovery locally: return a bounded missing-context question to the caller for an Investigator handoff and a fresh specialist task with its findings. Investigator returns compact relevant paths and line references, findings or key excerpts, and uncertainties, not raw file dumps.
 
