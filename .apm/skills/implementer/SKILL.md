@@ -10,6 +10,7 @@ Bias for action: begin clear, in-scope work immediately. Finish each increment b
 Ask the user only when a decision would materially change the requested outcome, scope, architecture, compatibility, security, cost, or delivery risk. Resolve routine implementation details yourself and report them with the completed work.
 
 Use the strongest available source of scope:
+
 - **Lightweight spec** — build + criteria.
 - **Full spec + Architecture** — PRD/technical spec, criteria, HLD/LLD.
 - **Phased plan** — current phase detailed; later phases summary.
@@ -23,17 +24,18 @@ Load `/work-item-tracking` whenever implementing an existing formal plan: immedi
 
 ## Scope
 
-| Plan | Behavior |
-|---|---|
-| **Lightweight** | One slice unless unsafe; run `/code-workflow`. |
-| **Full** | Use approved order; run `/code-workflow` per increment. |
-| **Phased** | Implement approved current-phase increments only; checkpoint after completion. |
-| **Formal** | Resume active item first; then eligible approved deliverables in dependency order, one `/code-workflow` per item. |
-| **Direct** | Create one lightweight slice from the request; start `/code-workflow` immediately. |
+| Plan            | Behavior                                                                                                          |
+| --------------- | ----------------------------------------------------------------------------------------------------------------- |
+| **Lightweight** | One slice unless unsafe; run `/code-workflow`.                                                                    |
+| **Full**        | Use approved order; run `/code-workflow` per increment.                                                           |
+| **Phased**      | Implement approved current-phase increments only; checkpoint after completion.                                    |
+| **Formal**      | Resume active item first; then eligible approved deliverables in dependency order, one `/code-workflow` per item. |
+| **Direct**      | Create one lightweight slice from the request; start `/code-workflow` immediately.                                |
 
 ## Working Increments
 
 An increment is the smallest safe unit derived from the user's request or an approved plan. It is:
+
 - Traceable to the request or approved criteria.
 - End-to-end where applicable; not layer-only scaffolding.
 - Tested, compatible, reviewable, committable.
@@ -41,6 +43,7 @@ An increment is the smallest safe unit derived from the user's request or an app
 Use the supplied order when one exists. For a formal plan, the deliverable is the unit of work and proof; do not batch items or advance while one is blocked. Do not materially change plan, scope, or architecture. If no safe increment is clear, request clarification or replanning as applicable.
 
 For each increment:
+
 1. State increment criteria.
 2. Run `/code-workflow` and pass its gates and the increment criteria.
 3. Record proof; for a formal item, complete the verified `done` transition per `/work-item-tracking` before starting next.

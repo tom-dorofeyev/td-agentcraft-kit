@@ -9,8 +9,8 @@ Use the harness's native subagent delegation whenever it is available. Use a CLI
 
 Supported fallbacks:
 
-* OpenCode: `opencode run "<task>"`
-* Codex: `codex exec --ephemeral "<task>"`
+- OpenCode: `opencode run "<task>"`
+- Codex: `codex exec --ephemeral "<task>"`
 
 For a named OpenCode agent, use `opencode run --agent <agent-name> "<task>"` only when the environment defines that agent or the caller requests it.
 

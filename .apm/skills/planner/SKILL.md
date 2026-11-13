@@ -6,6 +6,7 @@ description: Orchestrate scope-scaled planning when the user explicitly invokes 
 When loaded, orchestrate scope-scaled planning: understand the request, resolve requirements with the user, classify scope, and assemble the approved plan. Delegate only specialist work that needs a distinct product, technical, or codebase perspective.
 
 Use `/specialized-agent` for bounded specialist work:
+
 - Investigator reads the code and returns relevant context.
 - Specifier turns confirmed user-facing requirements into Gherkin acceptance criteria.
 - Architect produces conceptual high-level and low-level design.
@@ -17,6 +18,7 @@ Delegate each role in a separate session. Give it only confirmed requirements an
 When planning depends on existing repository behavior, give broad searches and exploratory file reading to Investigator first. Pass its concise findings and file references to Specifier or Architect as relevant. Specialists may inspect those specific files or request a sequential Investigator follow-up when needed, per `/specialized-agent`.
 
 This skill must:
+
 - Produce approved plans: small spec, full spec + architecture, or phased platform plan.
 - Never write implementation code. Choose either session planning or a formal plan; never create untracked planning documents.
 - Write user-facing planning specs; use technical specs for migrations, CI, refactors, performance, and infrastructure.
@@ -35,11 +37,11 @@ Use a formal plan when the request needs a durable handoff or multiple approved 
 
 ## Plan Depth
 
-| Scope | Signal | Output |
-|---|---|---|
-| **Small** | Simple change beyond one-liner | Lightweight spec: build, decisions, criteria. |
-| **Medium** | Feature, cross-cutting change, abstraction, infra, refactor | Full product/technical spec + architecture. |
-| **Large** | App/platform | MVP phases; full current/MVP detail, future summaries. |
+| Scope      | Signal                                                      | Output                                                 |
+| ---------- | ----------------------------------------------------------- | ------------------------------------------------------ |
+| **Small**  | Simple change beyond one-liner                              | Lightweight spec: build, decisions, criteria.          |
+| **Medium** | Feature, cross-cutting change, abstraction, infra, refactor | Full product/technical spec + architecture.            |
+| **Large**  | App/platform                                                | MVP phases; full current/MVP detail, future summaries. |
 
 ### Heuristics
 
@@ -54,6 +56,7 @@ Use a formal plan when the request needs a durable handoff or multiple approved 
 Medium/large handoffs require ordered small increments. For formal plans, each is a separate deliverable, not a slice hidden inside a phase or mega-item. A phase is shared context, not a work item.
 
 Every increment states:
+
 - Outcome; approved requirements and criteria covered.
 - Dependency IDs (for formal plans) and compatibility constraints.
 - Why it works independently and is committable; end-to-end where applicable.

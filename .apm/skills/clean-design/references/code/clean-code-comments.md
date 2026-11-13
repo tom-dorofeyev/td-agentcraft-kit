@@ -12,22 +12,24 @@
 - **No position markers / banner comments**: `///// ---- Section A ---- /////` is a sign of a class that is too large and needs to be split.
 - **Acceptable comments (rare)**:
   - Legal/license headers at the top of a file
-  - Explanation of a non-obvious *external* constraint (e.g., a workaround for a documented third-party bug, with a link to the issue)
+  - Explanation of a non-obvious _external_ constraint (e.g., a workaround for a documented third-party bug, with a link to the issue)
   - Public API documentation where a contract is not self-evident from types and names alone
   - TODO markers that are tracked and have an owner (but clean them up regularly)
 
 ## When Writing
 
 Every time you reach for a comment, stop and ask:
+
 1. Can I rename the variable, function, or class to make this obvious?
 2. Can I extract a function with a descriptive name that replaces this comment?
-3. Is this truly a rare case where the *external constraint* cannot be expressed in code?
+3. Is this truly a rare case where the _external constraint_ cannot be expressed in code?
 
 If (1) or (2) is possible, do it instead of writing the comment. Only write a comment if (3) is true.
 
 ## When Reviewing
 
 Flag any comment that:
+
 - Describes what the code immediately below/around it already says
 - Records change history or authorship
 - Is commented-out code (regardless of how recently it was commented out)

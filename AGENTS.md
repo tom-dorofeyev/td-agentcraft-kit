@@ -34,26 +34,26 @@ The default Agent and each skill use YAML frontmatter for metadata. Workflow rol
 
 `planner` and `implementer` orchestrate their workflows. `specialized-agent` loads these portable contracts and uses native delegation for one bounded, sequential task; `delegate` is its fallback for ordinary callers. Specialists may make only bounded native Investigator handoffs for missing broad discovery; Investigator never delegates:
 
-| Role | Purpose |
-|---|---|---|
-| Specifier | Gherkin acceptance criteria |
-| Architect | HLD + LLD architectural design |
-| Builder | Production implementation |
-| Reviser | Separate scope or quality/architecture review with in-review remediation |
-| Refactorer | Measured complexity and duplication reduction |
-| Investigator | Read-only codebase investigation |
+| Role         | Purpose                                                                  |
+| ------------ | ------------------------------------------------------------------------ |
+| Specifier    | Gherkin acceptance criteria                                              |
+| Architect    | HLD + LLD architectural design                                           |
+| Builder      | Production implementation                                                |
+| Reviser      | Separate scope or quality/architecture review with in-review remediation |
+| Refactorer   | Measured complexity and duplication reduction                            |
+| Investigator | Read-only codebase investigation                                         |
 
 ## Universal Design Principles
 
 Every artifact in this project is expected to uphold these principles regardless of the specific skill or agent:
 
-| Principle | Enforcement |
-|---|---|
-| **SOLID** | Applied at every scale — function, module, agent, workflow |
-| **Clean Code** | Naming, function size, comments, class cohesion, error handling |
-| **YAGNI** | No speculative behavior. Generalise on the third duplication (Rule of Three), not before |
+| Principle                 | Enforcement                                                                              |
+| ------------------------- | ---------------------------------------------------------------------------------------- |
+| **SOLID**                 | Applied at every scale — function, module, agent, workflow                               |
+| **Clean Code**            | Naming, function size, comments, class cohesion, error handling                          |
+| **YAGNI**                 | No speculative behavior. Generalise on the third duplication (Rule of Three), not before |
 | **Single Responsibility** | Every file has exactly one reason to change; if "and" is needed to describe it, split it |
-| **No dead code** | Unused code is deleted immediately, never commented out |
+| **No dead code**          | Unused code is deleted immediately, never commented out                                  |
 
 ## Hard Constraints (never negotiable)
 
@@ -66,11 +66,11 @@ These are baked into the instructions layer and inherited by all agents:
 
 Ordinary work uses `/code-workflow` with the request and conversation context; no formal files or mandatory Planner/Implementer handoff. Use `/planner` and `/implementer` primarily when complex work needs approved, durable planning and tracked delivery. An explicitly requested lightweight plan can stay in the session.
 
-| Scope | Signal | Path |
-|---|---|---|
-| **Ordinary** | Clear request, including a small change | **`/code-workflow`** — sequential roles and gates, using conversation context |
-| **Complex** | Cross-cutting feature or durable handoff | **`/planner` → `/implementer`** — approved plan decomposed into independently verifiable deliverables |
-| **Large** | Application or platform | **`/planner` → `/implementer` → `/planner` → ...** — approved current-phase deliverables; later phases remain summaries until planned |
+| Scope        | Signal                                   | Path                                                                                                                                  |
+| ------------ | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| **Ordinary** | Clear request, including a small change  | **`/code-workflow`** — sequential roles and gates, using conversation context                                                         |
+| **Complex**  | Cross-cutting feature or durable handoff | **`/planner` → `/implementer`** — approved plan decomposed into independently verifiable deliverables                                 |
+| **Large**    | Application or platform                  | **`/planner` → `/implementer` → `/planner` → ...** — approved current-phase deliverables; later phases remain summaries until planned |
 
 Formal plans use `.agent-craft-work/<plan-slug>/plan.md` for shared scope, decisions, ordered IDs, and future phase summaries; each small deliverable has its own `todo/<KEY>-001-<title>/work-item.md` and moves as a whole directory through `in-progress/` to `done/` only after its gates pass. `/work-item-tracking` is the lifecycle and format authority; do not create executable mega-items.
 

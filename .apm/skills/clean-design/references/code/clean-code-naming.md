@@ -17,7 +17,8 @@
 ## When Writing
 
 Before finalising any name, ask:
-1. Does this name reveal *why* and *what* without needing a comment?
+
+1. Does this name reveal _why_ and _what_ without needing a comment?
 2. Could it be confused with something else in this codebase?
 3. Can a new team member understand it in 5 seconds?
 
@@ -26,6 +27,7 @@ Rename immediately if the answer to any of these is no. Spending 30 seconds on a
 ## When Reviewing
 
 Flag any name that:
+
 - Requires a comment or surrounding context to understand
 - Differs from a nearby name only by a number suffix, noise word, or single letter
 - Is a single letter (outside a short loop counter)

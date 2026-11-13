@@ -41,3 +41,9 @@ If you already have a user-level APM manifest, check its `targets:` before compi
 - Project install details: [docs/install-in-a-project.md](docs/install-in-a-project.md)
 - Model selection and setup: [docs/models](docs/models/README.md)
 - All docs: [docs](docs)
+
+## Contributing
+
+With Node.js and npm installed, run `npm ci` after cloning to install dependencies and enable the Git pre-commit hook. The hook checks Markdown formatting and blocks commits if it fails; Git does not activate repository hooks automatically on clone.
+
+Run `npm run format` to format the project's Markdown, including table alignment, then stage the changes. Run `npm run format:check` to check formatting without changing files. Prose line wrapping is preserved to keep diffs focused. The hook checks the working tree, so unstaged Markdown changes must also be formatted.

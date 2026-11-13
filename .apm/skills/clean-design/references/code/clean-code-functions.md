@@ -13,7 +13,7 @@
   - 3 args: avoid — use a parameter object instead
   - 4+ args: never — always use an object/struct
 - **No flag arguments**: a boolean parameter announces that the function does two things. Split it into two functions.
-- **Command-Query Separation (CQS)**: a function either *does* something (command — returns void, changes state) or *answers* something (query — returns a value, no side effects). Never both. `setAndCheckName()` is a violation.
+- **Command-Query Separation (CQS)**: a function either _does_ something (command — returns void, changes state) or _answers_ something (query — returns a value, no side effects). Never both. `setAndCheckName()` is a violation.
 - **No side effects**: functions that appear to query should not secretly mutate state. Temporal coupling and hidden state changes are the result.
 - **Prefer exceptions to error codes**: returning error codes forces callers to handle errors inline and pollutes the call site. Throw typed exceptions instead.
 - **Extract try/catch bodies**: the body of a try block and the catch block should each be extracted into their own functions. Error handling is its own concern.
@@ -24,10 +24,11 @@
 Write the complete function first — do not stop mid-implementation to extract. Stopping to refactor before the function is finished breaks flow and creates half-formed logic. Once the function is complete and working, apply the checklist below before committing.
 
 Post-completion checklist:
+
 1. Can I state what this function does in one phrase without "and"? If not, identify the boundary and extract.
 2. Are all statements at the same level of abstraction? If not, pull the low-level steps into named sub-functions.
 3. Does it have 3 or fewer arguments? If not, can I make a parameter object?
-4. Does it either return a value *or* change state — but not both?
+4. Does it either return a value _or_ change state — but not both?
 5. Is any logic here duplicated elsewhere in the codebase (Rule of Three)?
 
 The goal after completing a function is to end up with many small, named functions — but arrive at them by extracting from a working whole, not by guessing structure upfront.
@@ -35,6 +36,7 @@ The goal after completing a function is to end up with many small, named functio
 ## When Reviewing
 
 Flag any function that:
+
 - Exceeds 20 lines without a clear structural justification
 - Requires "and" to describe its purpose
 - Mixes levels of abstraction (e.g., a high-level orchestration call alongside a raw SQL string or bit-manipulation)

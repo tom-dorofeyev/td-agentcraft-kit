@@ -8,9 +8,9 @@ SOLID principles apply at every scale — a function, a class, a module, a servi
 
 **"A module should have one, and only one, reason to change."**
 
-A *reason to change* is a person or role whose requirements drive the behaviour. A class that satisfies both the billing team and the report team has two reasons to change.
+A _reason to change_ is a person or role whose requirements drive the behaviour. A class that satisfies both the billing team and the report team has two reasons to change.
 
-- At function level: a function that validates input *and* persists the result has two responsibilities — split it.
+- At function level: a function that validates input _and_ persists the result has two responsibilities — split it.
 - At class level: if "and" is needed to describe what the class does, it does too much.
 - At module/service level: if two distinct business capabilities share the same deployment unit, draw a boundary.
 
@@ -22,7 +22,7 @@ Symptom: a file is edited frequently for unrelated reasons.
 
 **"Software entities should be open for extension, closed for modification."**
 
-Adding new behaviour should be possible by *writing new code*, not by editing working code. Existing logic, once tested and shipped, should be a stable platform to extend from.
+Adding new behaviour should be possible by _writing new code_, not by editing working code. Existing logic, once tested and shipped, should be a stable platform to extend from.
 
 - Design extension points: interfaces, abstract types, strategy objects, hooks.
 - An `if/else` or `switch` chain inside existing logic that grows every time a new variant is added is a violation — replace with polymorphism.
@@ -67,8 +67,8 @@ Symptom: a class implements an interface but leaves several methods as stubs or 
 
 Business logic is the most valuable and least-changing part of a system. It must not be held hostage to infrastructure details like databases, HTTP clients, or third-party SDKs.
 
-- High-level policy (use cases, domain rules) defines *interfaces* (ports) that express what it needs.
-- Infrastructure code *implements* those interfaces. The arrow of dependency points toward the domain, always.
+- High-level policy (use cases, domain rules) defines _interfaces_ (ports) that express what it needs.
+- Infrastructure code _implements_ those interfaces. The arrow of dependency points toward the domain, always.
 - Never instantiate a concrete infrastructure type (`new PostgresRepository()`, `new StripeClient()`) inside business logic. Inject it.
 - Applies at every scale: a function that calls `Date.now()` directly is coupled to the system clock — inject a clock abstraction.
 
@@ -80,13 +80,13 @@ Symptom: a unit test for business logic requires a real database, HTTP server, o
 
 Before committing any unit of code, run through the five checks:
 
-| Check | Question |
-|---|---|
-| **SRP** | Does this unit have exactly one reason to change? |
-| **OCP** | Can I add a new variant or case without editing this code? |
+| Check   | Question                                                                               |
+| ------- | -------------------------------------------------------------------------------------- |
+| **SRP** | Does this unit have exactly one reason to change?                                      |
+| **OCP** | Can I add a new variant or case without editing this code?                             |
 | **LSP** | If this type is subclassed, can every subclass be dropped in without callers noticing? |
-| **ISP** | Does every consumer of this interface/API use everything it exposes? |
-| **DIP** | Does this unit depend on a concrete infrastructure type — database, clock, HTTP, SDK? |
+| **ISP** | Does every consumer of this interface/API use everything it exposes?                   |
+| **DIP** | Does this unit depend on a concrete infrastructure type — database, clock, HTTP, SDK?  |
 
 Use these questions to identify concrete problems; apply the shared engineering-workflow scope policy before requiring a fix. Do not add extension points for hypothetical variants.
 

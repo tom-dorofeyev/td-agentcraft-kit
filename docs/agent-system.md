@@ -33,14 +33,14 @@ The shared instructions require `/code-workflow` for every executable change. It
 
 Load `/planner` for planning, `/implementer` for explicitly requested slice orchestration, and `/code-workflow` for code changes. Each uses `/specialized-agent` for the relevant specialist; when available, prefer native agents.
 
-| Role | Purpose |
-|---|---|
-| Specifier | Product-facing Gherkin acceptance criteria |
-| Architect | Conceptual HLD and LLD |
-| Builder | Production implementation |
-| Reviser | Separate scope or quality/architecture review, fixing and verifying its own findings |
-| Refactorer | Measured complexity and duplication reduction |
-| Investigator | Read-only evidence-based investigation |
+| Role         | Purpose                                                                              |
+| ------------ | ------------------------------------------------------------------------------------ |
+| Specifier    | Product-facing Gherkin acceptance criteria                                           |
+| Architect    | Conceptual HLD and LLD                                                               |
+| Builder      | Production implementation                                                            |
+| Reviser      | Separate scope or quality/architecture review, fixing and verifying its own findings |
+| Refactorer   | Measured complexity and duplication reduction                                        |
+| Investigator | Read-only evidence-based investigation                                               |
 
 Role agents are thin native execution adapters: role responsibilities remain in `specialized-agent/references/`, and shared discovery routing lives in `/specialized-agent`. Every specialist except Investigator sends broad searches and exploratory file reading to Investigator, unless supplied findings suffice. Specialists read identified relevant files locally and own their role work. Only bounded, sequential native Investigator handoffs are allowed within a specialist; if native discovery is unavailable, it returns a missing-context question to its caller for an Investigator handoff and fresh specialist task, never a nested CLI. Investigator does not delegate and returns compact findings with paths, line references, and uncertainty, not raw dumps. Ordinary callers may still use the CLI fallback to start a specialist task.
 

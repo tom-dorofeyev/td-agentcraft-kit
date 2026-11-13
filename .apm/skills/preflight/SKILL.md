@@ -26,13 +26,13 @@ cat .apm/preflight-state.yaml 2>/dev/null || echo "missing"
 
 ## Gitignore — Auto-Applied
 
-| Tool | Patterns |
-|---|---|
-| `nyc` / `c8` | `.nyc_output/`, `coverage/` |
-| `pytest-cov` / `coverage` | `.coverage`, `htmlcov/`, `coverage.xml` |
-| JaCoCo (Maven) | `target/site/jacoco/`, `target/jacoco.exec` |
-| JaCoCo (Gradle) | `build/reports/jacoco/`, `build/jacoco/` |
-| `jscpd` | `.jscpd-report/`, `.jscpd-report.json` |
+| Tool                      | Patterns                                    |
+| ------------------------- | ------------------------------------------- |
+| `nyc` / `c8`              | `.nyc_output/`, `coverage/`                 |
+| `pytest-cov` / `coverage` | `.coverage`, `htmlcov/`, `coverage.xml`     |
+| JaCoCo (Maven)            | `target/site/jacoco/`, `target/jacoco.exec` |
+| JaCoCo (Gradle)           | `build/reports/jacoco/`, `build/jacoco/`    |
+| `jscpd`                   | `.jscpd-report/`, `.jscpd-report.json`      |
 
 ## Step 1 — Complexity & Duplication
 
@@ -45,16 +45,17 @@ Fallback for jscpd: `npx jscpd`. If both fail → record as missing for collecti
 
 ## Step 2 — Coverage
 
-| Signal | Language | Tool | Install |
-|---|---|---|---|
-| `package.json` | JS/TS | nyc, c8, vitest, jest | `npm install -g nyc` or `npx` |
-| `pyproject.toml`, `setup.py`, `requirements*.txt` | Python | pytest-cov | `pip install --user pytest-cov coverage` |
-| `go.mod` | Go | built-in | `go test -cover` (no install) |
-| `pom.xml` | Java (Maven) | JaCoCo | Ask before editing pom.xml |
-| `build.gradle(.kts)` | Java (Gradle) | JaCoCo | Ask before editing build.gradle |
-| None detected | Unknown | — | Ask the user |
+| Signal                                            | Language      | Tool                  | Install                                  |
+| ------------------------------------------------- | ------------- | --------------------- | ---------------------------------------- |
+| `package.json`                                    | JS/TS         | nyc, c8, vitest, jest | `npm install -g nyc` or `npx`            |
+| `pyproject.toml`, `setup.py`, `requirements*.txt` | Python        | pytest-cov            | `pip install --user pytest-cov coverage` |
+| `go.mod`                                          | Go            | built-in              | `go test -cover` (no install)            |
+| `pom.xml`                                         | Java (Maven)  | JaCoCo                | Ask before editing pom.xml               |
+| `build.gradle(.kts)`                              | Java (Gradle) | JaCoCo                | Ask before editing build.gradle          |
+| None detected                                     | Unknown       | —                     | Ask the user                             |
 
 Verify:
+
 ```bash
 # JS/TS
 npx nyc --version 2>/dev/null || nyc --version 2>/dev/null || echo "missing"
@@ -85,9 +86,9 @@ Write `.apm/preflight-state.yaml`:
 last_check: "<ISO-8601>"
 project_language: "<js|python|go|java|unknown>"
 tools:
-  lizard:    { available: true,  install_method: "pip install --user lizard" }
-  jscpd:     { available: true,  install_method: "npm install -g jscpd" }
-  coverage:  { available: true,  tool: "nyc", install_method: "npx nyc" }
+  lizard: { available: true, install_method: "pip install --user lizard" }
+  jscpd: { available: true, install_method: "npm install -g jscpd" }
+  coverage: { available: true, tool: "nyc", install_method: "npx nyc" }
 gitignore_updated: true
 warnings: []
 ```

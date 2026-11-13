@@ -15,6 +15,7 @@ Put **all currently known questions up front**, grouped by topic and numbered wi
 
 ```markdown
 ### Q1: What is the initial delivery scope? (Select one)
+
 - [ ] Registration and login only — recommended to keep the first delivery bounded.
 - [ ] Registration, login, and password reset.
 - [ ] Other — custom answer:

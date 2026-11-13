@@ -7,3 +7,4 @@ apm_modules/
 .opencode
 .codex
 .agent-craft-work/
+node_modules/

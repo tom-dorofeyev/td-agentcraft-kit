@@ -1,6 +1,7 @@
 ---
 description: Shared engineering workflow and agent collaboration rules.
 ---
+
 # Agent Instructions
 
 These instructions apply to every agent without exception.
