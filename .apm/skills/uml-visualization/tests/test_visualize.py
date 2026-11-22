@@ -1,0 +1,85 @@
+import importlib.util
+import tempfile
+import unittest
+from pathlib import Path
+from unittest.mock import patch
+
+SCRIPT = Path(__file__).parents[1] / 'scripts' / 'visualize.py'
+spec = importlib.util.spec_from_file_location('visualize', SCRIPT)
+visualize = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(visualize)
+
+
+class VisualizationTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.root = Path(self.temp.name).resolve()
+
+    def write(self, name, text):
+        path = self.root / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(text, encoding='utf-8')
+
+    def test_typescript_dependencies_and_exclusions(self):
+        self.write('src/a.ts', 'import { b } from "./b";\nexport * from "./dir";\n// import "./missing"\nimport "library";')
+        self.write('src/b.ts', 'export const b = 1;')
+        self.write('src/dir/index.ts', '')
+        self.write('node_modules/external.ts', '')
+        self.assertEqual(visualize.graph(self.root), {
+            'nodes': ['src/a.ts', 'src/b.ts', 'src/dir/index.ts'],
+            'edges': [['src/a.ts', 'src/b.ts'], ['src/a.ts', 'src/dir/index.ts']],
+            'unresolved': [['src/a.ts', 'library']], 'warnings': []})
+
+    def test_java_imports_and_static_imports(self):
+        self.write('one/A.java', 'package one; import two.B; import static two.B.method;')
+        self.write('two/B.java', 'package two; class B {}')
+        self.assertEqual(visualize.graph(self.root)['edges'], [['one/A.java', 'two/B.java']])
+
+    def test_output_is_stable_and_script_safe(self):
+        self.write('a.ts', '')
+        result = visualize.graph(self.root)
+        self.assertEqual(visualize.render(result), visualize.render(visualize.graph(self.root)))
+        self.assertNotIn('</script><script>', visualize.render({'nodes': ['</script><script>'], 'edges': []}))
+
+    def test_comment_scanner_preserves_import_strings(self):
+        self.assertIn('"./b"', visualize.strip_comments('/* ignore */ import "./b"; // comment'))
+        self.assertNotIn('comment', visualize.strip_comments('// comment'))
+
+    def test_cli_writes_output(self):
+        self.write('a.ts', '')
+        output = self.root / 'diagram.html'
+        with patch('sys.argv', ['visualize.py', str(self.root), '--output', str(output)]):
+            visualize.main()
+        self.assertIn('a.ts', output.read_text(encoding='utf-8'))
+
+    def test_cli_rejects_file_as_root(self):
+        self.write('a.ts', '')
+        with patch('sys.argv', ['visualize.py', str(self.root / 'a.ts'), '--output', 'out']):
+            with self.assertRaises(SystemExit):
+                visualize.main()
+
+    def test_typescript_aliases_and_dynamic_imports(self):
+        self.write('tsconfig.json', '{"compilerOptions":{"baseUrl":".","paths":{"@/*":["src/*"]}}}')
+        self.write('src/a.ts', 'import { b } from "@/b"; import("./b.js"); import("missing"); import(name);')
+        self.write('src/b.ts', 'export const b = 1;')
+        result = visualize.graph(self.root)
+        self.assertEqual(result['edges'], [['src/a.ts', 'src/b.ts']])
+        self.assertEqual(result['unresolved'], [['src/a.ts', '<computed dynamic import>'], ['src/a.ts', 'missing']])
+
+    def test_java_wildcard_and_unresolved(self):
+        self.write('one/A.java', 'package one; import two.*; import static two.B.*; import missing.X; class A { B b; }')
+        self.write('two/B.java', 'package two; class B {}')
+        self.write('two/C.java', 'package two; class C {}')
+        result = visualize.graph(self.root)
+        self.assertEqual(result['edges'], [['one/A.java', 'two/B.java']])
+        self.assertEqual(result['unresolved'], [['one/A.java', 'missing.X']])
+
+    def test_inherited_config_is_reported(self):
+        self.write('tsconfig.json', '{"extends":"./base.json"}')
+        self.write('a.ts', '')
+        self.assertTrue(visualize.graph(self.root)['warnings'])
+
+
+if __name__ == '__main__':
+    unittest.main()
