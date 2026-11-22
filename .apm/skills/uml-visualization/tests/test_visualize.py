@@ -1,4 +1,5 @@
 import importlib.util
+import os
 import tempfile
 import unittest
 from pathlib import Path
@@ -49,9 +50,42 @@ class VisualizationTests(unittest.TestCase):
     def test_cli_writes_output(self):
         self.write('a.ts', '')
         output = self.root / 'diagram.html'
+        previous = Path.cwd()
+        os.chdir(self.root)
+        self.addCleanup(os.chdir, previous)
         with patch('sys.argv', ['visualize.py', str(self.root), '--output', str(output)]):
             visualize.main()
         self.assertIn('a.ts', output.read_text(encoding='utf-8'))
+
+    def test_default_output_and_overwrite_protection(self):
+        previous = Path.cwd()
+        os.chdir(self.root)
+        self.addCleanup(os.chdir, previous)
+        output = self.root / '.agent-craft-work/uml-visualization/dependencies.html'
+        with patch('sys.argv', ['visualize.py', str(self.root)]):
+            visualize.main()
+            self.assertTrue(output.is_file())
+            with self.assertRaises(FileExistsError):
+                visualize.main()
+        with patch('sys.argv', ['visualize.py', str(self.root), '--force']):
+            visualize.main()
+
+    def test_output_outside_current_directory_is_rejected(self):
+        previous = Path.cwd()
+        os.chdir(self.root)
+        self.addCleanup(os.chdir, previous)
+        with patch('sys.argv', ['visualize.py', str(self.root), '--output', '../outside.html']):
+            with self.assertRaises(SystemExit):
+                visualize.main()
+
+    def test_symlink_escape_is_rejected(self):
+        previous = Path.cwd()
+        os.chdir(self.root)
+        self.addCleanup(os.chdir, previous)
+        (self.root / 'escape').symlink_to(self.root.parent, target_is_directory=True)
+        with patch('sys.argv', ['visualize.py', str(self.root), '--output', 'escape/outside.html']):
+            with self.assertRaises(SystemExit):
+                visualize.main()
 
     def test_cli_rejects_file_as_root(self):
         self.write('a.ts', '')

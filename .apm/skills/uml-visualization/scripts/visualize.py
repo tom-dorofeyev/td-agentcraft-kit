@@ -170,12 +170,20 @@ def render(data):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('root', type=Path)
-    parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--output', type=Path, default=Path('.agent-craft-work/uml-visualization/dependencies.html'))
+    parser.add_argument('--force', action='store_true', help='overwrite an existing output file')
     args = parser.parse_args()
     root = args.root.resolve(strict=True)
     if not root.is_dir():
         parser.error('root must be a directory')
-    args.output.write_text(render(graph(root)), encoding='utf-8')
+    output = args.output.resolve()
+    if not output.is_relative_to(Path.cwd().resolve()):
+        parser.error('output must be inside the current working directory')
+    content = render(graph(root))
+    output.parent.mkdir(parents=True, exist_ok=True)
+    with output.open('w' if args.force else 'x', encoding='utf-8') as file:
+        file.write(content)
+    print(f'Wrote {output}')
 
 
 if __name__ == '__main__':
