@@ -3,7 +3,9 @@
 
 import argparse
 import json
+import os
 import re
+import subprocess
 from pathlib import Path
 
 EXTENSIONS = {'.ts', '.tsx', '.js', '.jsx', '.mjs', '.cjs', '.java'}
@@ -139,7 +141,40 @@ def ts_targets(path, text, known, config, settings):
         yield '<computed dynamic import>', []
 
 
-def graph(root):
+def selected_files(root, files, paths):
+    selected = set()
+    for value in paths:
+        path = Path(value)
+        if path.is_absolute() or '..' in path.parts:
+            raise ValueError(f'scope must be project-relative: {value}')
+        target = (root / path).resolve()
+        if not target.is_relative_to(root) or not target.exists():
+            raise ValueError(f'scope must exist inside the project: {value}')
+        selected.update(file for file in files if file == target or target in file.parents)
+    return selected
+
+
+def changed_files(root, files):
+    try:
+        repo = subprocess.run(
+            ['git', '-C', str(root), 'rev-parse', '--show-toplevel'],
+            capture_output=True, check=False)
+        if repo.returncode:
+            raise ValueError('could not read Git repository: ' + repo.stderr.decode(errors='replace').strip())
+        repo_root = Path(os.fsdecode(repo.stdout).rstrip('\n')).resolve()
+        result = subprocess.run(
+            ['git', '-C', str(root), 'status', '--porcelain=v1', '-z',
+             '--untracked-files=all', '--no-renames', '--', '.'],
+            capture_output=True, check=False)
+    except OSError as error:
+        raise ValueError(f'could not read Git status: {error}') from error
+    if result.returncode:
+        raise ValueError('could not read Git status: ' + result.stderr.decode(errors='replace').strip())
+    changed = {repo_root / os.fsdecode(entry[3:]) for entry in result.stdout.split(b'\0') if entry}
+    return set(files) & changed
+
+
+def graph(root, selected=None):
     files = source_files(root)
     texts = {path: strip_comments(path.read_text(encoding='utf-8')) for path in files}
     names = java_names(files, texts)
@@ -152,13 +187,16 @@ def graph(root):
             targets = java_targets(texts[path], names)
         else:
             config, settings = config_for(path, root)
-            if 'extends' in settings or 'error' in settings:
+            if ('extends' in settings or 'error' in settings) and (selected is None or path in selected):
                 warnings.add(f'{config.relative_to(root)}: inherited or invalid configuration is not resolved')
             targets = ts_targets(path, texts[path], known, config, settings)
         add_targets(path, targets, root, edges, unresolved)
-    return {'nodes': [p.relative_to(root).as_posix() for p in files],
-            'edges': [list(edge) for edge in sorted(edges)],
-            'unresolved': [list(item) for item in sorted(unresolved)], 'warnings': sorted(warnings)}
+    included = set(files) if selected is None else set(files) & selected
+    paths = {path.relative_to(root).as_posix() for path in included}
+    return {'nodes': sorted(paths),
+            'edges': [list(edge) for edge in sorted(edges) if edge[0] in paths and edge[1] in paths],
+            'unresolved': [list(item) for item in sorted(unresolved) if item[0] in paths],
+            'warnings': sorted(warnings)}
 
 
 def render(data):
@@ -172,6 +210,9 @@ def main():
     parser.add_argument('root', type=Path)
     parser.add_argument('--output', type=Path, default=Path('.agent-craft-work/uml-visualization/dependencies.html'))
     parser.add_argument('--force', action='store_true', help='overwrite an existing output file')
+    scope = parser.add_mutually_exclusive_group()
+    scope.add_argument('--scope', action='append', metavar='PATH', help='include a project-relative file or directory; repeatable')
+    scope.add_argument('--changed', action='store_true', help='include Git changed and untracked source files')
     args = parser.parse_args()
     root = args.root.resolve(strict=True)
     if not root.is_dir():
@@ -179,7 +220,14 @@ def main():
     output = args.output.resolve()
     if not output.is_relative_to(Path.cwd().resolve()):
         parser.error('output must be inside the current working directory')
-    content = render(graph(root))
+    try:
+        files = source_files(root)
+        selected = selected_files(root, files, args.scope) if args.scope else None
+        if args.changed:
+            selected = changed_files(root, files)
+    except ValueError as error:
+        parser.error(str(error))
+    content = render(graph(root, selected))
     output.parent.mkdir(parents=True, exist_ok=True)
     with output.open('w' if args.force else 'x', encoding='utf-8') as file:
         file.write(content)

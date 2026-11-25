@@ -3,7 +3,7 @@ import os
 import tempfile
 import unittest
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import patch, Mock
 
 SCRIPT = Path(__file__).parents[1] / 'scripts' / 'visualize.py'
 spec = importlib.util.spec_from_file_location('visualize', SCRIPT)
@@ -113,6 +113,47 @@ class VisualizationTests(unittest.TestCase):
         self.write('tsconfig.json', '{"extends":"./base.json"}')
         self.write('a.ts', '')
         self.assertTrue(visualize.graph(self.root)['warnings'])
+
+    def test_selected_files_and_directories_keep_only_internal_edges(self):
+        self.write('src/a.ts', 'import "./b"; import "./c"; import "missing";')
+        self.write('src/b.ts', '')
+        self.write('src/c.ts', '')
+        self.write('other/d.ts', '')
+        files = visualize.source_files(self.root)
+        selected = visualize.selected_files(self.root, files, ['src/a.ts', 'src/b.ts', 'other'])
+        result = visualize.graph(self.root, selected)
+        self.assertEqual(result['nodes'], ['other/d.ts', 'src/a.ts', 'src/b.ts'])
+        self.assertEqual(result['edges'], [['src/a.ts', 'src/b.ts']])
+        self.assertEqual(result['unresolved'], [['src/a.ts', 'missing']])
+
+    def test_scope_rejects_missing_and_outside_paths(self):
+        for path in ['../outside', '/outside', 'missing']:
+            with self.subTest(path=path), self.assertRaises(ValueError):
+                visualize.selected_files(self.root, [], [path])
+
+    def test_changed_selection_includes_existing_source_files_only(self):
+        self.write('staged.ts', '')
+        self.write('new file.ts', '')
+        self.write('unchanged.ts', '')
+        status = b'M  staged.ts\0?? new file.ts\0 D deleted.ts\0?? notes.txt\0'
+        repo = Mock(returncode=0, stdout=os.fsencode(str(self.root) + '\n'))
+        with patch.object(visualize.subprocess, 'run', side_effect=[repo, Mock(returncode=0, stdout=status)]):
+            selected = visualize.changed_files(self.root, visualize.source_files(self.root))
+        self.assertEqual(visualize.graph(self.root, selected)['nodes'], ['new file.ts', 'staged.ts'])
+
+    def test_changed_selection_for_project_inside_repository(self):
+        self.write('project/a.ts', '')
+        project = self.root / 'project'
+        repo = Mock(returncode=0, stdout=os.fsencode(str(self.root) + '\n'))
+        status = Mock(returncode=0, stdout=b' M project/a.ts\0')
+        with patch.object(visualize.subprocess, 'run', side_effect=[repo, status]):
+            selected = visualize.changed_files(project, visualize.source_files(project))
+        self.assertEqual(visualize.graph(project, selected)['nodes'], ['a.ts'])
+
+    def test_git_failure_is_reported(self):
+        with patch.object(visualize.subprocess, 'run', return_value=Mock(returncode=128, stderr=b'not a repository')):
+            with self.assertRaisesRegex(ValueError, 'not a repository'):
+                visualize.changed_files(self.root, [])
 
 
 if __name__ == '__main__':

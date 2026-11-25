@@ -17,6 +17,20 @@ Requires Python 3.9 or newer. Run the script from the directory where output sho
 python3 /path/to/uml-visualization/scripts/visualize.py /path/to/project
 ```
 
+To review selected modules, repeat `--scope` with project-relative files or directories:
+
+```bash
+python3 /path/to/uml-visualization/scripts/visualize.py /path/to/project --scope src/auth --scope src/app.ts
+```
+
+To review uncommitted changes instead:
+
+```bash
+python3 /path/to/uml-visualization/scripts/visualize.py /path/to/project --changed
+```
+
+This includes existing source files with staged, unstaged, or untracked Git changes under the project root, not committed branch changes. Deleted files are omitted; renames include the existing destination. Git must be available and the project must be inside a repository. No changes produces an empty graph. The options cannot be combined. Scope paths must exist inside the project. Both modes retain edges only when both endpoints are selected; imports of files outside the selection are not reported as unresolved. Normal source exclusions still apply.
+
 The default output is `.agent-craft-work/uml-visualization/dependencies.html` under the current working directory. Use `--output <path>` for a different location inside that directory; paths outside it, including symlink escapes, are rejected. Existing files are not overwritten unless `--force` is supplied. Generate again after changing source with `--force` or a new output path. Identical source trees produce identical output bytes.
 
 Open the generated HTML locally in a browser. Select a module to highlight its incoming and outgoing edges; use the filter to narrow the view. The viewer follows the system color scheme initially; use the theme button to switch between light and dark mode.
