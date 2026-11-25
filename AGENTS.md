@@ -64,7 +64,7 @@ These are baked into the instructions layer and inherited by all agents:
 
 ## Workflow Overview
 
-Ordinary work uses `/code-workflow` with the request and conversation context; no formal files or mandatory Planner/Implementer handoff. Use `/planner` and `/implementer` primarily when complex work needs approved, durable planning and tracked delivery. An explicitly requested lightweight plan can stay in the session.
+Ordinary work uses `/code-workflow` with the request and conversation context unless the user explicitly asks to skip it for the current work; no formal files or mandatory Planner/Implementer handoff. Use `/planner` and `/implementer` primarily when complex work needs approved, durable planning and tracked delivery. An explicitly requested lightweight plan can stay in the session.
 
 | Scope        | Signal                                   | Path                                                                                                                                  |
 | ------------ | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |

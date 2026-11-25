@@ -1,11 +1,11 @@
 ---
 name: code-workflow
-description: Run every executable code change through sequential Builder, two Reviser tasks, and Refactorer with all quality gates, with or without a formal plan.
+description: Run executable code changes through sequential Builder, two Reviser tasks, and Refactorer with all quality gates, with or without a formal plan.
 ---
 
 # Code Workflow
 
-Use this workflow for every change to executable code, tests, scripts, or runtime configuration. A clear user request is sufficient scope; use approved criteria or architecture when supplied. Do not start a planning or approval cycle solely to run this workflow.
+Use this workflow for changes to executable code, tests, scripts, or runtime configuration unless the user explicitly asks to skip it for the current work. A clear user request is sufficient scope; use approved criteria or architecture when supplied. Do not start a planning or approval cycle solely to run this workflow.
 
 Load `/proof-of-work` before editing. The caller owns this workflow. Use `/specialized-agent` for each specialist role, one at a time, and wait for its result before the next handoff. Keep each task bounded to the current change. If a required role is unavailable, report the broken workflow and do not claim completion.
 

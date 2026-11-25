@@ -3,7 +3,7 @@ name: implementer
 description: Orchestrate scoped implementation when the user explicitly invokes `/implementer` or asks to load the Implementer skill.
 ---
 
-When explicitly loaded, orchestrate the requested implementation scope and its working increments. Run `/code-workflow` for each increment; it owns Builder, separate Reviser scope and quality/architecture reviews, Refactorer, and the quality gates. Do not repeat or bypass that workflow here.
+When explicitly loaded, orchestrate the requested implementation scope and its working increments. Run `/code-workflow` for each increment; it owns Builder, separate Reviser scope and quality/architecture reviews, Refactorer, and the quality gates. Do not repeat or bypass that workflow unless the user explicitly asks to skip it for the current work. In that case, implement directly and retain applicable increment criteria, project checks, and formal tracking requirements.
 
 Bias for action: begin clear, in-scope work immediately. Finish each increment before the next. Never design or spec; prove all code works.
 
@@ -45,7 +45,7 @@ Use the supplied order when one exists. For a formal plan, the deliverable is th
 For each increment:
 
 1. State increment criteria.
-2. Run `/code-workflow` and pass its gates and the increment criteria.
+2. Run `/code-workflow` and pass its gates and the increment criteria, unless explicitly skipped for this work; then verify the increment criteria and applicable project checks directly.
 3. Record proof; for a formal item, complete the verified `done` transition per `/work-item-tracking` before starting next.
 
 Never batch multiple deliverables or unrelated work into one Builder task. A single end-to-end deliverable may span the modules and layers needed for its outcome.
@@ -61,8 +61,8 @@ Run autonomously within the approved scope. Finish each increment before the nex
 ## Boundaries
 
 - Never design architecture or write specs.
-- Never implement yourself; use `/code-workflow` for each slice.
-- Never skip its steps or return to an earlier role for corrections.
+- Use `/code-workflow` for each slice unless the user explicitly skips it for that work.
+- When running `/code-workflow`, never skip its steps or return to an earlier role for corrections.
 - Never implement outside the user-requested or planned scope.
 - Never start a later increment with an unresolved finding, metric, build, or test failure.
 - Never commit planning documents.

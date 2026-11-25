@@ -15,7 +15,7 @@ Markdown is production code. The system is designed as small, focused contracts:
 - `skills/` contains reusable workflows and quality gates.
 - `instructions/` contains shared rules.
 
-The shared instructions require `/code-workflow` for every executable change. It delegates Builder, separate fresh Reviser tasks for scope and quality/architecture, and Refactorer sequentially and requires review, static analysis, a passing build and test suite, and behavior-focused evidence. Each downstream stage verifies its own changes and preserves earlier invariants; an unresolved blocker stops the workflow without backward role cycles. Ordinary work enters with conversation context, without a separate plan or formal files. `/implementer` invokes the same workflow per approved deliverable when requested for complex tracked work.
+Use `/code-workflow` for executable changes unless the user explicitly asks to skip it for the current work. The exception does not carry over to later requests, and other applicable instructions and project checks still apply. The workflow delegates Builder, separate fresh Reviser tasks for scope and quality/architecture, and Refactorer sequentially and requires review, static analysis, a passing build and test suite, and behavior-focused evidence. Each downstream stage verifies its own changes and preserves earlier invariants; an unresolved blocker stops the workflow without backward role cycles. Ordinary work enters with conversation context, without a separate plan or formal files. `/implementer` invokes the same workflow per approved deliverable when requested for complex tracked work, unless explicitly skipped.
 
 ```text
 .apm/
@@ -31,7 +31,7 @@ The shared instructions require `/code-workflow` for every executable change. It
 
 ## Workflow Roles
 
-Load `/planner` for planning, `/implementer` for explicitly requested slice orchestration, and `/code-workflow` for code changes. Each uses `/specialized-agent` for the relevant specialist; when available, prefer native agents.
+Load `/planner` for planning, `/implementer` for explicitly requested slice orchestration, and `/code-workflow` for code changes unless explicitly skipped for the current work. Each uses `/specialized-agent` for the relevant specialist; when available, prefer native agents.
 
 | Role         | Purpose                                                                              |
 | ------------ | ------------------------------------------------------------------------------------ |
@@ -48,7 +48,7 @@ Role agents are thin native execution adapters: role responsibilities remain in 
 
 1. **Everyday tasks** → `Agent`. Load `/coordinator` explicitly for a coordination-only session until you ask to exit the mode.
 2. **Planning** → load `/planner`; it uses Investigator for needed repository evidence before sequential Specifier or Architect handoffs through `/specialized-agent`.
-3. **Implementation** → load `/code-workflow`; it runs Builder, separate Reviser scope and quality/architecture reviews, Refactorer, and final verification for every code change. Explicit `/implementer` work uses it per slice.
+3. **Implementation** → load `/code-workflow`; it runs Builder, separate Reviser scope and quality/architecture reviews, Refactorer, and final verification for code changes. Explicit `/implementer` work uses it per slice. The user can explicitly skip it for the current work.
 4. **Large scope** → `/planner` defines MVP phases; each current phase goes through the same workflow.
 
 ## Planning Outputs
